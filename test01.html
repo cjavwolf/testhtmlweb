@@ -40,6 +40,13 @@
         // 调用祈祷并铸造代币函数
         async function prayAndMint() {
             try {
+                // 确保 contract 变量已经初始化
+                if (!contract) {
+                    console.error('Contract is not initialized');
+                    return;
+                }
+                
+                // 调用 prayAndMint 函数
                 await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
                 console.log('Pray and mint successful');
             } catch (error) {

@@ -206,23 +206,57 @@
     </script>
 </head>
 <body>
-    <h1>iKunCoin Web3 Demo</h1>
-    <button id="connectWalletButton">Connect Wallet</button>
-    <button onclick="getTokenInfo()">Get Token Info</button>
-    <button onclick="prayAndMint()">Pray and Mint</button>
-    <button onclick="transfer('0xRecipientAddress', 100)">Transfer</button> <!-- 替换 '0xRecipientAddress' 和 100 为接收地址和数量 -->
-    <button onclick="offerIncenseAndBurn(10)">Offer Incense and Burn</button> <!-- 替换 10 为销毁数量 -->
-    <button onclick="mintNFT()">Mint NFT</button>
-    <button onclick="transferNFT(tokenId, '0xRecipientAddress')">Transfer NFT</button> <!-- 替换 tokenId 和 '0xRecipientAddress' 为NFT ID和接收地址 -->
-    <button onclick="setNFTContentByNFTId(tokenId, 'name', 'metadata')">Set NFT Content</button> <!-- 替换 tokenId、'name' 和 'metadata' 为NFT ID、名称和元数据 -->
-    <button onclick="getOwnerNFTCodesByPage(owner, page)">Get Owner NFT Codes By Page</button> <!-- 替换 owner 和 page 为用户地址和页码 -->
-    <button onclick="getAllMintedNFTCodesByPage(page)">Get All Minted NFT Codes By Page</button> <!-- 替换 page 为页码 -->
-    <button onclick="getNFTById(tokenId)">Get NFT By ID</button> <!-- 替换 tokenId 为NFT ID -->
-    <button onclick="getNFTByCode(code)">Get NFT By Code</button> <!-- 替换 code 为NFT代码 -->
-    <button onclick="leaseAdvertisingSlot(slotId, duration)">Lease Advertising Slot</button> <!-- 替换 slotId 和 duration 为广告位 ID 和租期 -->
-    <button onclick="setAdvertisingContent(slotId, 'title', 'content')">Set Advertising Content</button> <!-- 替换 slotId、'title' 和 'content' 为广告位 ID、标题和内容 -->
-    <button onclick="getAdvertisingSlot(slotId)">Get Advertising Slot</button> <!-- 替换 slotId 为广告位 ID -->
-    <button onclick="getAvailableSlots()">Get Available Slots</button>
-    <button onclick="getOneDayLeaseCost()">Get One Day Lease Cost</button>
+     <h1>iKunCoin Web3 Demo</h1>
+    <button id="connectWalletButton">Connect Wallet</button><br><br>
+
+    <h2>Token Operations</h2>
+    <button onclick="getTokenInfo()">Get Token Info</button><br>
+    <button onclick="prayAndMint()">Pray and Mint</button><br>
+    <label for="transferRecipient">Recipient Address:</label>
+    <input type="text" id="transferRecipient" placeholder="Recipient Address"><br>
+    <label for="transferAmount">Transfer Amount:</label>
+    <input type="number" id="transferAmount" placeholder="Transfer Amount"><br>
+    <button onclick="transfer()">Transfer</button><br>
+    <label for="burnAmount">Burn Amount:</label>
+    <input type="number" id="burnAmount" placeholder="Burn Amount"><br>
+    <button onclick="offerIncenseAndBurn()">Offer Incense and Burn</button><br>
+
+    <h2>NFT Operations</h2>
+    <button onclick="mintNFT()">Mint NFT</button><br>
+    <label for="nftRecipient">Recipient Address:</label>
+    <input type="text" id="nftRecipient" placeholder="Recipient Address"><br>
+    <label for="nftId">NFT ID:</label>
+    <input type="number" id="nftId" placeholder="NFT ID"><br>
+    <button onclick="transferNFT()">Transfer NFT</button><br>
+    <label for="nftName">NFT Name:</label>
+    <input type="text" id="nftName" placeholder="NFT Name"><br>
+    <label for="nftMetadata">NFT Metadata:</label>
+    <input type="text" id="nftMetadata" placeholder="NFT Metadata"><br>
+    <button onclick="setNFTContentByNFTId()">Set NFT Content</button><br>
+    <label for="ownerAddress">Owner Address:</label>
+    <input type="text" id="ownerAddress" placeholder="Owner Address"><br>
+    <label for="ownerPage">Page:</label>
+    <input type="number" id="ownerPage" placeholder="Page"><br>
+    <button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button><br>
+    <label for="allMintedPage">Page:</label>
+    <input type="number" id="allMintedPage" placeholder="Page"><br>
+    <button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button><br>
+    <label for="nftCode">NFT Code:</label>
+    <input type="text" id="nftCode" placeholder="NFT Code"><br>
+    <button onclick="getNFTByCode()">Get NFT By Code</button><br>
+    <label for="nftIdQuery">NFT ID:</label>
+    <input type="number" id="nftIdQuery" placeholder="NFT ID"><br>
+    <button onclick="getNFTById()">Get NFT By ID</button><br>
+
+    <h2>Advertising Operations</h2>
+    <label for="slotId">Slot ID:</label>
+    <input type="number" id="slotId" placeholder="Slot ID"><br>
+    <label for="duration">Duration:</label>
+    <input type="number" id="duration" placeholder="Duration"><br>
+    <button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button><br>
+    <button onclick="getAdvertisingSlot()">Get Advertising Slot</button><br>
+    <button onclick="getAvailableSlots()">Get Available Slots</button><br>
+    <button onclick="getOneDayLeaseCost()">Get One Day Lease Cost</button><br>
+
 </body>
 </html>

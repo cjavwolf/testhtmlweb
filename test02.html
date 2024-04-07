@@ -206,57 +206,163 @@
     </script>
 </head>
 <body>
-     <h1>iKunCoin Web3 Demo</h1>
-    <button id="connectWalletButton">Connect Wallet</button><br><br>
+    <h1>iKunCoin Web3 Demo</h1>
 
-    <h2>Token Operations</h2>
-    <button onclick="getTokenInfo()">Get Token Info</button><br>
-    <button onclick="prayAndMint()">Pray and Mint</button><br>
-    <label for="transferRecipient">Recipient Address:</label>
-    <input type="text" id="transferRecipient" placeholder="Recipient Address"><br>
-    <label for="transferAmount">Transfer Amount:</label>
-    <input type="number" id="transferAmount" placeholder="Transfer Amount"><br>
-    <button onclick="transfer()">Transfer</button><br>
-    <label for="burnAmount">Burn Amount:</label>
-    <input type="number" id="burnAmount" placeholder="Burn Amount"><br>
-    <button onclick="offerIncenseAndBurn()">Offer Incense and Burn</button><br>
+    <!-- 1. 连接钱包 -->
+    <button onclick="connectWallet()">Connect Wallet</button>
+    <div>
+        <!-- 输入条件：无 -->
+        <!-- 输出结果：成功连接时显示用户的钱包地址，或显示连接错误信息 -->
+        <p id="connectWalletResult"></p>
+    </div>
 
-    <h2>NFT Operations</h2>
-    <button onclick="mintNFT()">Mint NFT</button><br>
-    <label for="nftRecipient">Recipient Address:</label>
-    <input type="text" id="nftRecipient" placeholder="Recipient Address"><br>
-    <label for="nftId">NFT ID:</label>
-    <input type="number" id="nftId" placeholder="NFT ID"><br>
-    <button onclick="transferNFT()">Transfer NFT</button><br>
-    <label for="nftName">NFT Name:</label>
-    <input type="text" id="nftName" placeholder="NFT Name"><br>
-    <label for="nftMetadata">NFT Metadata:</label>
-    <input type="text" id="nftMetadata" placeholder="NFT Metadata"><br>
-    <button onclick="setNFTContentByNFTId()">Set NFT Content</button><br>
-    <label for="ownerAddress">Owner Address:</label>
-    <input type="text" id="ownerAddress" placeholder="Owner Address"><br>
-    <label for="ownerPage">Page:</label>
-    <input type="number" id="ownerPage" placeholder="Page"><br>
-    <button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button><br>
-    <label for="allMintedPage">Page:</label>
-    <input type="number" id="allMintedPage" placeholder="Page"><br>
-    <button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button><br>
-    <label for="nftCode">NFT Code:</label>
-    <input type="text" id="nftCode" placeholder="NFT Code"><br>
-    <button onclick="getNFTByCode()">Get NFT By Code</button><br>
-    <label for="nftIdQuery">NFT ID:</label>
-    <input type="number" id="nftIdQuery" placeholder="NFT ID"><br>
-    <button onclick="getNFTById()">Get NFT By ID</button><br>
+    <!-- 2. 获取代币信息 -->
+    <button onclick="getTokenInfo()">Get Token Info</button>
+    <div>
+        <!-- 输入条件：无 -->
+        <!-- 输出结果：代币信息的JSON格式 -->
+        <p id="tokenInfoResult"></p>
+    </div>
 
-    <h2>Advertising Operations</h2>
-    <label for="slotId">Slot ID:</label>
-    <input type="number" id="slotId" placeholder="Slot ID"><br>
-    <label for="duration">Duration:</label>
-    <input type="number" id="duration" placeholder="Duration"><br>
-    <button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button><br>
-    <button onclick="getAdvertisingSlot()">Get Advertising Slot</button><br>
-    <button onclick="getAvailableSlots()">Get Available Slots</button><br>
-    <button onclick="getOneDayLeaseCost()">Get One Day Lease Cost</button><br>
+    <!-- 3. 祈祷并铸币 -->
+    <button onclick="prayAndMint()">Pray and Mint</button>
+    <div>
+        <!-- 输入条件：无 -->
+        <!-- 输出结果：铸币成功的提示信息 -->
+        <p id="prayAndMintResult"></p>
+    </div>
 
+    <!-- 4. 转账 -->
+    <button onclick="transferTokens()">Transfer Tokens</button>
+    <div>
+        <!-- 输入条件：接收地址和数量 -->
+        <input type="text" id="transferRecipient" placeholder="Recipient Address">
+        <input type="number" id="transferAmount" placeholder="Amount">
+        <!-- 输出结果：转账成功的提示信息或错误信息 -->
+        <p id="transferTokensResult"></p>
+    </div>
+
+    <!-- 5. 祭奠并销毁 -->
+    <button onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
+    <div>
+        <!-- 输入条件：销毁数量 -->
+        <input type="number" id="burnAmount" placeholder="Amount to Burn">
+        <!-- 输出结果：销毁成功的提示信息或错误信息 -->
+        <p id="offerIncenseAndBurnResult"></p>
+    </div>
+
+    <!-- 6. 铸造NFT -->
+    <button onclick="mintNFT()">Mint NFT</button>
+    <div>
+        <!-- 输入条件：无 -->
+        <!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
+        <p id="mintNFTResult"></p>
+    </div>
+
+    <!-- 7. 转移NFT -->
+    <button onclick="transferNFT()">Transfer NFT</button>
+    <div>
+        <!-- 输入条件：NFT ID和接收地址 -->
+        <input type="text" id="nftId" placeholder="NFT ID">
+        <input type="text" id="nftRecipient" placeholder="Recipient Address">
+        <!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
+        <p id="transferNFTResult"></p>
+    </div>
+
+    <!-- 8. 设置NFT内容 -->
+    <button onclick="setNFTContent()">Set NFT Content</button>
+    <div>
+        <!-- 输入条件：NFT ID、名称和元数据 -->
+        <input type="text" id="nftIdContent" placeholder="NFT ID">
+        <input type="text" id="nftName" placeholder="NFT Name">
+        <input type="text" id="nftMetadata" placeholder="NFT Metadata">
+        <!-- 输出结果：设置成功的提示信息或错误信息 -->
+        <p id="setNFTContentResult"></p>
+    </div>
+
+    <!-- 9. 获取指定用户的NFT代码（按页） -->
+    <button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button>
+    <div>
+        <!-- 输入条件：用户地址和页码 -->
+        <input type="text" id="ownerAddress" placeholder="Owner Address">
+        <input type="number" id="pageNumberOwner" placeholder="Page Number">
+        <!-- 输出结果：JSON格式的NFT代码列表 -->
+        <p id="ownerNFTCodesResult"></p>
+    </div>
+
+    <!-- 10. 获取所有已铸造的NFT代码（按页） -->
+    <button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button>
+    <div>
+        <!-- 输入条件：页码 -->
+        <input type="number" id="pageNumberMinted" placeholder="Page Number">
+        <!-- 输出结果：JSON格式的NFT代码列表 -->
+        <p id="mintedNFTCodesResult"></p>
+    </div>
+
+    <!-- 11. 获取指定NFT的详细信息 -->
+    <button onclick="getNFTById()">Get NFT By ID</button>
+    <div>
+        <!-- 输入条件：NFT ID -->
+        <input type="text" id="nftIdDetail" placeholder="NFT ID">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="nftDetailResult"></p>
+    </div>
+
+    <!-- 12. 获取指定NFT代码的详细信息 -->
+    <button onclick="getNFTByCode()">Get NFT By Code</button>
+    <div>
+        <!-- 输入条件：NFT代码 -->
+        <input type="text" id="nftCode" placeholder="NFT Code">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="nftByCodeResult"></p>
+    </div>
+
+    <!-- 13. 租赁广告位 -->
+    <button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button>
+    <div>
+        <!-- 输入条件：广告位ID和租期 -->
+        <input type="number" id="slotId" placeholder="Slot ID">
+        <input type="number" id="leaseDuration" placeholder="Lease Duration">
+        <!-- 输出结果：租赁成功的提示信息或错误信息 -->
+        <p id="leaseAdvertisingSlotResult"></p>
+    </div>
+
+    <!-- 14. 设置广告内容 -->
+    <button onclick="setAdvertisingContent()">Set Advertising Content</button>
+    <div>
+        <!-- 输入条件：广告位ID、标题和内容 -->
+        <input type="number" id="adSlotId" placeholder="Slot ID">
+        <input type="text" id="adTitle" placeholder="Title">
+        <input type="text" id="adContent" placeholder="Content">
+        <!-- 输出结果：设置成功的提示信息或错误信息 -->
+        <p id="setAdvertisingContentResult"></p>
+    </div>
+
+    <!-- 15. 获取广告位信息 -->
+    <button onclick="getAdvertisingSlot()">Get Advertising Slot</button>
+    <div>
+        <!-- 输入条件：广告位ID -->
+        <input type="number" id="adSlotIdInfo" placeholder="Slot ID">
+        <!-- 输出结果：JSON格式的广告位信息 -->
+        <p id="adSlotInfoResult"></p>
+    </div>
+
+    <!-- 16. 获取所有广告位信息（按页） -->
+    <button onclick="getAllAdvertisingSlotsByPage()">Get All Advertising Slots By Page</button>
+    <div>
+        <!-- 输入条件：页码 -->
+        <input type="number" id="pageNumberAds" placeholder="Page Number">
+        <!-- 输出结果：JSON格式的广告位列表 -->
+        <p id="adSlotsByPageResult"></p>
+    </div>
+
+    <!-- 17. 获取广告数据 -->
+    <button onclick="getAdData()">Get Ad Data</button>
+    <div>
+        <!-- 输入条件：广告ID -->
+        <input type="number" id="adId" placeholder="Ad ID">
+        <!-- 输出结果：JSON格式的广告数据 -->
+        <p id="adDataResult"></p>
+    </div>
 </body>
 </html>

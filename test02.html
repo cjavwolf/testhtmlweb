@@ -43,23 +43,31 @@
         }
     });
     
-    // 1. 连接钱包
-    function connectWallet() {
-        document.getElementById("connectWalletResult").innerText = "Connected wallet successfully!";
+    // 连接钱包
+    async function connectWallet() {
+        try {
+            // 请求用户授权连接钱包
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
+        } catch (error) {
+            console.error('User denied wallet connection');
+            document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
+        }
     }
     
-    // 2. 获取代币信息
+    // 获取代币信息
     async function getTokenInfo() {
         try {
             const info = await contract.methods.getTokenInfo().call();
             console.log(info);
-            document.getElementById("tokenInfoResult").innerText = "Retrieved token information successfully!";
+            document.getElementById("tokenInfoResult").innerText = JSON.stringify(info);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("tokenInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 3. 祈祷并铸币
+    // 祈祷并铸币
     async function prayAndMint() {
         try {
             await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
@@ -67,150 +75,198 @@
             document.getElementById("prayAndMintResult").innerText = "Prayed and minted successfully!";
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("prayAndMintResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 4. 转账
-    async function transfer(recipient, amount) {
+    // 转账
+    async function transferTokens() {
+        const recipient = document.getElementById("transferRecipient").value;
+        const amount = document.getElementById("transferAmount").value;
         try {
             await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
             console.log('Transfer successful');
+            document.getElementById("transferTokensResult").innerText = "Transfer successful!";
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("transferTokensResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 5. 烧香并销毁代币
-    async function offerIncenseAndBurn(amount) {
+    // 祭奠并销毁
+    async function offerIncenseAndBurn() {
+        const amount = document.getElementById("burnAmount").value;
         try {
             await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
             console.log('Offer incense and burn successful');
+            document.getElementById("offerIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("offerIncenseAndBurnResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 6. NFT创建
+    // 铸造NFT
     async function mintNFT() {
         try {
             await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
             console.log('Mint NFT successful');
+            document.getElementById("mintNFTResult").innerText = "Mint NFT successful!";
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("mintNFTResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 7. NFT转账
-    async function transferNFT(tokenId, recipient) {
+    // 转移NFT
+    async function transferNFT() {
+        const tokenId = document.getElementById("nftId").value;
+        const recipient = document.getElementById("nftRecipient").value;
         try {
             await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
             console.log('Transfer NFT successful');
+            document.getElementById("transferNFTResult").innerText = "Transfer NFT successful!";
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("transferNFTResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 8. 设置NFT内容
-    async function setNFTContentByNFTId(tokenId, name, metadata) {
+    // 设置NFT内容
+    async function setNFTContent() {
+        const tokenId = document.getElementById("nftIdContent").value;
+        const name = document.getElementById("nftName").value;
+        const metadata = document.getElementById("nftMetadata").value;
         try {
             await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
             console.log('Set NFT content successful');
+            document.getElementById("setNFTContentResult").innerText = "Set NFT content successful!";
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("setNFTContentResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 9. 租用广告位
-    async function leaseAdvertisingSlot(slotId, duration) {
-        try {
-            await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
-            console.log('Lease advertising slot successful');
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-    
-    // 10. 设置广告内容
-    async function setAdvertisingContent(slotId, title, content) {
-        try {
-            await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
-            console.log('Set advertising content successful');
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-    
-    // 11. 获取代币信息
-    async function getTokenInfo() {
-        try {
-            const info = await contract.methods.getTokenInfo().call();
-            console.log(info);
-            document.getElementById("tokenInfoResult").innerText = "Retrieved token information successfully!";
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-    
-    // 12. 获取指定用户的NFT代码列表
-    async function getOwnerNFTCodesByPage(owner, page) {
+    // 获取指定用户的NFT代码（按页）
+    async function getOwnerNFTCodesByPage() {
+        const owner = document.getElementById("ownerAddress").value;
+        const page = document.getElementById("pageNumberOwner").value;
         try {
             const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
             console.log(codes);
+            document.getElementById("ownerNFTCodesResult").innerText = JSON.stringify(codes);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("ownerNFTCodesResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 13. 获取所有已发行NFT的代码列表
-    async function getAllMintedNFTCodesByPage(page) {
+    // 获取所有已铸造的NFT代码（按页）
+    async function getAllMintedNFTCodesByPage() {
+        const page = document.getElementById("pageNumberMinted").value;
         try {
             const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
             console.log(codes);
+            document.getElementById("mintedNFTCodesResult").innerText = JSON.stringify(codes);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("mintedNFTCodesResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 14. 获取指定NFT的详细信息
-    async function getNFTById(tokenId) {
+    // 获取指定NFT的详细信息
+    async function getNFTById() {
+        const tokenId = document.getElementById("nftIdDetail").value;
         try {
             const nft = await contract.methods.getNFTById(tokenId).call();
             console.log(nft);
+            document.getElementById("nftDetailResult").innerText = JSON.stringify(nft);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("nftDetailResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 15. 获取指定NFT代码的详细信息
-    async function getNFTByCode(code) {
+    // 获取指定NFT代码的详细信息
+    async function getNFTByCode() {
+        const code = document.getElementById("nftCode").value;
         try {
             const nft = await contract.methods.getNFTByCode(code).call();
             console.log(nft);
+            document.getElementById("nftByCodeResult").innerText = JSON.stringify(nft);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("nftByCodeResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 16. 获取指定广告位的详细信息
-    async function getAdvertisingSlot(slotId) {
+    // 租赁广告位
+    async function leaseAdvertisingSlot() {
+        const slotId = document.getElementById("slotId").value;
+        const duration = document.getElementById("leaseDuration").value;
+        try {
+            await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
+            console.log('Lease advertising slot successful');
+            document.getElementById("leaseAdvertisingSlotResult").innerText = "Lease advertising slot successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("leaseAdvertisingSlotResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 设置广告内容
+    async function setAdvertisingContent() {
+        const slotId = document.getElementById("adSlotId").value;
+        const title = document.getElementById("adTitle").value;
+        const content = document.getElementById("adContent").value;
+        try {
+            await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
+            console.log('Set advertising content successful');
+            document.getElementById("setAdvertisingContentResult").innerText = "Set advertising content successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("setAdvertisingContentResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取广告位信息
+    async function getAdvertisingSlot() {
+        const slotId = document.getElementById("adSlotIdInfo").value;
         try {
             const slot = await contract.methods.getAdvertisingSlot(slotId).call();
             console.log(slot);
+            document.getElementById("adSlotInfoResult").innerText = JSON.stringify(slot);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("adSlotInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 17. 获取可租用的广告位列表
-    async function getAvailableSlots() {
+    // 获取所有广告位信息（按页）
+    async function getAllAdvertisingSlotsByPage() {
+        const page = document.getElementById("pageNumberAds").value;
         try {
-            const slots = await contract.methods.getAvailableSlots().call();
+            const slots = await contract.methods.getAllAdvertisingSlotsByPage(page).call();
             console.log(slots);
+            document.getElementById("adSlotsByPageResult").innerText = JSON.stringify(slots);
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;
         }
     }
-
+    
+    // 获取广告数据
+    async function getAdData() {
+        const adId = document.getElementById("adId").value;
+        try {
+            const adData = await contract.methods.getAdData(adId).call();
+            console.log(adData);
+            document.getElementById("adDataResult").innerText = JSON.stringify(adData);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
+        }
+    }
 
 </script>
 </head>

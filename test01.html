@@ -56,8 +56,8 @@
 
         // 调用转账函数
         async function transfer() {
-            const recipient = '0xRecipientAddress'; // 替换成接收者的地址
-            const amount = 100; // 替换成要转账的代币数量
+            const recipient = document.getElementById('recipientAddress').value;
+            const amount = document.getElementById('transferAmount').value;
             try {
                 await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
                 console.log('Transfer successful');
@@ -68,7 +68,7 @@
 
         // 调用烧香并销毁代币函数
         async function offerIncenseAndBurn() {
-            const amount = 10; // 替换成要销毁的代币数量
+            const amount = document.getElementById('burnAmount').value;
             try {
                 await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
                 console.log('Offer incense and burn successful');
@@ -81,8 +81,14 @@
 <body>
     <h1>iKunCoin Web3 Demo</h1>
     <button id="connectWalletButton">Connect Wallet</button>
-    <button onclick="prayAndMint()">Pray and Mint</button>
-    <button onclick="transfer()">Transfer</button>
+    <button onclick="prayAndMint()">Pray and Mint</button><br><br>
+    <label for="recipientAddress">Recipient Address:</label>
+    <input type="text" id="recipientAddress" placeholder="Recipient Address"><br>
+    <label for="transferAmount">Transfer Amount:</label>
+    <input type="number" id="transferAmount" placeholder="Transfer Amount"><br>
+    <button onclick="transfer()">Transfer</button><br><br>
+    <label for="burnAmount">Burn Amount:</label>
+    <input type="number" id="burnAmount" placeholder="Burn Amount"><br>
     <button onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
 </body>
 </html>

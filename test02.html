@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iKunCoin Web3 Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
+    <script>
+        // 声明全局变量
+        let contract;
+
+        // 初始化 Web3
+        window.addEventListener('load', async () => {
+            const connectWalletButton = document.getElementById('connectWalletButton');
+            
+            if (window.ethereum) {
+                try {
+                    // 等待用户连接钱包
+                    await window.ethereum.enable();
+                    console.log('Connected to wallet');
+
+                    // 初始化 contract
+                    const web3 = new Web3(window.ethereum);
+                    const contractAddress = '0xdFfa370C46308D16Ff1d59D951b2Dd4BF1D407b8'; // 合约地址
+                    const contractABI = []; // 替换成你的合约 ABI
+                    contract = new web3.eth.Contract(contractABI, contractAddress);
+                } catch (error) {
+                    console.error('User denied wallet connection');
+                }
+                
+                connectWalletButton.addEventListener('click', async () => {
+                    try {
+                        // 请求用户授权连接钱包
+                        await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        console.log('Connected to wallet');
+                    } catch (error) {
+                        console.error('User denied wallet connection');
+                    }
+                });
+                
+                console.log('Web3 provider detected');
+            } else {
+                console.error('Web3 provider not detected');
+            }
+        });
+
+        // 调用祈祷并铸造代币函数
+        async function prayAndMint() {
+            try {
+                await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
+                console.log('Pray and mint successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用转账函数
+        async function transfer(recipient, amount) {
+            try {
+                await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
+                console.log('Transfer successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用烧香并销毁代币函数
+        async function offerIncenseAndBurn(amount) {
+            try {
+                await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
+                console.log('Offer incense and burn successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用NFT创建函数
+        async function mintNFT() {
+            try {
+                await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
+                console.log('Mint NFT successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用NFT转账函数
+        async function transferNFT(tokenId, recipient) {
+            try {
+                await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
+                console.log('Transfer NFT successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用设置NFT内容函数
+        async function setNFTContentByNFTId(tokenId, name, metadata) {
+            try {
+                await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
+                console.log('Set NFT content successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用租用广告位函数
+        async function leaseAdvertisingSlot(slotId, duration) {
+            try {
+                await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
+                console.log('Lease advertising slot successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 调用设置广告内容函数
+        async function setAdvertisingContent(slotId, title, content) {
+            try {
+                await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
+                console.log('Set advertising content successful');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取代币信息
+        async function getTokenInfo() {
+            try {
+                const info = await contract.methods.getTokenInfo().call();
+                console.log(info);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取指定用户的NFT代码列表
+        async function getOwnerNFTCodesByPage(owner, page) {
+            try {
+                const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
+                console.log(codes);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取所有已发行NFT的代码列表
+        async function getAllMintedNFTCodesByPage(page) {
+            try {
+                const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
+                console.log(codes);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取指定NFT的详细信息
+        async function getNFTById(tokenId) {
+            try {
+                const nft = await contract.methods.getNFTById(tokenId).call();
+                console.log(nft);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取指定NFT代码的详细信息
+        async function getNFTByCode(code) {
+            try {
+                const nft = await contract.methods.getNFTByCode(code).call();
+                console.log(nft);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取指定广告位的详细信息
+        async function getAdvertisingSlot(slotId) {
+            try {
+                const slot = await contract.methods.getAdvertisingSlot(slotId).call();
+                console.log(slot);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取可租用的广告位列表
+        async function getAvailableSlots() {
+            try {
+                const slots = await contract.methods.getAvailableSlots().call();
+                console.log(slots);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // 获取一天租用广告位的费用
+        async function getOneDayLeaseCost() {
+            try {
+                const cost = await contract.methods.getOneDayLeaseCost().call();
+                console.log(cost);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>iKunCoin Web3 Demo</h1>
+    <button id="connectWalletButton">Connect Wallet</button>
+    <button onclick="getTokenInfo()">Get Token Info</button>
+    <button onclick="prayAndMint()">Pray and Mint</button>
+    <button onclick="transfer('0xRecipientAddress', 100)">Transfer</button> <!-- 替换 '0xRecipientAddress' 和 100 为接收地址和数量 -->
+    <button onclick="offerIncenseAndBurn(10)">Offer Incense and Burn</button> <!-- 替换 10 为销毁数量 -->
+    <button onclick="mintNFT()">Mint NFT</button>
+    <button onclick="transferNFT(tokenId, '0xRecipientAddress')">Transfer NFT</button> <!-- 替换 tokenId 和 '0xRecipientAddress' 为NFT ID和接收地址 -->
+    <button onclick="setNFTContentByNFTId(tokenId, 'name', 'metadata')">Set NFT Content</button> <!-- 替换 tokenId、'name' 和 'metadata' 为NFT ID、名称和元数据 -->
+    <button onclick="getOwnerNFTCodesByPage(owner, page)">Get Owner NFT Codes By Page</button> <!-- 替换 owner 和 page 为用户地址和页码 -->
+    <button onclick="getAllMintedNFTCodesByPage(page)">Get All Minted NFT Codes By Page</button> <!-- 替换 page 为页码 -->
+    <button onclick="getNFTById(tokenId)">Get NFT By ID</button> <!-- 替换 tokenId 为NFT ID -->
+    <button onclick="getNFTByCode(code)">Get NFT By Code</button> <!-- 替换 code 为NFT代码 -->
+    <button onclick="leaseAdvertisingSlot(slotId, duration)">Lease Advertising Slot</button> <!-- 替换 slotId 和 duration 为广告位 ID 和租期 -->
+    <button onclick="setAdvertisingContent(slotId, 'title', 'content')">Set Advertising Content</button> <!-- 替换 slotId、'title' 和 'content' 为广告位 ID、标题和内容 -->
+    <button onclick="getAdvertisingSlot(slotId)">Get Advertising Slot</button> <!-- 替换 slotId 为广告位 ID -->
+    <button onclick="getAvailableSlots()">Get Available Slots</button>
+    <button onclick="getOneDayLeaseCost()">Get One Day Lease Cost</button>
+</body>
+</html>

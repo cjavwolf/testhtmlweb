@@ -120,7 +120,7 @@
     }
 
     // 获取铸造NFT费用
-    async function getOwnerNFTCodesByPage() {
+    async function getMintNFTCost() {
         try {
             const cost = await contract.methods.mintNFTCost().call();
             document.getElementById("getMintNFTCostResult").innerText = JSON.stringify(cost);
@@ -344,7 +344,7 @@
 </script>
 </head>
 <body>
-    <h1>iKunCoin Web3 Demo</h1>
+    <h1>BSC TEST iKunCoin Web3</h1>
 
     <!-- 1. 连接钱包 -->
     <button onclick="connectWallet()">Connect Wallet</button>

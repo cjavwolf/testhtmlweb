@@ -78,6 +78,19 @@
             document.getElementById("prayAndMintResult").innerText = `Error: ${error.message}`;
         }
     }
+
+    // 余额查询
+    async function balanceof() {
+        const address = document.getElementById("balanceaddress").value;
+        try {
+            const info = await contract.methods.balanceOf(address).send({ from: window.ethereum.selectedAddress });
+            console.log(info);
+            document.getElementById("balanceofResult").innerText = JSON.stringify(info);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("balanceofResult").innerText = `Error: ${error.message}`;
+        }
+    }
     
     // 转账
     async function transferTokens() {
@@ -105,6 +118,17 @@
             document.getElementById("offerIncenseAndBurnResult").innerText = `Error: ${error.message}`;
         }
     }
+
+    // 获取铸造NFT费用
+    async function getOwnerNFTCodesByPage() {
+        try {
+            const cost = await contract.methods.mintNFTCost().call();
+            document.getElementById("getMintNFTCostResult").innerText = JSON.stringify(cost);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("getMintNFTCostResult").innerText = `Error: ${error.message}`;
+        }
+    }        
     
     // 铸造NFT
     async function mintNFT() {
@@ -209,7 +233,7 @@
             document.getElementById("sellNFTResult").innerText = "NFT is Selling!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("leaseAdvertisingSlotResult").innerText = `Error: ${error.message}`;
+            document.getElementById("sellNFTResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -221,7 +245,7 @@
             document.getElementById("cancelSellNFTResult").innerText = "cancelSellNFT Successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("leaseAdvertisingSlotResult").innerText = `Error: ${error.message}`;
+            document.getElementById("cancelSellNFTResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -233,7 +257,7 @@
             document.getElementById("pageNumberSellingResult").innerText = JSON.stringify(codes);
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("ownerNFTCodesResult").innerText = `Error: ${error.message}`;
+            document.getElementById("pageNumberSellingResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -246,9 +270,10 @@
             document.getElementById("buyNFTResult").innerText = "Buy NFT successful!!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("leaseAdvertisingSlotResult").innerText = `Error: ${error.message}`;
+            document.getElementById("buyNFTResult").innerText = `Error: ${error.message}`;
         }
     }
+ 
     
     // 租赁广告位
     async function leaseAdvertisingSlot() {
@@ -345,6 +370,14 @@
         <p id="prayAndMintResult"></p>
     </div>
 
+    <!-- 获取个人余额 -->
+    <button onclick="balanceof()">Get Address Balance</button>
+    <div>
+        <input type="text" id="balanceaddress" placeholder="Balance Address">
+        <!-- 输出结果：余额信息信息 -->
+        <p id="balanceofResult"></p>
+    </div>
+
     <!-- 4. 转账 -->
     <button onclick="transferTokens()">Transfer Tokens</button>
     <div>
@@ -364,22 +397,17 @@
         <p id="offerIncenseAndBurnResult"></p>
     </div>
 
+    <button onclick="getMintNFTCost()">Get NFT Cost</button>
+    <div>
+        <p id="getMintNFTCostResult"></p>
+    </div>
+
     <!-- 6. 铸造NFT -->
     <button onclick="mintNFT()">Mint NFT</button>
     <div>
         <!-- 输入条件：无 -->
         <!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
         <p id="mintNFTResult"></p>
-    </div>
-
-    <!-- 7. 转移NFT -->
-    <button onclick="transferNFT()">Transfer NFT</button>
-    <div>
-        <!-- 输入条件：NFT ID和接收地址 -->
-        <input type="text" id="nftId" placeholder="NFT ID">
-        <input type="text" id="nftRecipient" placeholder="Recipient Address">
-        <!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
-        <p id="transferNFTResult"></p>
     </div>
 
     <!-- 8. 设置NFT内容 -->
@@ -391,6 +419,16 @@
         <input type="text" id="nftMetadata" placeholder="NFT Metadata">
         <!-- 输出结果：设置成功的提示信息或错误信息 -->
         <p id="setNFTContentResult"></p>
+    </div>
+
+    <!-- 7. 转移NFT -->
+    <button onclick="transferNFT()">Transfer NFT</button>
+    <div>
+        <!-- 输入条件：NFT ID和接收地址 -->
+        <input type="text" id="nftId" placeholder="NFT ID">
+        <input type="text" id="nftRecipient" placeholder="Recipient Address">
+        <!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
+        <p id="transferNFTResult"></p>
     </div>
 
     <!-- 9. 获取指定用户的NFT代码（按页） -->
@@ -458,7 +496,6 @@
         <p id="pageNumberSellingResult"></p>
     </div>
 
-
     <!-- 购买NFT -->
     <button onclick="buyNFT()">Buy NFT</button>
     <div>
@@ -466,6 +503,20 @@
         <input type="number" id="buyNFTId" placeholder="NFT ID">
         <!-- 输出结果：JSON格式的NFT详细信息 -->
         <p id="buyNFTResult"></p>
+    </div>
+
+    <!-- 17. 获取广告日天单价 -->
+    <button onclick="getAdPrice()">Get Ad Price OneDay</button>
+    <div>
+        <!-- 输出结果：JSON格式的广告数据 -->
+        <p id="adDataResult"></p>
+    </div>
+
+    <!-- 16. 获取所有待出租广告位id -->
+    <button onclick="getAllAdvertisingSlots()">Get All Advertising Slots</button>
+    <div>
+        <!-- 输出结果：JSON格式的广告位列表 -->
+        <p id="adSlotsByPageResult"></p>
     </div>
 
     <!-- 13. 租赁广告位 -->
@@ -498,18 +549,5 @@
         <p id="adSlotInfoResult"></p>
     </div>
 
-    <!-- 16. 获取所有待出租广告位id -->
-    <button onclick="getAllAdvertisingSlots()">Get All Advertising Slots</button>
-    <div>
-        <!-- 输出结果：JSON格式的广告位列表 -->
-        <p id="adSlotsByPageResult"></p>
-    </div>
-
-    <!-- 17. 获取广告数据 -->
-    <button onclick="getAdPrice()">Get Ad Price OneDay</button>
-    <div>
-        <!-- 输出结果：JSON格式的广告数据 -->
-        <p id="adDataResult"></p>
-    </div>
 </body>
 </html>

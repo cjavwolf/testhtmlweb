@@ -363,6 +363,8 @@
 
 	</script>
     <style>
+	
+	
 		h1 {
 			position: fixed;
 			top: 0;
@@ -440,23 +442,52 @@
 			margin-bottom: 20px; /* 设置分隔符与下方元素的间距 */
 		}
 		
-		.card {
-			border: 2px dashed #ccc; /* 设置卡牌的虚线边框样式 */
-			border-radius: 10px; /* 设置卡牌的圆角 */
-			padding: 20px; /* 设置卡牌的内边距 */
-			margin-top: 20px; /* 设置卡牌与分隔符的间距 */
-		}
+		.card-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
 
-		.card-content {
-			font-family: Arial, sans-serif; /* 设置字体 */
-			font-size: 16px; /* 设置字体大小 */
-			line-height: 1.5; /* 设置行高 */
-			color: #333; /* 设置文本颜色 */
-		}
+        .card-content {
+            flex: 1;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            margin-right: 10px;
+            font-family: Arial, sans-serif;
+            position: relative;
+            min-height: 200px; /* 设置默认高度 */
+        }
 
-		.refresh-button {
-			margin-top: 10px; /* 设置刷新按钮与卡牌内容的间距 */
-		}
+        .card-content::before {
+            content: "TOKEN INFO";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 0 5px;
+            font-weight: bold;
+        }
+
+        .refresh-button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .right-card {
+            flex: 1;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            min-height: 200px; /* 设置默认高度 */
+        }
     </style>
 </head>
 <body>
@@ -513,8 +544,10 @@
 	</div>
 	<div class="separator"></div>
     <div class="card-container">
-        <div class="card-content" id="tokenInfoContent"></div>
-        <button class="refresh-button" onclick="getTokenInfo()">Refresh</button>
+        <div class="card-content" id="tokenInfoContent">
+            <button class="refresh-button" onclick="getTokenInfo()">Refresh</button>
+        </div>
+        <div class="right-card" id="anotherCard"></div>
     </div>
 	<div class="separator"></div>
 

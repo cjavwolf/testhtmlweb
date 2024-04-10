@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSC TEST iKunCoin Web3</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
+    <script>
+    let contract;
+    
+    // 初始化 Web3
+    window.addEventListener('load', async () => {
+        const connectWalletButton = document.getElementById('connectWalletButton');
+        
+        if (window.ethereum) {
+            try {
+                // 等待用户连接钱包
+                await window.ethereum.enable();
+                console.log('Connected to wallet');
+    
+                // 初始化 contract
+                const web3 = new Web3(window.ethereum);
+                const contractAddress = '0x12025dEE2e50A8807735e9A67B63a88e3440fB58'; // 合约地址
+                const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // 替换成你的合约 ABI
+                contract = new web3.eth.Contract(contractABI, contractAddress);
+            } catch (error) {
+                console.error('User denied wallet connection');
+            }
+            
+            connectWalletButton.addEventListener('click', async () => {
+                try {
+                    // 请求用户授权连接钱包
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    console.log('Connected to wallet');
+                } catch (error) {
+                    console.error('User denied wallet connection');
+                }
+            });
+            
+            console.log('Web3 provider detected');
+        } else {
+            console.error('Web3 provider not detected');
+        }
+    });
+    
+    // 连接钱包
+    async function connectWallet() {
+        try {
+            // 请求用户授权连接钱包
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
+        } catch (error) {
+            console.error('User denied wallet connection');
+            document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
+        }
+    }
+    
+    // 获取代币信息
+	async function getTokenInfo() {
+		try {
+			const info = await contract.methods.getTokenInfo().call();
+			console.log(info);
+			
+			const tokenInfoContent = document.getElementById("tokenInfoContent");
+			tokenInfoContent.innerHTML = `
+				<p>Coin Name: ${info.coinName}</p>
+				<p>Coin Symbol: ${info.coinSymbol}</p>
+				<p>Mission: ${info.mission}</p>
+				<p>Spirit: ${info.spirit}</p>
+				<p>Slogan: ${info.slogan}</p>
+				<p>Coin Decimals: ${info.coinDecimals}</p>
+				<p>Max Circulation: ${info.maxCirculation}</p>
+				<p>Current Supply Num: ${info.currentSupplyNum}</p>
+				<p>Percentage: ${info.percentage}</p>
+				<p>Current Rate: ${info.currentRate}</p>
+				<p>Total Burned Num: ${info.totalBurnedNum}</p>
+			`;
+		} catch (error) {
+			console.error('Error:', error);
+			document.getElementById("tokenInfoContent").innerText = `Error: ${error.message}`;
+		}
+	}
+    
+    // 祈祷并铸币
+    async function prayAndMint() {
+        try {
+            await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
+            console.log('Pray and mint successful');
+            document.getElementById("prayAndMintResult").innerText = "Prayed and minted successfully!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("prayAndMintResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    // 余额查询
+    async function balanceof() {
+        const address = document.getElementById("balanceaddress").value;
+        try {
+            const info = await contract.methods.balanceOf(address).call();
+            console.log(info);
+            document.getElementById("balanceofResult").innerText = JSON.stringify(info);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("balanceofResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 转账
+    async function transferTokens() {
+        const recipient = document.getElementById("transferRecipient").value;
+        const amount = document.getElementById("transferAmount").value;
+        try {
+            await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
+            console.log('Transfer successful');
+            document.getElementById("transferTokensResult").innerText = "Transfer successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("transferTokensResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 祭奠并销毁
+    async function offerIncenseAndBurn() {
+        const amount = document.getElementById("burnAmount").value;
+        try {
+            await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
+            console.log('Offer incense and burn successful');
+            document.getElementById("offerIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("offerIncenseAndBurnResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    // 获取铸造NFT费用
+    async function getMintNFTCost() {
+        try {
+            const cost = await contract.methods.mintNFTCost().call();
+            document.getElementById("getMintNFTCostResult").innerText = JSON.stringify(cost);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("getMintNFTCostResult").innerText = `Error: ${error.message}`;
+        }
+    }        
+    
+    // 铸造NFT
+    async function mintNFT() {
+        try {
+            await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
+            console.log('Mint NFT successful');
+            document.getElementById("mintNFTResult").innerText = "Mint NFT successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("mintNFTResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 转移NFT
+    async function transferNFT() {
+        const tokenId = document.getElementById("nftId").value;
+        const recipient = document.getElementById("nftRecipient").value;
+        try {
+            await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
+            console.log('Transfer NFT successful');
+            document.getElementById("transferNFTResult").innerText = "Transfer NFT successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("transferNFTResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 设置NFT内容
+    async function setNFTContent() {
+        const tokenId = document.getElementById("nftIdContent").value;
+        const name = document.getElementById("nftName").value;
+        const metadata = document.getElementById("nftMetadata").value;
+        try {
+            await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
+            console.log('Set NFT content successful');
+            document.getElementById("setNFTContentResult").innerText = "Set NFT content successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("setNFTContentResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取指定用户的NFT代码（按页）
+    async function getOwnerNFTCodesByPage() {
+        const owner = document.getElementById("ownerAddress").value;
+        const page = document.getElementById("pageNumberOwner").value;
+        try {
+            const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
+            console.log(codes);
+            document.getElementById("ownerNFTCodesResult").innerText = JSON.stringify(codes);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("ownerNFTCodesResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取所有已铸造的NFT代码（按页）
+    async function getAllMintedNFTCodesByPage() {
+        const page = document.getElementById("pageNumberMinted").value;
+        try {
+            const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
+            console.log(codes);
+            document.getElementById("mintedNFTCodesResult").innerText = JSON.stringify(codes);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("mintedNFTCodesResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    // 获取指定NFT的详细信息
+    async function getNFTById() {
+        const tokenId = document.getElementById("nftIdDetail").value;
+        try {
+            const nft = await contract.methods.getNFTById(tokenId).call();
+            console.log(nft);
+            document.getElementById("nftDetailResult").innerText = JSON.stringify(nft);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("nftDetailResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取指定NFT代码的详细信息
+    async function getNFTByCode() {
+        const code = document.getElementById("nftCode").value;
+        try {
+            const nft = await contract.methods.getNFTByCode(code).call();
+            console.log(nft);
+            document.getElementById("nftByCodeResult").innerText = JSON.stringify(nft);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("nftByCodeResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    // 出售NFT
+    async function sellNFT() {
+        const nftId = document.getElementById("sellNFTId").value;
+        const nftPrice = document.getElementById("sellNFTPrice").value;
+        try {
+            await contract.methods.sellNFT(nftId, nftPrice).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("sellNFTResult").innerText = "NFT is Selling!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("sellNFTResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    // 取消出售NFT
+    async function cancelSellNFT() {
+        const nftId = document.getElementById("cancelSellNFTId").value;
+        try {
+            await contract.methods.cancelSellNFT(nftId).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("cancelSellNFTResult").innerText = "cancelSellNFT Successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("cancelSellNFTResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    // 获取正在出售的NFT编码（按页）
+    async function getALLSellingNFTCodesByPage() {
+        const page = document.getElementById("pageNumberSelling").value;
+        try {
+            const codes = await contract.methods.getAllSellingNFTCodesByPage(page).call();
+            document.getElementById("pageNumberSellingResult").innerText = JSON.stringify(codes);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("pageNumberSellingResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+
+    // 购买NFT
+    async function buyNFT() {
+        const nftId = document.getElementById("buyNFTId").value;
+        try {
+            await contract.methods.buyNFT(nftId).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("buyNFTResult").innerText = "Buy NFT successful!!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("buyNFTResult").innerText = `Error: ${error.message}`;
+        }
+    }
+ 
+    
+    // 租赁广告位
+    async function leaseAdvertisingSlot() {
+        const slotId = document.getElementById("slotId").value;
+        const duration = document.getElementById("leaseDuration").value;
+        try {
+            await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
+            console.log('Lease advertising slot successful');
+            document.getElementById("leaseAdvertisingSlotResult").innerText = "Lease advertising slot successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("leaseAdvertisingSlotResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 设置广告内容
+    async function setAdvertisingContent() {
+        const slotId = document.getElementById("adSlotId").value;
+        const title = document.getElementById("adTitle").value;
+        const content = document.getElementById("adContent").value;
+        try {
+            await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
+            console.log('Set advertising content successful');
+            document.getElementById("setAdvertisingContentResult").innerText = "Set advertising content successful!";
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("setAdvertisingContentResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取广告位信息
+    async function getAdvertisingSlot() {
+        const slotId = document.getElementById("adSlotIdInfo").value;
+        try {
+            const slot = await contract.methods.getAdvertisingSlot(slotId).call();
+            console.log(slot);
+            document.getElementById("adSlotInfoResult").innerText = JSON.stringify(slot);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("adSlotInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取所有空闲广告位
+    async function getAllAdvertisingSlots() {
+        try {
+            const slots = await contract.methods.getAvailableSlots().call();
+            console.log(slots);
+            document.getElementById("adSlotsByPageResult").innerText = JSON.stringify(slots);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    // 获取广告日天单价
+    async function getAdPrice() {
+        try {
+            const adData = await contract.methods.getOneDayLeaseCost().call();
+            console.log(adData);
+            document.getElementById("adDataResult").innerText = JSON.stringify(adData);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
+        }
+    }
+	
+	window.onload = function() {
+    // 执行初始化方法
+		init();
+	};
+
+
+	</script>
+    <style>
+	
+	
+		h1 {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 10px;
+			margin: 0;
+			background-color: #333;
+			color: #fff;
+			text-align: center;
+			z-index: 9999;
+		}
+
+        .text-container {
+            margin-top: 50px !important;
+            white-space: pre;
+            font-family: monospace;
+            line-height: 1.0;
+            width: 100%;
+            margin: 0 auto;
+            overflow: auto;
+            max-height: calc(100vh - 50px); 
+            padding: 5px;
+        }
+		
+		@keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scrolling-text {
+            overflow: hidden; 
+            white-space: nowrap; 
+            animation: scroll 20s linear infinite; 
+        }
+		.static-text {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
+		.wallet-wrapper {
+			margin-top: 50px !important;
+			position: fixed;
+			top: 20px; /* 距离顶部的距离 */
+			right: 20px; /* 距离右侧的距离 */
+		}
+
+		.wallet-container {
+			display: flex;
+			align-items: center;
+		}
+
+		.wallet-button {
+			width: 100px; /* 按钮的固定宽度 */
+		}
+
+		.wallet-result {
+			margin-left: 5px; /* 结果与按钮之间的间距 */
+		}
+
+		.separator {
+			border-top: 1px solid #ccc; /* 设置分隔符的顶部边框 */
+			margin-top: 20px; /* 设置分隔符与上方元素的间距 */
+			margin-bottom: 20px; /* 设置分隔符与下方元素的间距 */
+		}
+		
+		.card-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			width: 95%; /* 或者您想要的宽度 */
+			margin: 0 auto; /* 水平居中 */
+		}
+
+		.left-card,
+		.center-card,
+		.right-card {
+			flex: 1;
+			border: 1px solid #ccc;
+			padding: 10px;
+			font-family: Arial, sans-serif;
+			min-height: 400px; /* 设置默认高度 */
+			border-radius: 10px; /* 圆角 */
+			box-sizing: border-box; /* 边框大小计入盒模型 */
+			margin-right: 10px; /* 卡片间距 */
+		}
+
+		.refresh-button {
+			padding: 5px 10px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			cursor: pointer;
+			margin-top: 10px; /* 与上方卡片的间距 */
+			border-radius: 5px; /* 圆角 */
+			display: block; /* 按钮块级显示 */
+			width: 100%; /* 按钮宽度填充卡片宽度 */
+			text-align: center; /* 按钮文本居中 */
+		}
+
+		.button-container {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 5px; /* 按钮之间的间距 */
+		}
+		
+		.card-container-button {
+			display: flex;
+			border: none;
+			justify-content: space-between;
+			align-items: flex-start;
+			width: 95%; /* 或者您想要的宽度 */
+			margin: 0 auto; /* 水平居中 */
+		}
+		
+		.left-card-button,
+		.center-card-button,
+		.right-card-button {
+			flex: 1;
+			border: none;
+			padding: 0px;
+			font-family: Arial, sans-serif;
+			border-radius: 10px; 
+			box-sizing: border-box; 
+			margin-right: 10px; 
+		}
+		
+		
+		
+
+    </style>
+</head>
+<body>
+
+	<h1>BSC TEST iKunCoin Web3</h1>
+	
+	<div class="text-container">
+    	.__ ____  __.               	_________        .__        
+    	|__|    |/ _|__ __  ____    	\_   ___ \  ____ |__| ____  
+    	|  |      < |  |  \/    \   	/    \  \/ /  _ \|  |/    \ 
+    	|  |    |  \|  |  /   |  \  	\     \___(  <_> )  |   |  \
+    	|__|____|__ \____/|___|  /  	 \______  /\____/|__|___|  /
+    	           \/          \/   	        \/               \/  
+	</div>
+	<div class="scrolling-text">
+		~ iKun is a way of life.
+	</div>
+	
+	
+	
+	<div class="static-text">
+	
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ7777777777777771333333333WMQQMVJJ3JJJJJUX7-)(((((3JJJ3MMMW-::::::::777777
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ7777777777777777771I3JNMQM4JJJJ&2I(((()(((-JJJJJ()(((IJ99MMM-::::::777777
+	QQQQQQQQQQQQE    QQQQQQQQQQQQ7777777777777777777NMMO97J&VVVY((()((JHMMJKMQMMRJJ3I()-:339HMN1::::777777
+	QQQQQQQQQQM     ,QQQQQQQQQQQQ7777777777777777YMMN97-Y9VI(((3JJ()(JGQSGQQUENNQQM&J1:())-3J&RMM!::777777
+	QQQQQQQQQK        2QQQQQQQQQQ77777777777777&MQU9"I29V(():99JJ()(JJMQMMMMGZ99F6QQH&J-MM)(-JJ9HQN:777777
+	QQQQQQQQQ          WQQQQQQQQQ7777777777771MQSV"3JJ9)(((!V9JJI(V9J6QACCCJ;;;YLCLUMNVJJMQJ)-4J9ZMM777777
+	QQQQQQQQ"           QQQQQQQQQ77717777777HMNV"JJI;IQAJ7:VVJJI((V4JMQPP$);;;;;;)&C&QMVJ2MMW)!;J&FQ717777
+	QQQQQQQQQ           QQQQQQQQQ)1::)17777MMF4:JJJ-)QMJ3"LVJJJ")99J3QQL24NQMA;;;;;9MQQ6:JJNM5(;7JVE::)1::
+	QQQQQQQQQQM        QQQQQQQQQQ:::::::77MM93RCVV-)GQ$J;(VLJJ-((V2JJQQJ3   .NM0;7MMJ2QH9:J&NM&)(JJV::::::
+	QQQQQQQQQQM        QQQQQQQQQQ::::::::HM$4NQJV9-)QQVJ-C9JJ3:(1JJJJQQJ"  ...VQKM0 .4QMMQQQMQM2)1JJ::::::
+	QQQQQQQQQQM        .QQQQQQQQQ::::::::2QQRQQ492!(QQVJ-V9JJ-)(LQQLJQMJ. MQQQ;NQQ,  J4JMQQQ9FMM3LVJ::::::
+	QQQQQQQQQQ     .     QQQQQQQQ:::::::::::!QQJ9J((QQV3-99JQMJJBMMMMQQJ, NQQM-EQM.     NQQQ3RQQHJVL::::::
+	QQQQQQQQQQ    QQQQ    QQQQQQQ::::::::::::MM392J4QQV3((JJQQQMNNQ5IJJJJ ... (QMQV      ...BM$CMMQQ::::::
+	QQQQQQQQQR   QQQQQQF  .QQQQQQ::::::::::::QNJ9GMMMM93;JJ4MNO&C4IMM$.     "MMD62MM1   ..KMN;VZONM:::::::
+	QQQQQQQQQ   QQQQQQG  .QQQQQQQ::::::::::::WMQMQZ9TQMU0HMMMMOOF);;;RMMMMQMQS333339NMMMMM2)ZPZZZSM7::::::
+	QQQQQQQQQ.  QQQQQ&.WMQQQQQQQQ:::::::::::IGMMNM01COSSA8OO8OTPP(;;;;;;;NM33333333333VM2;;$ZZZZZXMZ::::::
+	QQQQQQQQQ.  QQQZL.OMQQQQQQQQQ:!:::!RMMMBP9655MM1IPPPPZPZPZZZZ;;;;;;;3MNJ333333333EMQN;;ZPZZZPRQ;:::!::
+	QQQQQQQQM  QQQQQQ  :MQQQQQQQQMM:HMMT69699996FOMR1&PZZZZZZZZPL7111177)NMMMMMMMMMNGJSM);;$PZZPTMN::HMM::
+	QQQQQQQQQ. QQQQQQQQ-3QQQQQQQQ99QW99PEMMMMMMMMMMMN11PPPPZPZZ111111711171HMN23333JBMK;;;;)PZPDMN::QW99QQ
+	QQQQQQQQM  QQQQQQQQQQQQQQQQQQ9969999966999999F5NQMB171111IC0RHNNNNHK0V31111I2LJ111177(;;;RMMY11(699966
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQMMNMMMMK69969999$TQMNQQMMMQMHRRRRBRRRRRRRENMMMMMMMH0I17775MQMQQMMU1NMMMNN
+	</div>
+
+	
+	<div class="wallet-wrapper">
+		<div class="wallet-container">
+			<div class="wallet-result">
+				<p id="connectWalletResult"></p>
+			</div>
+			<button class="wallet-button" onclick="connectWallet()">Connect Wallet</button>
+		</div>
+	</div>
+	<div class="separator"></div>
+	<div class="card-container">
+		<div class="left-card" id="tokenInfoContent">
+		</div>
+		<div class="center-card" id="centerCard">
+		</div>
+		<div class="right-card" id="anotherCard">
+		</div>
+	</div>
+	
+	<div class="card-container-button">
+		<div class="left-card-button">
+			<button class="refresh-button" onclick="getTokenInfo()">Refresh</button>
+		</div>
+		<div class="center-card-button">
+			<button class="refresh-button" onclick="getTokenInfo2()">Refresh</button>
+		</div>
+		<div class="right-card-button">
+			<button class="refresh-button" onclick="getTokenInfo3()">Refresh</button>
+		</div>
+	</div>
+
+	<div class="separator"></div>
+
+    <!-- 3. 祈祷并铸币 -->
+    <button onclick="prayAndMint()">Pray and Mint</button>
+    <div>
+        <!-- 输入条件：无 -->
+        <!-- 输出结果：铸币成功的提示信息 -->
+        <p id="prayAndMintResult"></p>
+    </div>
+
+    <!-- 获取个人余额 -->
+    <button onclick="balanceof()">Get Address Balance</button>
+    <div>
+        <input type="text" id="balanceaddress" placeholder="Balance Address">
+        <!-- 输出结果：余额信息信息 -->
+        <p id="balanceofResult"></p>
+    </div>
+
+    <!-- 4. 转账 -->
+    <button onclick="transferTokens()">Transfer Tokens</button>
+    <div>
+        <!-- 输入条件：接收地址和数量 -->
+        <input type="text" id="transferRecipient" placeholder="Recipient Address">
+        <input type="number" id="transferAmount" placeholder="Amount">
+        <!-- 输出结果：转账成功的提示信息或错误信息 -->
+        <p id="transferTokensResult"></p>
+    </div>
+
+    <!-- 5. 祭奠并销毁 -->
+    <button onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
+    <div>
+        <!-- 输入条件：销毁数量 -->
+        <input type="number" id="burnAmount" placeholder="Amount to Burn">
+        <!-- 输出结果：销毁成功的提示信息或错误信息 -->
+        <p id="offerIncenseAndBurnResult"></p>
+    </div>
+
+    <button onclick="getMintNFTCost()">Get NFT Cost</button>
+    <div>
+        <p id="getMintNFTCostResult"></p>
+    </div>
+
+    <!-- 6. 铸造NFT -->
+    <button onclick="mintNFT()">Mint NFT</button>
+    <div>
+        <!-- 输入条件：无 -->
+        <!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
+        <p id="mintNFTResult"></p>
+    </div>
+
+    <!-- 8. 设置NFT内容 -->
+    <button onclick="setNFTContent()">Set NFT Content</button>
+    <div>
+        <!-- 输入条件：NFT ID、名称和元数据 -->
+        <input type="text" id="nftIdContent" placeholder="NFT ID">
+        <input type="text" id="nftName" placeholder="NFT Name">
+        <input type="text" id="nftMetadata" placeholder="NFT Metadata">
+        <!-- 输出结果：设置成功的提示信息或错误信息 -->
+        <p id="setNFTContentResult"></p>
+    </div>
+
+    <!-- 7. 转移NFT -->
+    <button onclick="transferNFT()">Transfer NFT</button>
+    <div>
+        <!-- 输入条件：NFT ID和接收地址 -->
+        <input type="text" id="nftId" placeholder="NFT ID">
+        <input type="text" id="nftRecipient" placeholder="Recipient Address">
+        <!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
+        <p id="transferNFTResult"></p>
+    </div>
+
+    <!-- 9. 获取指定用户的NFT代码（按页） -->
+    <button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button>
+    <div>
+        <!-- 输入条件：用户地址和页码 -->
+        <input type="text" id="ownerAddress" placeholder="Owner Address">
+        <input type="number" id="pageNumberOwner" placeholder="Page Number">
+        <!-- 输出结果：JSON格式的NFT代码列表 -->
+        <p id="ownerNFTCodesResult"></p>
+    </div>
+
+    <!-- 10. 获取所有已铸造的NFT代码（按页） -->
+    <button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button>
+    <div>
+        <!-- 输入条件：页码 -->
+        <input type="number" id="pageNumberMinted" placeholder="Page Number">
+        <!-- 输出结果：JSON格式的NFT代码列表 -->
+        <p id="mintedNFTCodesResult"></p>
+    </div>
+
+    <!-- 11. 获取指定NFT的详细信息 -->
+    <button onclick="getNFTById()">Get NFT By ID</button>
+    <div>
+        <!-- 输入条件：NFT ID -->
+        <input type="text" id="nftIdDetail" placeholder="NFT ID">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="nftDetailResult"></p>
+    </div>
+
+    <!-- 12. 获取指定NFT代码的详细信息 -->
+    <button onclick="getNFTByCode()">Get NFT By Code</button>
+    <div>
+        <!-- 输入条件：NFT代码 -->
+        <input type="text" id="nftCode" placeholder="NFT Code">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="nftByCodeResult"></p>
+    </div>
+
+    <!-- 出售NFT -->
+    <button onclick="sellNFT()">Sell NFT</button>
+    <div>
+        <!-- 输入条件：NFT代码 -->
+        <input type="number" id="sellNFTId" placeholder="NFT ID">
+        <input type="number" id="sellNFTPrice" placeholder="Sell price">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="sellNFTResult"></p>
+    </div>
+
+    <!-- 取消出售NFT -->
+    <button onclick="cancelSellNFT()">Cancel Sell NFT</button>
+    <div>
+        <!-- 输入条件：NFT代码 -->
+        <input type="number" id="cancelSellNFTId" placeholder="NFT ID">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="cancelSellNFTResult"></p>
+    </div>
+
+    <!--  获取正在出售的NFT编码（按页） -->
+    <button onclick="getALLSellingNFTCodesByPage()">Get All Selling NFT Codes By Page</button>
+    <div>
+        <!-- 输入条件：页码 -->
+        <input type="number" id="pageNumberSelling" placeholder="Page Number">
+        <!-- 输出结果：JSON格式的NFT代码列表 -->
+        <p id="pageNumberSellingResult"></p>
+    </div>
+
+    <!-- 购买NFT -->
+    <button onclick="buyNFT()">Buy NFT</button>
+    <div>
+        <!-- 输入条件：NFT代码 -->
+        <input type="number" id="buyNFTId" placeholder="NFT ID">
+        <!-- 输出结果：JSON格式的NFT详细信息 -->
+        <p id="buyNFTResult"></p>
+    </div>
+
+    <!-- 17. 获取广告日天单价 -->
+    <button onclick="getAdPrice()">Get Ad Price OneDay</button>
+    <div>
+        <!-- 输出结果：JSON格式的广告数据 -->
+        <p id="adDataResult"></p>
+    </div>
+
+    <!-- 16. 获取所有待出租广告位id -->
+    <button onclick="getAllAdvertisingSlots()">Get All Advertising Slots</button>
+    <div>
+        <!-- 输出结果：JSON格式的广告位列表 -->
+        <p id="adSlotsByPageResult"></p>
+    </div>
+
+    <!-- 13. 租赁广告位 -->
+    <button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button>
+    <div>
+        <!-- 输入条件：广告位ID和租期 -->
+        <input type="number" id="slotId" placeholder="Slot ID">
+        <input type="number" id="leaseDuration" placeholder="Lease Duration">
+        <!-- 输出结果：租赁成功的提示信息或错误信息 -->
+        <p id="leaseAdvertisingSlotResult"></p>
+    </div>
+
+    <!-- 14. 设置广告内容 -->
+    <button onclick="setAdvertisingContent()">Set Advertising Content</button>
+    <div>
+        <!-- 输入条件：广告位ID、标题和内容 -->
+        <input type="number" id="adSlotId" placeholder="Slot ID">
+        <input type="text" id="adTitle" placeholder="Title">
+        <input type="text" id="adContent" placeholder="Content">
+        <!-- 输出结果：设置成功的提示信息或错误信息 -->
+        <p id="setAdvertisingContentResult"></p>
+    </div>
+
+    <!-- 15. 获取广告位信息 -->
+    <button onclick="getAdvertisingSlot()">Get Advertising Slot</button>
+    <div>
+        <!-- 输入条件：广告位ID -->
+        <input type="number" id="adSlotIdInfo" placeholder="Slot ID">
+        <!-- 输出结果：JSON格式的广告位信息 -->
+        <p id="adSlotInfoResult"></p>
+    </div>
+
+</body>
+</html>

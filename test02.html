@@ -56,16 +56,30 @@
     }
     
     // 获取代币信息
-    async function getTokenInfo() {
-        try {
-            const info = await contract.methods.getTokenInfo().call();
-            console.log(info);
-            document.getElementById("tokenInfoResult").innerText = JSON.stringify(info);
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById("tokenInfoResult").innerText = `Error: ${error.message}`;
-        }
-    }
+	async function getTokenInfo() {
+		try {
+			const info = await contract.methods.getTokenInfo().call();
+			console.log(info);
+			
+			const tokenInfoContent = document.getElementById("tokenInfoContent");
+			tokenInfoContent.innerHTML = `
+				<p>Coin Name: ${info.coinName}</p>
+				<p>Coin Symbol: ${info.coinSymbol}</p>
+				<p>Mission: ${info.mission}</p>
+				<p>Spirit: ${info.spirit}</p>
+				<p>Slogan: ${info.slogan}</p>
+				<p>Coin Decimals: ${info.coinDecimals}</p>
+				<p>Max Circulation: ${info.maxCirculation}</p>
+				<p>Current Supply Num: ${info.currentSupplyNum}</p>
+				<p>Percentage: ${info.percentage}</p>
+				<p>Current Rate: ${info.currentRate}</p>
+				<p>Total Burned Num: ${info.totalBurnedNum}</p>
+			`;
+		} catch (error) {
+			console.error('Error:', error);
+			document.getElementById("tokenInfoContent").innerText = `Error: ${error.message}`;
+		}
+	}
     
     // 祈祷并铸币
     async function prayAndMint() {
@@ -340,27 +354,169 @@
             document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
         }
     }
+	
+	window.onload = function() {
+    // 执行初始化方法
+		init();
+	};
 
-</script>
+
+	</script>
+    <style>
+		h1 {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 10px;
+			margin: 0;
+			background-color: #333;
+			color: #fff;
+			text-align: center;
+			z-index: 9999;
+		}
+
+        .text-container {
+            margin-top: 50px !important;
+            white-space: pre;
+            font-family: monospace;
+            line-height: 1.0;
+            width: 100%;
+            margin: 0 auto;
+            overflow: auto;
+            max-height: calc(100vh - 50px); 
+            padding: 5px;
+        }
+		
+		@keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scrolling-text {
+            overflow: hidden; 
+            white-space: nowrap; 
+            animation: scroll 20s linear infinite; 
+        }
+		.static-text {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
+		.wallet-wrapper {
+			margin-top: 50px !important;
+			position: fixed;
+			top: 20px; /* 距离顶部的距离 */
+			right: 20px; /* 距离右侧的距离 */
+		}
+
+		.wallet-container {
+			display: flex;
+			align-items: center;
+		}
+
+		.wallet-button {
+			width: 100px; /* 按钮的固定宽度 */
+		}
+
+		.wallet-result {
+			margin-left: 5px; /* 结果与按钮之间的间距 */
+		}
+
+		.separator {
+			border-top: 1px solid #ccc; /* 设置分隔符的顶部边框 */
+			margin-top: 20px; /* 设置分隔符与上方元素的间距 */
+			margin-bottom: 20px; /* 设置分隔符与下方元素的间距 */
+		}
+		
+		.card {
+			border: 2px dashed #ccc; /* 设置卡牌的虚线边框样式 */
+			border-radius: 10px; /* 设置卡牌的圆角 */
+			padding: 20px; /* 设置卡牌的内边距 */
+			margin-top: 20px; /* 设置卡牌与分隔符的间距 */
+		}
+
+		.card-content {
+			font-family: Arial, sans-serif; /* 设置字体 */
+			font-size: 16px; /* 设置字体大小 */
+			line-height: 1.5; /* 设置行高 */
+			color: #333; /* 设置文本颜色 */
+		}
+
+		.refresh-button {
+			margin-top: 10px; /* 设置刷新按钮与卡牌内容的间距 */
+		}
+    </style>
 </head>
 <body>
-    <h1>BSC TEST iKunCoin Web3</h1>
 
-    <!-- 1. 连接钱包 -->
-    <button onclick="connectWallet()">Connect Wallet</button>
-    <div>
-        <!-- 输入条件：无 -->
-        <!-- 输出结果：成功连接时显示用户的钱包地址，或显示连接错误信息 -->
-        <p id="connectWalletResult"></p>
-    </div>
+	<h1>BSC TEST iKunCoin Web3</h1>
+	
+	<div class="text-container">
+    	.__ ____  __.               	_________        .__        
+    	|__|    |/ _|__ __  ____    	\_   ___ \  ____ |__| ____  
+    	|  |      < |  |  \/    \   	/    \  \/ /  _ \|  |/    \ 
+    	|  |    |  \|  |  /   |  \  	\     \___(  <_> )  |   |  \
+    	|__|____|__ \____/|___|  /  	 \______  /\____/|__|___|  /
+    	           \/          \/   	        \/               \/  
+	</div>
+	<div class="scrolling-text">
+		~ iKun is a way of life.
+	</div>
+	
+	
+	
+	<div class="static-text">
+	
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ7777777777777771333333333WMQQMVJJ3JJJJJUX7-)(((((3JJJ3MMMW-::::::::777777
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ7777777777777777771I3JNMQM4JJJJ&2I(((()(((-JJJJJ()(((IJ99MMM-::::::777777
+	QQQQQQQQQQQQE    QQQQQQQQQQQQ7777777777777777777NMMO97J&VVVY((()((JHMMJKMQMMRJJ3I()-:339HMN1::::777777
+	QQQQQQQQQQM     ,QQQQQQQQQQQQ7777777777777777YMMN97-Y9VI(((3JJ()(JGQSGQQUENNQQM&J1:())-3J&RMM!::777777
+	QQQQQQQQQK        2QQQQQQQQQQ77777777777777&MQU9"I29V(():99JJ()(JJMQMMMMGZ99F6QQH&J-MM)(-JJ9HQN:777777
+	QQQQQQQQQ          WQQQQQQQQQ7777777777771MQSV"3JJ9)(((!V9JJI(V9J6QACCCJ;;;YLCLUMNVJJMQJ)-4J9ZMM777777
+	QQQQQQQQ"           QQQQQQQQQ77717777777HMNV"JJI;IQAJ7:VVJJI((V4JMQPP$);;;;;;)&C&QMVJ2MMW)!;J&FQ717777
+	QQQQQQQQQ           QQQQQQQQQ)1::)17777MMF4:JJJ-)QMJ3"LVJJJ")99J3QQL24NQMA;;;;;9MQQ6:JJNM5(;7JVE::)1::
+	QQQQQQQQQQM        QQQQQQQQQQ:::::::77MM93RCVV-)GQ$J;(VLJJ-((V2JJQQJ3   .NM0;7MMJ2QH9:J&NM&)(JJV::::::
+	QQQQQQQQQQM        QQQQQQQQQQ::::::::HM$4NQJV9-)QQVJ-C9JJ3:(1JJJJQQJ"  ...VQKM0 .4QMMQQQMQM2)1JJ::::::
+	QQQQQQQQQQM        .QQQQQQQQQ::::::::2QQRQQ492!(QQVJ-V9JJ-)(LQQLJQMJ. MQQQ;NQQ,  J4JMQQQ9FMM3LVJ::::::
+	QQQQQQQQQQ     .     QQQQQQQQ:::::::::::!QQJ9J((QQV3-99JQMJJBMMMMQQJ, NQQM-EQM.     NQQQ3RQQHJVL::::::
+	QQQQQQQQQQ    QQQQ    QQQQQQQ::::::::::::MM392J4QQV3((JJQQQMNNQ5IJJJJ ... (QMQV      ...BM$CMMQQ::::::
+	QQQQQQQQQR   QQQQQQF  .QQQQQQ::::::::::::QNJ9GMMMM93;JJ4MNO&C4IMM$.     "MMD62MM1   ..KMN;VZONM:::::::
+	QQQQQQQQQ   QQQQQQG  .QQQQQQQ::::::::::::WMQMQZ9TQMU0HMMMMOOF);;;RMMMMQMQS333339NMMMMM2)ZPZZZSM7::::::
+	QQQQQQQQQ.  QQQQQ&.WMQQQQQQQQ:::::::::::IGMMNM01COSSA8OO8OTPP(;;;;;;;NM33333333333VM2;;$ZZZZZXMZ::::::
+	QQQQQQQQQ.  QQQZL.OMQQQQQQQQQ:!:::!RMMMBP9655MM1IPPPPZPZPZZZZ;;;;;;;3MNJ333333333EMQN;;ZPZZZPRQ;:::!::
+	QQQQQQQQM  QQQQQQ  :MQQQQQQQQMM:HMMT69699996FOMR1&PZZZZZZZZPL7111177)NMMMMMMMMMNGJSM);;$PZZPTMN::HMM::
+	QQQQQQQQQ. QQQQQQQQ-3QQQQQQQQ99QW99PEMMMMMMMMMMMN11PPPPZPZZ111111711171HMN23333JBMK;;;;)PZPDMN::QW99QQ
+	QQQQQQQQM  QQQQQQQQQQQQQQQQQQ9969999966999999F5NQMB171111IC0RHNNNNHK0V31111I2LJ111177(;;;RMMY11(699966
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQMMNMMMMK69969999$TQMNQQMMMQMHRRRRBRRRRRRRENMMMMMMMH0I17775MQMQQMMU1NMMMNN
+	</div>
 
-    <!-- 2. 获取代币信息 -->
-    <button onclick="getTokenInfo()">Get Token Info</button>
-    <div>
-        <!-- 输入条件：无 -->
-        <!-- 输出结果：代币信息的JSON格式 -->
-        <p id="tokenInfoResult"></p>
+	
+	<div class="wallet-wrapper">
+		<div class="wallet-container">
+			<div class="wallet-result">
+				<p id="connectWalletResult"></p>
+			</div>
+			<button class="wallet-button" onclick="connectWallet()">Connect Wallet</button>
+		</div>
+	</div>
+	<div class="separator"></div>
+    <div class="card-container">
+        <div class="card-content" id="tokenInfoContent"></div>
+        <button class="refresh-button" onclick="getTokenInfo()">Refresh</button>
     </div>
+	<div class="separator"></div>
 
     <!-- 3. 祈祷并铸币 -->
     <button onclick="prayAndMint()">Pray and Mint</button>

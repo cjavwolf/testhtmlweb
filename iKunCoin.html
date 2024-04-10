@@ -330,6 +330,7 @@
             document.getElementById("adSlotInfoResult").innerText = `Error: ${error.message}`;
         }
     }
+
     
     // 获取所有空闲广告位
     async function getAllAdvertisingSlots() {
@@ -359,6 +360,70 @@
     // 执行初始化方法
 		init();
 	};
+
+
+	let availableSlots = []; // 空闲广告位数组
+	let currentIndex = 0; // 当前广告索引
+
+	async function getAllAdvertisingSlotsToShow() {
+		try {
+			const allSlots = [1,2,3,4,5,6,7,8,9,10]; // 获取所有广告位
+			const unUsedSlots = await contract.methods.getUsedSlots().call(); // 获取空闲广告位
+			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot)); // 获取使用广告位
+
+			console.log(availableSlots);
+
+			showNextAd(); // 显示下一个广告
+		} catch (error) {
+			console.error('Error:', error);
+			document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;
+		}
+	}
+
+	function showNextAd() {
+		const adSlotContent = document.getElementById("adSlotContent");
+		adSlotContent.innerHTML = ""; // 清空之前的内容
+		
+		// 如果没有空闲广告位，则不显示广告
+		if (availableSlots.length === 0) {
+			adSlotContent.innerText = "Advertising Space Available.";
+			return;
+		}
+
+		// 获取当前广告位的广告内容并显示
+		getAdContentBySlot(availableSlots[currentIndex])
+			.then(adContent => {
+				const adSlotDiv = document.createElement("div");
+				adSlotDiv.classList.add("ad-slot");
+				adSlotDiv.innerHTML = `
+					<p>Slot ID: ${availableSlots[currentIndex]}</p>
+					<p>Title: ${adContent.title}</p>
+					<p>Content: ${adContent.content}</p>
+					<p>Duration: ${adContent.duration}</p>
+					<p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
+					<p>Tenant: ${adContent.tenant}</p>
+				`;
+				adSlotContent.appendChild(adSlotDiv);
+
+				// 更新索引以显示下一个广告
+				currentIndex = (currentIndex + 1) % availableSlots.length;
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				adSlotContent.innerText = `Error: ${error.message}`;
+			});
+	}
+
+	async function getAdContentBySlot(slotId) {
+		try {
+			const adContent = await contract.methods.getAdContent(slotId).call();
+			console.log("Ad content for slot " + slotId + ":", adContent);
+			return adContent;
+		} catch (error) {
+			console.error('Error:', error);
+			throw new Error(`Failed to get ad content for slot ${slotId}: ${error.message}`);
+		}
+	}
 
 
 	</script>
@@ -564,7 +629,7 @@
 	<div class="card-container">
 		<div class="left-card" id="tokenInfoContent">
 		</div>
-		<div class="center-card" id="centerCard">
+		<div class="center-card" id="adSlotContent">
 		</div>
 		<div class="right-card" id="anotherCard">
 		</div>
@@ -575,7 +640,7 @@
 			<button class="refresh-button" onclick="getTokenInfo()">Refresh</button>
 		</div>
 		<div class="center-card-button">
-			<button class="refresh-button" onclick="getTokenInfo2()">Refresh</button>
+			<button class="refresh-button" onclick="getAllAdvertisingSlotsToShow()">Refresh</button>
 		</div>
 		<div class="right-card-button">
 			<button class="refresh-button" onclick="getTokenInfo3()">Refresh</button>

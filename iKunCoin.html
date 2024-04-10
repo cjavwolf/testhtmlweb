@@ -416,7 +416,7 @@
 
 	async function getAdContentBySlot(slotId) {
 		try {
-			const adContent = await contract.methods.getAdContent(slotId).call();
+			const adContent = await contract.methods.getAdvertisingSlot(slotId).call();
 			console.log("Ad content for slot " + slotId + ":", adContent);
 			return adContent;
 		} catch (error) {

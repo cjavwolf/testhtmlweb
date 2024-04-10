@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iKunCoin Web3 Demo</title>
+    <title>BSC TEST iKunCoin Web3</title>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
     <script>
     let contract;
@@ -83,7 +83,7 @@
     async function balanceof() {
         const address = document.getElementById("balanceaddress").value;
         try {
-            const info = await contract.methods.balanceOf(address).send({ from: window.ethereum.selectedAddress });
+            const info = await contract.methods.balanceOf(address).call();
             console.log(info);
             document.getElementById("balanceofResult").innerText = JSON.stringify(info);
         } catch (error) {

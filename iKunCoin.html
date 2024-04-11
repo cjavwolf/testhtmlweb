@@ -566,21 +566,24 @@
 		}
 		
 		.ad-slot p {
-		    margin: 0;
-		    display: -webkit-box;
-		    -webkit-line-clamp: 2; /* 标题最多两行 */
-		    -webkit-box-orient: vertical;
-		    overflow: hidden;
-		    word-wrap: break-word; /* 自动换行 */
+		    margin: 0;			
+			  word-wrap: break-word;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			  display: -webkit-box;
+			  -webkit-box-orient: vertical;
+			  -webkit-line-clamp: 2; 
 		}
 		
 		.ad-slot .content p {
-		    display: -webkit-box;
-		    -webkit-line-clamp: 5; /* 内容最多五行 */
-		    -webkit-box-orient: vertical;
-		    overflow: hidden;
-		    word-wrap: break-word; /* 自动换行 */
+		    word-wrap: break-word;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		  display: -webkit-box;
+		  -webkit-box-orient: vertical;
+		  -webkit-line-clamp: 5; 
 		}
+
 
 
 		.refresh-button {

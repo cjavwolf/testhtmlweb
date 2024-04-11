@@ -81,6 +81,25 @@
 			document.getElementById("tokenInfoContent").innerText = `Error: ${error.message}`;
 		}
 	}
+	
+	async function getOtherInfo() {
+		try {
+			const cost = await contract.methods.mintNFTCost().call();
+			const adData = await contract.methods.getOneDayLeaseCost().call();
+			const slots = await contract.methods.getAvailableSlots().call();
+
+			
+			const anotherCard = document.getElementById("anotherCard");
+			anotherCard.innerHTML = `
+				<p>NFT Cost: ${cost}</p>
+				<p>Ad Price OneDay: ${adData}</p>
+				<p>Available Ad Slots: ${slots}</p>
+			`;
+		} catch (error) {
+			console.error('Error:', error);
+			document.getElementById("anotherCard").innerText = `Error: ${error.message}`;
+		}
+	}
     
     // 祈祷并铸币
     async function prayAndMint() {
@@ -748,7 +767,7 @@
 		.left-card-nft,
 		.right-card-nft {
 		    width: 50%;
-		    height: 416px;
+		    height: 516px;
 		    border: 1px solid #ccc;
 		    padding: 10px;
 		    font-family: Arial, sans-serif;
@@ -866,23 +885,6 @@
 		<div class="center-card" id="adSlotContent">
 		</div>
 		<div class="right-card" id="anotherCard">
-		    <button onclick="getMintNFTCost()">Get NFT Cost</button>
-			<div>
-				<p id="getMintNFTCostResult"></p>
-			</div>
-			    <!-- 17. 获取广告日天单价 -->
-			<button onclick="getAdPrice()">Get Ad Price OneDay</button>
-			<div>
-				<!-- 输出结果：JSON格式的广告数据 -->
-				<p id="adDataResult"></p>
-			</div>
-
-			<!-- 16. 获取所有待出租广告位id -->
-			<button onclick="getAllAdvertisingSlots()">Get All Advertising Slots</button>
-			<div>
-				<!-- 输出结果：JSON格式的广告位列表 -->
-				<p id="adSlotsByPageResult"></p>
-			</div>
 		
 		</div>
 	</div>
@@ -895,7 +897,7 @@
 			<button class="refresh-button" onclick="getAllAdvertisingSlotsToShow()">Refresh</button>
 		</div>
 		<div class="right-card-button">
-			<button class="refresh-button" onclick="getTokenInfo3()">Refresh</button>
+			<button class="refresh-button" onclick="getOtherInfo()">Refresh</button>
 		</div>
 	</div>
 
@@ -1157,6 +1159,5 @@
 		
 		</div>
 	</div>
-
 </body>
 </html>

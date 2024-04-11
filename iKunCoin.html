@@ -460,20 +460,20 @@
     <style>
 	
 	
-h1 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    margin: 0;
-    text-align: center;
-    z-index: 9999;
-    background-image: linear-gradient(to right, black 50%, transparent 50%);
-    background-size: 2px 100%;
-    background-repeat: repeat-x;
-    color: white; /* 设置文本颜色为白色 */
-}
+		h1 {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 10px;
+			margin: 0;
+			text-align: center;
+			z-index: 9999;
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white; 
+		}
 
         .text-container {
             margin-top: 50px !important;
@@ -546,10 +546,26 @@ h1 {
 		}
 
 		.separator {
-			border-top: 1px solid #ccc; /* 设置分隔符的顶部边框 */
+			display: flex; /* 使用 Flexbox 布局 */
+			align-items: center; /* 垂直居中对齐 */
 			margin-top: 20px; /* 设置分隔符与上方元素的间距 */
 			margin-bottom: 20px; /* 设置分隔符与下方元素的间距 */
 		}
+
+		.separator-title {
+			margin-right: 10px; /* 设置标题和标记之间的间距 */
+			font-weight: bold; /* 设置标题的粗体 */
+			border: 1px dashed black;
+			transform: skewX(-10deg);
+			padding: 5px 10px; /* 设置外边框的内边距 */
+			border-radius: 5px; /* 圆角 */
+		}
+
+		.separator-line {
+			flex: 1; /* 让分隔线占据剩余的空间 */
+			border-top: 1px solid #ccc; /* 设置分隔符的顶部边框 */
+		}
+
 		
 		.card-container {
 		    display: flex;
@@ -724,7 +740,10 @@ h1 {
 		</div>
 	</div>
 
-	<div class="separator"></div>
+	<div class="separator">
+		<span class="separator-title">iKunCoin</span>
+		<div class="separator-line"></div>
+	</div>
 
     <!-- 3. 祈祷并铸币 -->
     <button onclick="prayAndMint()">Pray and Mint</button>
@@ -760,6 +779,11 @@ h1 {
         <!-- 输出结果：销毁成功的提示信息或错误信息 -->
         <p id="offerIncenseAndBurnResult"></p>
     </div>
+
+	<div class="separator">
+		<span class="separator-title">iKunNFT</span>
+		<div class="separator-line"></div>
+	</div>
 
     <button onclick="getMintNFTCost()">Get NFT Cost</button>
     <div>
@@ -868,6 +892,11 @@ h1 {
         <!-- 输出结果：JSON格式的NFT详细信息 -->
         <p id="buyNFTResult"></p>
     </div>
+	
+	<div class="separator">
+		<span class="separator-title">Advertising</span>
+		<div class="separator-line"></div>
+	</div>
 
     <!-- 17. 获取广告日天单价 -->
     <button onclick="getAdPrice()">Get Ad Price OneDay</button>

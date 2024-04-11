@@ -394,27 +394,29 @@
 
 		// 获取当前广告位的广告内容并显示
 		getAdContentBySlot(availableSlots[currentIndex])
-			.then(adContent => {
-				const adSlotDiv = document.createElement("div");
-				adSlotDiv.classList.add("ad-slot");
-				adSlotDiv.innerHTML = `
-						<p>Slot ID: ${availableSlots[currentIndex]}</p>
-						<p>Title: ${adContent.title}</p>
-						<p>Content: ${adContent.content}</p>
-						<p>Duration: ${adContent.duration}</p>
-						<p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
-						<p>Tenant: ${adContent.tenant}</p>
-					`;
-				adSlotContent.appendChild(adSlotDiv);
+		    .then(adContent => {
+		        const adSlotDiv = document.createElement("div");
+		        adSlotDiv.classList.add("ad-slot");
+		
+		        const titleDiv = document.createElement("div");
+		        titleDiv.innerHTML = `<p>Title: ${adContent.title}</p>`;
+		        adSlotDiv.appendChild(titleDiv);
+		
+		        const contentDiv = document.createElement("div");
+		        contentDiv.classList.add("content");
+		        contentDiv.innerHTML = `<p>Content: ${adContent.content}</p>`;
+		        adSlotDiv.appendChild(contentDiv);
+		
+		        adSlotContent.appendChild(adSlotDiv);
+		
+		        // 更新索引以显示下一个广告
+		        currentIndex = (currentIndex + 1) % availableSlots.length;
+		    })
+		    .catch(error => {
+		        console.error('Error:', error);
+		        adSlotContent.innerText = `Error: ${error.message}`;
+		    });
 
-				// 更新索引以显示下一个广告
-				currentIndex = (currentIndex + 1) % availableSlots.length;
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				adSlotContent.innerText = `Error: ${error.message}`;
-			});
-	}
 
 	async function getAdContentBySlot(slotId) {
 		try {
@@ -533,16 +535,24 @@
 		    overflow: hidden; /* 隐藏溢出内容 */
 		}
 		
-		.center-card p {
+		.center-card .ad-slot p {
 		    margin: 0; /* 移除默认段落的边距 */
 		    overflow: hidden;
-		    text-overflow: ellipsis; /* 文本截断 */
 		    display: -webkit-box;
 		    -webkit-line-clamp: 2; /* 限制标题最多显示两行 */
 		    -webkit-box-orient: vertical;
 		}
 		
-		.center-card:hover p {
+		.center-card .ad-slot .content p {
+		    margin: 0; /* 移除默认段落的边距 */
+		    overflow: hidden;
+		    display: -webkit-box;
+		    -webkit-line-clamp: 4; /* 限制内容最多显示四行 */
+		    -webkit-box-orient: vertical;
+		    text-overflow: ellipsis; /* 文本截断 */
+		}
+		
+		.center-card:hover .ad-slot .content p {
 		    -webkit-line-clamp: initial; /* 悬浮时取消行数限制 */
 		    overflow: visible;
 		    white-space: normal;
@@ -554,7 +564,6 @@
 		    background-color: white;
 		    z-index: 999; /* 确保在最上层显示 */
 		}
-
 
 		.refresh-button {
 			padding: 5px 10px;

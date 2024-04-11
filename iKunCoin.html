@@ -429,13 +429,14 @@
 		}
 	}
 
-    function truncateText(text, maxLines) {
+	function truncateText(text, maxLines) {
 	    const lines = text.split('\n');
 	    if (lines.length <= maxLines) {
 	        return text;
 	    }
 	    return lines.slice(0, maxLines).join('\n') + '...';
 	}
+
 
 
 
@@ -558,6 +559,11 @@
 		    -webkit-line-clamp: 5; /* 限制内容最多显示五行 */
 		    -webkit-box-orient: vertical;
 		    text-overflow: ellipsis; /* 文本截断 */
+		}
+
+	    .ad-slot p {
+		    margin: 10px 0; /* 设置段落的上下边距 */
+		    line-height: 1.5; /* 设置段落的行高 */
 		}
 
 		.refresh-button {

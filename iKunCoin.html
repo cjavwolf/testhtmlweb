@@ -369,7 +369,7 @@
 		try {
 			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 获取所有广告位
 			const unUsedSlots = await contract.methods.getAvailableSlots().call(); // 获取空闲广告位
-			availableSlots = allSlots.filter(slot => unUsedSlots.indexOf(slot) === -1); // 获取使用广告位
+			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot)); // 获取使用广告位
 
 			console.log(availableSlots);
 

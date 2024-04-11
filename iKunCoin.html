@@ -374,7 +374,7 @@
 			console.log(availableSlots);
 
 			showNextAd(); // 显示下一个广告
-			setInterval(showNextAd, 5000); // 每5秒更换广告
+			setInterval(showNextAd, 15000); // 每5秒更换广告
 		} catch (error) {
 			console.error('Error:', error);
 			document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;

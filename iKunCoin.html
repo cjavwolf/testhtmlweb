@@ -514,8 +514,8 @@
 		    display: flex;
 		    justify-content: space-between;
 		    align-items: flex-start;
-		    width: 95%; /* 或者您想要的宽度 */
-		    margin: 0 auto; /* 水平居中 */
+		    width: 95%;
+		    margin: 0 auto;
 		}
 		
 		.left-card,
@@ -526,11 +526,11 @@
 		    border: 1px solid #ccc;
 		    padding: 10px;
 		    font-family: Arial, sans-serif;
-		    border-radius: 10px; /* 圆角 */
-		    box-sizing: border-box; /* 边框大小计入盒模型 */
-		    margin-right: 10px; /* 卡片间距 */
-		    overflow: hidden; /* 超出部分隐藏 */
-		    position: relative; /* 相对定位用于悬浮显示全量内容 */
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden; /* 隐藏溢出内容 */
 		}
 		
 		.center-card p {
@@ -543,11 +543,18 @@
 		}
 		
 		.center-card:hover p {
-		    white-space: normal; /* 悬浮时显示完整内容 */
-		    height: auto;
+		    -webkit-line-clamp: initial; /* 悬浮时取消行数限制 */
 		    overflow: visible;
-		    z-index: 9999; /* 确保悬浮内容在最上层 */
+		    white-space: normal;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: 0;
+		    bottom: 0;
+		    background-color: white;
+		    z-index: 999; /* 确保在最上层显示 */
 		}
+
 
 		.refresh-button {
 			padding: 5px 10px;

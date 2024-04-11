@@ -395,44 +395,44 @@
 
 		// 获取当前广告位的广告内容并显示
 		getAdContentBySlot(availableSlots[currentIndex])
-		    .then(adContent => {
-		        const adSlotDiv = document.createElement("div");
-		        adSlotDiv.classList.add("ad-slot");
-		
-		        const slotIdParagraph = document.createElement("p");
-		        slotIdParagraph.innerText = `Slot ID: ${availableSlots[currentIndex]}`;
-		        adSlotDiv.appendChild(slotIdParagraph);
-		
-		        const titleParagraph = document.createElement("p");
-		        titleParagraph.innerText = `Title: ${truncateText(adContent.title, 2)}`;
-		        adSlotDiv.appendChild(titleParagraph);
-		
-		        const contentParagraph = document.createElement("p");
-		        contentParagraph.classList.add("content"); // 添加 content 类
-		        contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
-		        adSlotDiv.appendChild(contentParagraph);
-		
-		        const durationParagraph = document.createElement("p");
-		        durationParagraph.innerText = `Duration: ${adContent.duration}`;
-		        adSlotDiv.appendChild(durationParagraph);
-		
-		        const startTimeParagraph = document.createElement("p");
-		        startTimeParagraph.innerText = `Start Time: ${new Date(adContent.startTime * 1000)}`;
-		        adSlotDiv.appendChild(startTimeParagraph);
-		
-		        const tenantParagraph = document.createElement("p");
-		        tenantParagraph.innerText = `Tenant: ${adContent.tenant}`;
-		        adSlotDiv.appendChild(tenantParagraph);
-		
-		        adSlotContent.appendChild(adSlotDiv);
-		
-		        // 更新索引以显示下一个广告
-		        currentIndex = (currentIndex + 1) % availableSlots.length;
-		    })
-		    .catch(error => {
-		        console.error('Error:', error);
-		        adSlotContent.innerText = `Error: ${error.message}`;
-		    });
+			.then(adContent => {
+				const adSlotDiv = document.createElement("div");
+				adSlotDiv.classList.add("ad-slot");
+
+				const slotIdParagraph = document.createElement("p");
+				slotIdParagraph.innerText = `Slot ID: ${availableSlots[currentIndex]}`;
+				adSlotDiv.appendChild(slotIdParagraph);
+
+				const titleParagraph = document.createElement("p");
+				titleParagraph.innerText = `Title: ${truncateText(adContent.title, 2)}`;
+				adSlotDiv.appendChild(titleParagraph);
+
+				const contentParagraph = document.createElement("p");
+				contentParagraph.classList.add("content"); // 添加 content 类
+				contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
+				adSlotDiv.appendChild(contentParagraph);
+
+				const durationParagraph = document.createElement("p");
+				durationParagraph.innerText = `Duration: ${adContent.duration}`;
+				adSlotDiv.appendChild(durationParagraph);
+
+				const startTimeParagraph = document.createElement("p");
+				startTimeParagraph.innerText = `Start Time: ${new Date(adContent.startTime * 1000)}`;
+				adSlotDiv.appendChild(startTimeParagraph);
+
+				const tenantParagraph = document.createElement("p");
+				tenantParagraph.innerText = `Tenant: ${adContent.tenant}`;
+				adSlotDiv.appendChild(tenantParagraph);
+
+				adSlotContent.appendChild(adSlotDiv);
+
+				// 更新索引以显示下一个广告
+				currentIndex = (currentIndex + 1) % availableSlots.length;
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				adSlotContent.innerText = `Error: ${error.message}`;
+			});
 
 	}
 
@@ -663,7 +663,146 @@
 			margin-right: 10px; 
 		}
 		
+		.card-container-coin {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+
+		.left-card-coin,
+		.right-card-coin {
+		    width: 50%;
+		    height: 416px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden; /* 隐藏溢出内容 */
+		}
+		.static-text-coin {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
 		
+		.offer-incense-container {
+			display: flex;
+			align-items: center; /* 垂直居中 */
+		}
+
+		.offer-incense-container input[type="number"] {
+			flex: 1; /* 让输入框占据剩余空间 */
+			margin-right: 10px; /* 添加间距 */
+		}
+		
+		
+		.common-button {
+			padding: 5px 10px;
+			/* background-color: #007bff;
+			color: #fff;*/
+			border: none;
+			cursor: pointer;
+			margin-top: 3px; /* 与上方卡片的间距 */
+			border-radius: 5px; /* 圆角 */
+			display: block; /* 按钮块级显示 */
+			width: 100%; /* 按钮宽度填充卡片宽度 */
+			text-align: center; /* 按钮文本居中 */
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white; /* 设置文本颜色为白色 */
+			font-size: 16px;
+		}
+		
+		.burnAmount {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 300px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; /* 添加虚线框线 */
+		}
+		
+		
+		.card-container-nft {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+
+		.left-card-nft,
+		.right-card-nft {
+		    width: 50%;
+		    height: 416px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden; /* 隐藏溢出内容 */
+		}
+		.static-text-nft {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
+		
+		.card-container-ad {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+
+		.left-card-ad {
+		    width: 100%;
+		    height: 266px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden; /* 隐藏溢出内容 */
+		}
+		.static-text-ad {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
 		
 
     </style>
@@ -727,6 +866,24 @@
 		<div class="center-card" id="adSlotContent">
 		</div>
 		<div class="right-card" id="anotherCard">
+		    <button onclick="getMintNFTCost()">Get NFT Cost</button>
+			<div>
+				<p id="getMintNFTCostResult"></p>
+			</div>
+			    <!-- 17. 获取广告日天单价 -->
+			<button onclick="getAdPrice()">Get Ad Price OneDay</button>
+			<div>
+				<!-- 输出结果：JSON格式的广告数据 -->
+				<p id="adDataResult"></p>
+			</div>
+
+			<!-- 16. 获取所有待出租广告位id -->
+			<button onclick="getAllAdvertisingSlots()">Get All Advertising Slots</button>
+			<div>
+				<!-- 输出结果：JSON格式的广告位列表 -->
+				<p id="adSlotsByPageResult"></p>
+			</div>
+		
 		</div>
 	</div>
 	
@@ -746,203 +903,260 @@
 		<span class="separator-title">iKunCoin</span>
 		<div class="separator-line"></div>
 	</div>
+	
 
-    <!-- 3. 祈祷并铸币 -->
-    <button onclick="prayAndMint()">Pray and Mint</button>
-    <div>
-        <!-- 输入条件：无 -->
-        <!-- 输出结果：铸币成功的提示信息 -->
-        <p id="prayAndMintResult"></p>
-    </div>
+	<div class="card-container-coin">
+		<div class="left-card-coin">
+			<div class="static-text-coin">
+	,,,,,,,,.,,,,,,,,,,,,,,,,,",,,,,,,,,,,,,,,,,,",,,,,,,,,,,,,,,,.,.
+	,,,,,,,,,,,.,,,,,,,,,,,,,",,,.,,,,,,,,,,,,,,,,,,",,,,,,,,,,,,.,,,
+	,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,,,,,,,,,,,",,,,,,,,.,,,,,,,,,,,,,,
+	,,.,,,,,,,,,,,,",,,,.,,,,,,,,,,,,,,,,,.",,,,,,,,,,,,.,,,..,,,,,,,
+	,:.,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,,,.".,,,,,,,,,,,,,,,,,,,,,,,,,,
+	.,,,,,,,,,,,,,,,,,,.,,,,,,J.,,.L,,.Y-,,,,,,,,,,,,,,,,,.,,,,,,,,,,
+	,,",,,,,,,,,,,,,,,,,,.,,,.Y.,,,L,,.2,,.,,,,,,,,,,,,,,,,,,,,,,,,,,
+	,,,,",,,,,,,,..,,,,,,,,,,.Y.,,,L,,.2,,,,,.,,,,,,,.",,,,,,,,",,,,,
+	,,,,,,",,,,,,,,,,,,,,,,.,.Y.,,,L,,.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	,,,,,,,,,",,,,,,,,,,,,,,,.Y,,,,L,,.2,,,,,,,,,,,,.,,,,,,,,,,,,,.,,
+	,,,,,,.,",,,,,,,,,,,,,,,,.Y,,,,L,,.2,,,,,,,,,,,,,,,,,,,,,,,,,,,.,
+	,,,,,,,,,,,"..,,,,,,,,,,..Y.,..L,,.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	,,,,..,,,,,,,",,,,,,,,,",.Y.,,,L,,.2,,,,,,,,,,,,,.,,,,,,,,,,,,,,,
+	,,,,,,,,,,,,,,,.,,,,,,,,,.Y.,,,L.".2,,,.,,,,,,,,,,,,,,,,,,,,,,,,,
+	,",,,,,,,,,,,,,,,.,-,,,,,.Y.,,,L,,.2,,,,,,,,,,,,,,,,,,,"-,,,,,,,,
+	.,,,,,,,,,,,,,,,,,,.,,,,,.Y.,,,L,,.2:,,,,,,,,,,,,,,,,,",,,,,,,,,,
+	,,",,,,,,,,,,,,,:.,,..,,,.Y.,,,L,,,2,...,,,,,,,,,,,,..,,,,,,,,,,,
+	,,,,,,,,,,,,,,.,,,,,,,".,.Y.,,,L",.2,,,,..,,,,,,,,,.,,,,,,,,,,,,,
+	,,,,,,,,,,,",..,,,,,,,,.. 2--:!Y::-Y...,, ," ,, .,,.,,,,,,,,,,,,,
+	,,,,,,,.3VV999996"C999V&V$FZF00XTTPF6V&V9999U(96V9999$,,,,,,,,.,"
+	,,,,,,,.9P,,,,,,C&0SSSAST$9&VVVV99VCVZDAD8ASUL-.,,,,"99,,,,,,,,""
+	,,,,,,,.9;,",,,,D999999992V99V9999999999999VV&"..,,,,9U,,,,,,,",,
+	,,,,,,,.56,,,,,Z6999999V9999999V999999999V9999&.,,.,69,,,,,,,,,,,
+	,,,,,,,.TV6,,,.9999999V999999999V99999999V99999.,,,)66 ,,,.,,,,,,
+	,".,,,,,I6V9"-,9V9999999999999999999VV&99999999I,,PV0X,,",,,,,,,,
+	",,,,,,,,,,,&V999VC999999999999999VV99999999999V9&.,,,-.,,,,,,,,,
+	,,.,,,,,,,,,,,,.&999V999999999999VV999V99999996,,,,,,,,,..,,,,,,,
+	,,,.,,,,,,,,,,", 99999V999999999V9999999V9999U.,,,,,,,,,,,,,,,,,,
+	,,,,,,,,,,,,..,,,,8D6V99V9999999999999VV9VXS2,,,,,,,,,,,,,,,,,,,,
+	,,,,,,,,,,",,,,,,,DOO I8&V9VV9VV9V999&PU."DO.,,",,,,,,,,,,,,,,,,,
+	,,,,,,,,",,,,,,,,,UOO,,,,,,,,.OO6,,,,,,,,,UO(",,,,,,,,,,,,,,,,."-
+	,,,,,,,,,,.,,,,,,,SSS,,,,,,,.:SSA,,,,,,,,,SX8.,,.,,,,,,,,,,,,,,,,
+	,,,,,,,,,,,,..,,,,,,,,,,,,,,,,,,,,,,,,,,,,.,,,,,,,.,,,,,,,,,,,,,,
+	,,,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,.,,,,,,,.,,,,,,,,,,",,,,,,,,,,,,,
+	,,,,,,,,,,,,,,,,,,,-,,,,,,,,,,,,,,.,.,,,,,,,,,,,,,,,,,,.!,,,,,,,,
+	:,,,,,,,,,,,,,,,,-".,,,,,,,,,,,,,,,,-,,,,,,,,,,,,,,,,."-,,,,,,,,,
+			</div>
+			<div>
+				<button class="common-button" onclick="prayAndMint()" >Pray and Mint</button>
+				<div>
+					<p id="prayAndMintResult"></p>
+				</div>
+			</div>
+			<div class="offer-incense-container">
+				<input type="number" class="burnAmount" placeholder="Amount to Burn">
 
-    <!-- 获取个人余额 -->
-    <button onclick="balanceof()">Get Address Balance</button>
-    <div>
-        <input type="text" id="balanceaddress" placeholder="Balance Address">
-        <!-- 输出结果：余额信息信息 -->
-        <p id="balanceofResult"></p>
-    </div>
+				<button class="common-button" onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
+			</div>
+			<div>
+				<p id="offerIncenseAndBurnResult"></p>
+			</div>
+		</div>
+		<div class="right-card-coin">
+		    <!-- 获取个人余额 -->
+			<button onclick="balanceof()">Get Address Balance</button>
+			<div>
+				<input type="text" id="balanceaddress" placeholder="Balance Address">
+				<!-- 输出结果：余额信息信息 -->
+				<p id="balanceofResult"></p>
+			</div>
 
-    <!-- 4. 转账 -->
-    <button onclick="transferTokens()">Transfer Tokens</button>
-    <div>
-        <!-- 输入条件：接收地址和数量 -->
-        <input type="text" id="transferRecipient" placeholder="Recipient Address">
-        <input type="number" id="transferAmount" placeholder="Amount">
-        <!-- 输出结果：转账成功的提示信息或错误信息 -->
-        <p id="transferTokensResult"></p>
-    </div>
+			<!-- 4. 转账 -->
+			<button onclick="transferTokens()">Transfer Tokens</button>
+			<div>
+				<!-- 输入条件：接收地址和数量 -->
+				<input type="text" id="transferRecipient" placeholder="Recipient Address">
+				<input type="number" id="transferAmount" placeholder="Amount">
+				<!-- 输出结果：转账成功的提示信息或错误信息 -->
+				<p id="transferTokensResult"></p>
+			</div>
+		</div>
+	</div>
+	
+	
 
-    <!-- 5. 祭奠并销毁 -->
-    <button onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
-    <div>
-        <!-- 输入条件：销毁数量 -->
-        <input type="number" id="burnAmount" placeholder="Amount to Burn">
-        <!-- 输出结果：销毁成功的提示信息或错误信息 -->
-        <p id="offerIncenseAndBurnResult"></p>
-    </div>
+
+
+
 
 	<div class="separator">
 		<span class="separator-title">iKunNFT</span>
 		<div class="separator-line"></div>
 	</div>
-
-    <button onclick="getMintNFTCost()">Get NFT Cost</button>
-    <div>
-        <p id="getMintNFTCostResult"></p>
-    </div>
-
-    <!-- 6. 铸造NFT -->
-    <button onclick="mintNFT()">Mint NFT</button>
-    <div>
-        <!-- 输入条件：无 -->
-        <!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
-        <p id="mintNFTResult"></p>
-    </div>
-
-    <!-- 8. 设置NFT内容 -->
-    <button onclick="setNFTContent()">Set NFT Content</button>
-    <div>
-        <!-- 输入条件：NFT ID、名称和元数据 -->
-        <input type="text" id="nftIdContent" placeholder="NFT ID">
-        <input type="text" id="nftName" placeholder="NFT Name">
-        <input type="text" id="nftMetadata" placeholder="NFT Metadata">
-        <!-- 输出结果：设置成功的提示信息或错误信息 -->
-        <p id="setNFTContentResult"></p>
-    </div>
-
-    <!-- 7. 转移NFT -->
-    <button onclick="transferNFT()">Transfer NFT</button>
-    <div>
-        <!-- 输入条件：NFT ID和接收地址 -->
-        <input type="text" id="nftId" placeholder="NFT ID">
-        <input type="text" id="nftRecipient" placeholder="Recipient Address">
-        <!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
-        <p id="transferNFTResult"></p>
-    </div>
-
-    <!-- 9. 获取指定用户的NFT代码（按页） -->
-    <button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button>
-    <div>
-        <!-- 输入条件：用户地址和页码 -->
-        <input type="text" id="ownerAddress" placeholder="Owner Address">
-        <input type="number" id="pageNumberOwner" placeholder="Page Number">
-        <!-- 输出结果：JSON格式的NFT代码列表 -->
-        <p id="ownerNFTCodesResult"></p>
-    </div>
-
-    <!-- 10. 获取所有已铸造的NFT代码（按页） -->
-    <button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button>
-    <div>
-        <!-- 输入条件：页码 -->
-        <input type="number" id="pageNumberMinted" placeholder="Page Number">
-        <!-- 输出结果：JSON格式的NFT代码列表 -->
-        <p id="mintedNFTCodesResult"></p>
-    </div>
-
-    <!-- 11. 获取指定NFT的详细信息 -->
-    <button onclick="getNFTById()">Get NFT By ID</button>
-    <div>
-        <!-- 输入条件：NFT ID -->
-        <input type="text" id="nftIdDetail" placeholder="NFT ID">
-        <!-- 输出结果：JSON格式的NFT详细信息 -->
-        <p id="nftDetailResult"></p>
-    </div>
-
-    <!-- 12. 获取指定NFT代码的详细信息 -->
-    <button onclick="getNFTByCode()">Get NFT By Code</button>
-    <div>
-        <!-- 输入条件：NFT代码 -->
-        <input type="text" id="nftCode" placeholder="NFT Code">
-        <!-- 输出结果：JSON格式的NFT详细信息 -->
-        <p id="nftByCodeResult"></p>
-    </div>
-
-    <!-- 出售NFT -->
-    <button onclick="sellNFT()">Sell NFT</button>
-    <div>
-        <!-- 输入条件：NFT代码 -->
-        <input type="number" id="sellNFTId" placeholder="NFT ID">
-        <input type="number" id="sellNFTPrice" placeholder="Sell price">
-        <!-- 输出结果：JSON格式的NFT详细信息 -->
-        <p id="sellNFTResult"></p>
-    </div>
-
-    <!-- 取消出售NFT -->
-    <button onclick="cancelSellNFT()">Cancel Sell NFT</button>
-    <div>
-        <!-- 输入条件：NFT代码 -->
-        <input type="number" id="cancelSellNFTId" placeholder="NFT ID">
-        <!-- 输出结果：JSON格式的NFT详细信息 -->
-        <p id="cancelSellNFTResult"></p>
-    </div>
-
-    <!--  获取正在出售的NFT编码（按页） -->
-    <button onclick="getALLSellingNFTCodesByPage()">Get All Selling NFT Codes By Page</button>
-    <div>
-        <!-- 输入条件：页码 -->
-        <input type="number" id="pageNumberSelling" placeholder="Page Number">
-        <!-- 输出结果：JSON格式的NFT代码列表 -->
-        <p id="pageNumberSellingResult"></p>
-    </div>
-
-    <!-- 购买NFT -->
-    <button onclick="buyNFT()">Buy NFT</button>
-    <div>
-        <!-- 输入条件：NFT代码 -->
-        <input type="number" id="buyNFTId" placeholder="NFT ID">
-        <!-- 输出结果：JSON格式的NFT详细信息 -->
-        <p id="buyNFTResult"></p>
-    </div>
 	
+	<div class="card-container-nft">
+		<div class="left-card-nft">
+			<!-- 6. 铸造NFT -->
+			<button onclick="mintNFT()">Mint NFT</button>
+			<div>
+				<!-- 输入条件：无 -->
+				<!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
+				<p id="mintNFTResult"></p>
+			</div>
+
+			<!-- 8. 设置NFT内容 -->
+			<button onclick="setNFTContent()">Set NFT Content</button>
+			<div>
+				<!-- 输入条件：NFT ID、名称和元数据 -->
+				<input type="text" id="nftIdContent" placeholder="NFT ID">
+				<input type="text" id="nftName" placeholder="NFT Name">
+				<input type="text" id="nftMetadata" placeholder="NFT Metadata">
+				<!-- 输出结果：设置成功的提示信息或错误信息 -->
+				<p id="setNFTContentResult"></p>
+			</div>
+
+			<!-- 7. 转移NFT -->
+			<button onclick="transferNFT()">Transfer NFT</button>
+			<div>
+				<!-- 输入条件：NFT ID和接收地址 -->
+				<input type="text" id="nftId" placeholder="NFT ID">
+				<input type="text" id="nftRecipient" placeholder="Recipient Address">
+				<!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
+				<p id="transferNFTResult"></p>
+			</div>
+			
+			<!-- 11. 获取指定NFT的详细信息 -->
+			<button onclick="getNFTById()">Get NFT By ID</button>
+			<div>
+				<!-- 输入条件：NFT ID -->
+				<input type="text" id="nftIdDetail" placeholder="NFT ID">
+				<!-- 输出结果：JSON格式的NFT详细信息 -->
+				<p id="nftDetailResult"></p>
+			</div>
+
+			<!-- 12. 获取指定NFT代码的详细信息 -->
+			<button onclick="getNFTByCode()">Get NFT By Code</button>
+			<div>
+				<!-- 输入条件：NFT代码 -->
+				<input type="text" id="nftCode" placeholder="NFT Code">
+				<!-- 输出结果：JSON格式的NFT详细信息 -->
+				<p id="nftByCodeResult"></p>
+			</div>
+			
+			<!-- 9. 获取指定用户的NFT代码（按页） -->
+			<button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button>
+			<div>
+				<!-- 输入条件：用户地址和页码 -->
+				<input type="text" id="ownerAddress" placeholder="Owner Address">
+				<input type="number" id="pageNumberOwner" placeholder="Page Number">
+				<!-- 输出结果：JSON格式的NFT代码列表 -->
+				<p id="ownerNFTCodesResult"></p>
+			</div>
+
+
+
+			
+		</div>
+		
+		
+		
+		
+		<div class="right-card-nft">
+
+			<!-- 10. 获取所有已铸造的NFT代码（按页） -->
+			<button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button>
+			<div>
+				<!-- 输入条件：页码 -->
+				<input type="number" id="pageNumberMinted" placeholder="Page Number">
+				<!-- 输出结果：JSON格式的NFT代码列表 -->
+				<p id="mintedNFTCodesResult"></p>
+			</div>
+
+
+			<!-- 出售NFT -->
+			<button onclick="sellNFT()">Sell NFT</button>
+			<div>
+				<!-- 输入条件：NFT代码 -->
+				<input type="number" id="sellNFTId" placeholder="NFT ID">
+				<input type="number" id="sellNFTPrice" placeholder="Sell price">
+				<!-- 输出结果：JSON格式的NFT详细信息 -->
+				<p id="sellNFTResult"></p>
+			</div>
+
+			<!-- 取消出售NFT -->
+			<button onclick="cancelSellNFT()">Cancel Sell NFT</button>
+			<div>
+				<!-- 输入条件：NFT代码 -->
+				<input type="number" id="cancelSellNFTId" placeholder="NFT ID">
+				<!-- 输出结果：JSON格式的NFT详细信息 -->
+				<p id="cancelSellNFTResult"></p>
+			</div>
+
+			<!--  获取正在出售的NFT编码（按页） -->
+			<button onclick="getALLSellingNFTCodesByPage()">Get All Selling NFT Codes By Page</button>
+			<div>
+				<!-- 输入条件：页码 -->
+				<input type="number" id="pageNumberSelling" placeholder="Page Number">
+				<!-- 输出结果：JSON格式的NFT代码列表 -->
+				<p id="pageNumberSellingResult"></p>
+			</div>
+
+			<!-- 购买NFT -->
+			<button onclick="buyNFT()">Buy NFT</button>
+			<div>
+				<!-- 输入条件：NFT代码 -->
+				<input type="number" id="buyNFTId" placeholder="NFT ID">
+				<!-- 输出结果：JSON格式的NFT详细信息 -->
+				<p id="buyNFTResult"></p>
+			</div>
+			
+
+		    
+		</div>
+	</div>
+
+
+
+    
+
+   
 	<div class="separator">
 		<span class="separator-title">Advertising</span>
 		<div class="separator-line"></div>
 	</div>
 
-    <!-- 17. 获取广告日天单价 -->
-    <button onclick="getAdPrice()">Get Ad Price OneDay</button>
-    <div>
-        <!-- 输出结果：JSON格式的广告数据 -->
-        <p id="adDataResult"></p>
-    </div>
+	<div class="card-container-ad">
+		<div class="left-card-ad">
+			<!-- 13. 租赁广告位 -->
+			<button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button>
+			<div>
+				<!-- 输入条件：广告位ID和租期 -->
+				<input type="number" id="slotId" placeholder="Slot ID">
+				<input type="number" id="leaseDuration" placeholder="Lease Duration">
+				<!-- 输出结果：租赁成功的提示信息或错误信息 -->
+				<p id="leaseAdvertisingSlotResult"></p>
+			</div>
 
-    <!-- 16. 获取所有待出租广告位id -->
-    <button onclick="getAllAdvertisingSlots()">Get All Advertising Slots</button>
-    <div>
-        <!-- 输出结果：JSON格式的广告位列表 -->
-        <p id="adSlotsByPageResult"></p>
-    </div>
+			<!-- 14. 设置广告内容 -->
+			<button onclick="setAdvertisingContent()">Set Advertising Content</button>
+			<div>
+				<!-- 输入条件：广告位ID、标题和内容 -->
+				<input type="number" id="adSlotId" placeholder="Slot ID">
+				<input type="text" id="adTitle" placeholder="Title">
+				<input type="text" id="adContent" placeholder="Content">
+				<!-- 输出结果：设置成功的提示信息或错误信息 -->
+				<p id="setAdvertisingContentResult"></p>
+			</div>
 
-    <!-- 13. 租赁广告位 -->
-    <button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button>
-    <div>
-        <!-- 输入条件：广告位ID和租期 -->
-        <input type="number" id="slotId" placeholder="Slot ID">
-        <input type="number" id="leaseDuration" placeholder="Lease Duration">
-        <!-- 输出结果：租赁成功的提示信息或错误信息 -->
-        <p id="leaseAdvertisingSlotResult"></p>
-    </div>
-
-    <!-- 14. 设置广告内容 -->
-    <button onclick="setAdvertisingContent()">Set Advertising Content</button>
-    <div>
-        <!-- 输入条件：广告位ID、标题和内容 -->
-        <input type="number" id="adSlotId" placeholder="Slot ID">
-        <input type="text" id="adTitle" placeholder="Title">
-        <input type="text" id="adContent" placeholder="Content">
-        <!-- 输出结果：设置成功的提示信息或错误信息 -->
-        <p id="setAdvertisingContentResult"></p>
-    </div>
-
-    <!-- 15. 获取广告位信息 -->
-    <button onclick="getAdvertisingSlot()">Get Advertising Slot</button>
-    <div>
-        <!-- 输入条件：广告位ID -->
-        <input type="number" id="adSlotIdInfo" placeholder="Slot ID">
-        <!-- 输出结果：JSON格式的广告位信息 -->
-        <p id="adSlotInfoResult"></p>
-    </div>
+			<!-- 15. 获取广告位信息 -->
+			<button onclick="getAdvertisingSlot()">Get Advertising Slot</button>
+			<div>
+				<!-- 输入条件：广告位ID -->
+				<input type="number" id="adSlotIdInfo" placeholder="Slot ID">
+				<!-- 输出结果：JSON格式的广告位信息 -->
+				<p id="adSlotInfoResult"></p>
+			</div>
+		
+		</div>
+	</div>
 
 </body>
 </html>

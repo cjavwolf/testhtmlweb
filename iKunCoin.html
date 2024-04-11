@@ -398,14 +398,29 @@
 		        const adSlotDiv = document.createElement("div");
 		        adSlotDiv.classList.add("ad-slot");
 		
-		        adSlotDiv.innerHTML = `
-		            <p>Slot ID: ${availableSlots[currentIndex]}</p>
-		            <p>Title: ${truncateText(adContent.title, 2)}</p>
-		            <p>Content: ${truncateText(adContent.content, 5)}</p>
-		            <p>Duration: ${adContent.duration}</p>
-		            <p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
-		            <p>Tenant: ${adContent.tenant}</p>
-		        `;
+		        const slotIdParagraph = document.createElement("p");
+		        slotIdParagraph.innerText = `Slot ID: ${availableSlots[currentIndex]}`;
+		        adSlotDiv.appendChild(slotIdParagraph);
+		
+		        const titleParagraph = document.createElement("p");
+		        titleParagraph.innerText = `Title: ${truncateText(adContent.title, 2)}`;
+		        adSlotDiv.appendChild(titleParagraph);
+		
+		        const contentParagraph = document.createElement("p");
+		        contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
+		        adSlotDiv.appendChild(contentParagraph);
+		
+		        const durationParagraph = document.createElement("p");
+		        durationParagraph.innerText = `Duration: ${adContent.duration}`;
+		        adSlotDiv.appendChild(durationParagraph);
+		
+		        const startTimeParagraph = document.createElement("p");
+		        startTimeParagraph.innerText = `Start Time: ${new Date(adContent.startTime * 1000)}`;
+		        adSlotDiv.appendChild(startTimeParagraph);
+		
+		        const tenantParagraph = document.createElement("p");
+		        tenantParagraph.innerText = `Tenant: ${adContent.tenant}`;
+		        adSlotDiv.appendChild(tenantParagraph);
 		
 		        adSlotContent.appendChild(adSlotDiv);
 		
@@ -544,10 +559,26 @@
 		    overflow: hidden; /* 隐藏溢出内容 */
 		}
 		
-	    .ad-slot p {
-		    margin: 10px 0; /* 设置段落的上下边距 */
-		    line-height: 2; /* 设置段落的行高 */
+	    .ad-slot {
+		    margin: 10px 0;
+		    line-height: 2;
 		}
+		
+		.ad-slot p {
+		    margin: 0;
+		    display: -webkit-box;
+		    -webkit-line-clamp: 2; /* 标题最多两行 */
+		    -webkit-box-orient: vertical;
+		    overflow: hidden;
+		}
+		
+		.ad-slot .content p {
+		    display: -webkit-box;
+		    -webkit-line-clamp: 5; /* 内容最多五行 */
+		    -webkit-box-orient: vertical;
+		    overflow: hidden;
+		}
+
 
 		.refresh-button {
 			padding: 5px 10px;

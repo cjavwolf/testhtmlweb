@@ -460,18 +460,20 @@
     <style>
 	
 	
-		h1 {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			padding: 10px;
-			margin: 0;
-			background-color: #333;
-			color: #fff;
-			text-align: center;
-			z-index: 9999;
-		}
+h1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+    z-index: 9999;
+    background-image: linear-gradient(to right, black 50%, transparent 50%);
+    background-size: 2px 100%;
+    background-repeat: repeat-x;
+    color: white; /* 设置文本颜色为白色 */
+}
 
         .text-container {
             margin-top: 50px !important;
@@ -525,6 +527,18 @@
 
 		.wallet-button {
 			width: 100px; /* 按钮的固定宽度 */
+			border: none; /* 移除默认边框 */
+			border-bottom: 1px dashed black; 
+			cursor: pointer;
+			margin-top: 10px; /* 与上方卡片的间距 */
+			border-radius: 5px; /* 圆角 */
+			display: block; /* 按钮块级显示 */
+			text-align: center; /* 按钮文本居中 */
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white; /* 设置文本颜色为白色 */
+			font-size: 16px;
 		}
 
 		.wallet-result {
@@ -585,11 +599,10 @@
 		}
 
 
-
 		.refresh-button {
 			padding: 5px 10px;
-			background-color: #007bff;
-			color: #fff;
+			/* background-color: #007bff;
+			color: #fff;*/
 			border: none;
 			cursor: pointer;
 			margin-top: 10px; /* 与上方卡片的间距 */
@@ -597,7 +610,13 @@
 			display: block; /* 按钮块级显示 */
 			width: 100%; /* 按钮宽度填充卡片宽度 */
 			text-align: center; /* 按钮文本居中 */
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white; /* 设置文本颜色为白色 */
+			font-size: 16px;
 		}
+
 
 		.button-container {
 			display: flex;

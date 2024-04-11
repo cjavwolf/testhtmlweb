@@ -50,6 +50,7 @@
             // 请求用户授权连接钱包
             await window.ethereum.request({ method: 'eth_requestAccounts' });
             document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
+			init();
         } catch (error) {
             console.error('User denied wallet connection');
             document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
@@ -380,6 +381,12 @@
 		// 执行初始化方法
 		init();
 	};
+	
+	function init() {
+		getTokenInfo();
+		getAllAdvertisingSlotsToShow();
+		getOtherInfo();
+	}
 
 
 	let availableSlots = []; // 空闲广告位数组
@@ -754,6 +761,51 @@
 			font-size: 16px;
 			border: 1px dashed #ccc; /* 添加虚线框线 */
 		}
+		.balanceaddress {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 300px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; /* 添加虚线框线 */
+		}
+		.transferRecipient {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 60%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; /* 添加虚线框线 */
+		}
+		.transferAmount {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 33%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; /* 添加虚线框线 */
+		}
+		.common-text-input {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 30%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; /* 添加虚线框线 */
+		}
+		.common-container {
+			display: flex;
+			align-items: center; /* 垂直居中 */
+		}
+
+		.common-container input[type="number"] {
+			flex: 1; /* 让输入框占据剩余空间 */
+			margin-right: 10px; /* 添加间距 */
+		}
 		
 		
 		.card-container-nft {
@@ -954,7 +1006,7 @@
 				</div>
 			</div>
 			<div class="offer-incense-container">
-				<input type="number" class="burnAmount" placeholder="Amount to Burn">
+				<input type="number" id="burnAmount" class="burnAmount" placeholder="Amount to Burn">
 
 				<button class="common-button" onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
 			</div>
@@ -963,20 +1015,19 @@
 			</div>
 		</div>
 		<div class="right-card-coin">
-		    <!-- 获取个人余额 -->
-			<button onclick="balanceof()">Get Address Balance</button>
-			<div>
-				<input type="text" id="balanceaddress" placeholder="Balance Address">
-				<!-- 输出结果：余额信息信息 -->
+			
+			<div class="common-container">
+				<input type="text" id="balanceaddress" class="balanceaddress" placeholder="Balance Address">
+				<button onclick="balanceof()" class="common-button">Get Address Balance</button>
 				<p id="balanceofResult"></p>
 			</div>
 
-			<!-- 4. 转账 -->
-			<button onclick="transferTokens()">Transfer Tokens</button>
+			
 			<div>
 				<!-- 输入条件：接收地址和数量 -->
-				<input type="text" id="transferRecipient" placeholder="Recipient Address">
-				<input type="number" id="transferAmount" placeholder="Amount">
+				<input type="text" id="transferRecipient" class="transferRecipient" placeholder="Recipient Address">
+				<input type="number" id="transferAmount" class="transferAmount" placeholder="Amount">
+				<button onclick="transferTokens()" class="common-button">Transfer Tokens</button>
 				<!-- 输出结果：转账成功的提示信息或错误信息 -->
 				<p id="transferTokensResult"></p>
 			</div>
@@ -997,115 +1048,100 @@
 	<div class="card-container-nft">
 		<div class="left-card-nft">
 			<!-- 6. 铸造NFT -->
-			<button onclick="mintNFT()">Mint NFT</button>
+			<button onclick="mintNFT()" class="common-button">Mint NFT</button>
 			<div>
 				<!-- 输入条件：无 -->
 				<!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
 				<p id="mintNFTResult"></p>
 			</div>
-
-			<!-- 8. 设置NFT内容 -->
-			<button onclick="setNFTContent()">Set NFT Content</button>
+			
 			<div>
 				<!-- 输入条件：NFT ID、名称和元数据 -->
-				<input type="text" id="nftIdContent" placeholder="NFT ID">
-				<input type="text" id="nftName" placeholder="NFT Name">
-				<input type="text" id="nftMetadata" placeholder="NFT Metadata">
+				<input type="text" id="nftIdContent" class="common-text-input" placeholder="NFT ID">
+				<input type="text" id="nftName" class="common-text-input" placeholder="NFT Name">
+				<input type="text" id="nftMetadata" class="common-text-input" placeholder="NFT Metadata">
+				<button onclick="setNFTContent()" class="common-button">Set NFT Content</button>
 				<!-- 输出结果：设置成功的提示信息或错误信息 -->
 				<p id="setNFTContentResult"></p>
 			</div>
 
-			<!-- 7. 转移NFT -->
-			<button onclick="transferNFT()">Transfer NFT</button>
+			
 			<div>
 				<!-- 输入条件：NFT ID和接收地址 -->
-				<input type="text" id="nftId" placeholder="NFT ID">
+				<input type="text" id="nftId" class="common-text-input" placeholder="NFT ID">
+				<button onclick="transferNFT()" class="common-button">Transfer NFT</button>
 				<input type="text" id="nftRecipient" placeholder="Recipient Address">
 				<!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
 				<p id="transferNFTResult"></p>
 			</div>
 			
-			<!-- 11. 获取指定NFT的详细信息 -->
-			<button onclick="getNFTById()">Get NFT By ID</button>
+			
 			<div>
 				<!-- 输入条件：NFT ID -->
-				<input type="text" id="nftIdDetail" placeholder="NFT ID">
+				<input type="text" id="nftIdDetail" class="common-text-input" placeholder="NFT ID">
+				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="nftDetailResult"></p>
 			</div>
 
-			<!-- 12. 获取指定NFT代码的详细信息 -->
-			<button onclick="getNFTByCode()">Get NFT By Code</button>
 			<div>
 				<!-- 输入条件：NFT代码 -->
-				<input type="text" id="nftCode" placeholder="NFT Code">
+				<input type="text" id="nftCode" class="common-text-input" placeholder="NFT Code">
+				<button onclick="getNFTByCode()" class="common-button">Get NFT By Code</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="nftByCodeResult"></p>
 			</div>
 			
-			<!-- 9. 获取指定用户的NFT代码（按页） -->
-			<button onclick="getOwnerNFTCodesByPage()">Get Owner NFT Codes By Page</button>
 			<div>
 				<!-- 输入条件：用户地址和页码 -->
-				<input type="text" id="ownerAddress" placeholder="Owner Address">
-				<input type="number" id="pageNumberOwner" placeholder="Page Number">
+				<input type="text" id="ownerAddress" class="common-text-input" placeholder="Owner Address">
+				<input type="number" id="pageNumberOwner" class="common-text-input" placeholder="Page Number">
+				<button onclick="getOwnerNFTCodesByPage()" class="common-button">Get Owner NFT Codes By Page</button>
 				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="ownerNFTCodesResult"></p>
 			</div>
-
-
-
-			
 		</div>
-		
-		
 		
 		
 		<div class="right-card-nft">
 
-			<!-- 10. 获取所有已铸造的NFT代码（按页） -->
-			<button onclick="getAllMintedNFTCodesByPage()">Get All Minted NFT Codes By Page</button>
 			<div>
 				<!-- 输入条件：页码 -->
-				<input type="number" id="pageNumberMinted" placeholder="Page Number">
+				<input type="number" id="pageNumberMinted" class="common-text-input" placeholder="Page Number">
+				<button onclick="getAllMintedNFTCodesByPage()" class="common-button">Get All Minted NFT Codes By Page</button>
 				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="mintedNFTCodesResult"></p>
 			</div>
 
-
-			<!-- 出售NFT -->
-			<button onclick="sellNFT()">Sell NFT</button>
 			<div>
 				<!-- 输入条件：NFT代码 -->
-				<input type="number" id="sellNFTId" placeholder="NFT ID">
-				<input type="number" id="sellNFTPrice" placeholder="Sell price">
+				<input type="number" id="sellNFTId" class="common-text-input" placeholder="NFT ID">
+				<input type="number" id="sellNFTPrice" class="common-text-input" placeholder="Sell price">
+				<button onclick="sellNFT()" class="common-button">Sell NFT</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="sellNFTResult"></p>
 			</div>
 
-			<!-- 取消出售NFT -->
-			<button onclick="cancelSellNFT()">Cancel Sell NFT</button>
 			<div>
 				<!-- 输入条件：NFT代码 -->
-				<input type="number" id="cancelSellNFTId" placeholder="NFT ID">
+				<input type="number" id="cancelSellNFTId" class="common-text-input" placeholder="NFT ID">
+				<button onclick="cancelSellNFT()" class="common-button">Cancel Sell NFT</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="cancelSellNFTResult"></p>
 			</div>
 
-			<!--  获取正在出售的NFT编码（按页） -->
-			<button onclick="getALLSellingNFTCodesByPage()">Get All Selling NFT Codes By Page</button>
 			<div>
 				<!-- 输入条件：页码 -->
-				<input type="number" id="pageNumberSelling" placeholder="Page Number">
+				<input type="number" id="pageNumberSelling" class="common-text-input" placeholder="Page Number">
+				<button onclick="getALLSellingNFTCodesByPage()" class="common-button">Get All Selling NFT Codes By Page</button>
 				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="pageNumberSellingResult"></p>
 			</div>
 
-			<!-- 购买NFT -->
-			<button onclick="buyNFT()">Buy NFT</button>
 			<div>
 				<!-- 输入条件：NFT代码 -->
-				<input type="number" id="buyNFTId" placeholder="NFT ID">
+				<input type="number" id="buyNFTId" class="common-text-input" placeholder="NFT ID">
+				<button onclick="buyNFT()" class="common-button">Buy NFT</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="buyNFTResult"></p>
 			</div>
@@ -1123,32 +1159,31 @@
 
 	<div class="card-container-ad">
 		<div class="left-card-ad">
-			<!-- 13. 租赁广告位 -->
-			<button onclick="leaseAdvertisingSlot()">Lease Advertising Slot</button>
+			
 			<div>
 				<!-- 输入条件：广告位ID和租期 -->
-				<input type="number" id="slotId" placeholder="Slot ID">
-				<input type="number" id="leaseDuration" placeholder="Lease Duration">
+				<input type="number" id="slotId" class="common-text-input" placeholder="Slot ID">
+				<input type="number" id="leaseDuration" class="common-text-input" placeholder="Lease Duration">
+				<button onclick="leaseAdvertisingSlot()" class="common-button">Lease Advertising Slot</button>
 				<!-- 输出结果：租赁成功的提示信息或错误信息 -->
 				<p id="leaseAdvertisingSlotResult"></p>
 			</div>
-
-			<!-- 14. 设置广告内容 -->
-			<button onclick="setAdvertisingContent()">Set Advertising Content</button>
+			
 			<div>
 				<!-- 输入条件：广告位ID、标题和内容 -->
-				<input type="number" id="adSlotId" placeholder="Slot ID">
-				<input type="text" id="adTitle" placeholder="Title">
-				<input type="text" id="adContent" placeholder="Content">
+				<input type="number" id="adSlotId" class="common-text-input" placeholder="Slot ID">
+				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
+				<input type="text" id="adContent" class="common-text-input" placeholder="Content">
+				<button onclick="setAdvertisingContent()" class="common-button">Set Advertising Content</button>
 				<!-- 输出结果：设置成功的提示信息或错误信息 -->
 				<p id="setAdvertisingContentResult"></p>
 			</div>
 
-			<!-- 15. 获取广告位信息 -->
-			<button onclick="getAdvertisingSlot()">Get Advertising Slot</button>
+
 			<div>
 				<!-- 输入条件：广告位ID -->
-				<input type="number" id="adSlotIdInfo" placeholder="Slot ID">
+				<input type="number" id="adSlotIdInfo" class="common-text-input" placeholder="Slot ID">
+				<button onclick="getAdvertisingSlot()" class="common-button">Get Advertising Slot</button>
 				<!-- 输出结果：JSON格式的广告位信息 -->
 				<p id="adSlotInfoResult"></p>
 			</div>

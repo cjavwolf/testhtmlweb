@@ -398,14 +398,14 @@
 		        const adSlotDiv = document.createElement("div");
 		        adSlotDiv.classList.add("ad-slot");
 		
-		        const titleDiv = document.createElement("div");
-		        titleDiv.innerHTML = `<p>Title: ${adContent.title}</p>`;
-		        adSlotDiv.appendChild(titleDiv);
-		
-		        const contentDiv = document.createElement("div");
-		        contentDiv.classList.add("content");
-		        contentDiv.innerHTML = `<p>Content: ${adContent.content}</p>`;
-		        adSlotDiv.appendChild(contentDiv);
+		        adSlotDiv.innerHTML = `
+		            <p>Slot ID: ${availableSlots[currentIndex]}</p>
+		            <p>Title: ${truncateText(adContent.title, 2)}</p>
+		            <p>Content: ${truncateText(adContent.content, 5)}</p>
+		            <p>Duration: ${adContent.duration}</p>
+		            <p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
+		            <p>Tenant: ${adContent.tenant}</p>
+		        `;
 		
 		        adSlotContent.appendChild(adSlotDiv);
 		
@@ -427,6 +427,14 @@
 			console.error('Error:', error);
 			throw new Error(`Failed to get ad content for slot ${slotId}: ${error.message}`);
 		}
+	}
+
+    function truncateText(text, maxLines) {
+	    const lines = text.split('\n');
+	    if (lines.length <= maxLines) {
+	        return text;
+	    }
+	    return lines.slice(0, maxLines).join('\n') + '...';
 	}
 
 
@@ -547,22 +555,9 @@
 		    margin: 0; /* 移除默认段落的边距 */
 		    overflow: hidden;
 		    display: -webkit-box;
-		    -webkit-line-clamp: 4; /* 限制内容最多显示四行 */
+		    -webkit-line-clamp: 5; /* 限制内容最多显示五行 */
 		    -webkit-box-orient: vertical;
 		    text-overflow: ellipsis; /* 文本截断 */
-		}
-		
-		.center-card:hover .ad-slot .content p {
-		    -webkit-line-clamp: initial; /* 悬浮时取消行数限制 */
-		    overflow: visible;
-		    white-space: normal;
-		    position: absolute;
-		    top: 0;
-		    left: 0;
-		    right: 0;
-		    bottom: 0;
-		    background-color: white;
-		    z-index: 999; /* 确保在最上层显示 */
 		}
 
 		.refresh-button {

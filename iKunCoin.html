@@ -367,13 +367,14 @@
 
 	async function getAllAdvertisingSlotsToShow() {
 		try {
-			const allSlots = [1,2,3,4,5,6,7,8,9,10]; // 获取所有广告位
+			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 获取所有广告位
 			const unUsedSlots = await contract.methods.getAvailableSlots().call(); // 获取空闲广告位
 			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot)); // 获取使用广告位
 
 			console.log(availableSlots);
 
 			showNextAd(); // 显示下一个广告
+			setInterval(showNextAd, 5000); // 每5秒更换广告
 		} catch (error) {
 			console.error('Error:', error);
 			document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;
@@ -383,7 +384,7 @@
 	function showNextAd() {
 		const adSlotContent = document.getElementById("adSlotContent");
 		adSlotContent.innerHTML = ""; // 清空之前的内容
-		
+
 		// 如果没有空闲广告位，则不显示广告
 		if (availableSlots.length === 0) {
 			adSlotContent.innerText = "Advertising Space Available.";
@@ -396,13 +397,13 @@
 				const adSlotDiv = document.createElement("div");
 				adSlotDiv.classList.add("ad-slot");
 				adSlotDiv.innerHTML = `
-					<p>Slot ID: ${availableSlots[currentIndex]}</p>
-					<p>Title: ${adContent.title}</p>
-					<p>Content: ${adContent.content}</p>
-					<p>Duration: ${adContent.duration}</p>
-					<p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
-					<p>Tenant: ${adContent.tenant}</p>
-				`;
+						<p>Slot ID: ${availableSlots[currentIndex]}</p>
+						<p>Title: ${adContent.title}</p>
+						<p>Content: ${adContent.content}</p>
+						<p>Duration: ${adContent.duration}</p>
+						<p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
+						<p>Tenant: ${adContent.tenant}</p>
+					`;
 				adSlotContent.appendChild(adSlotDiv);
 
 				// 更新索引以显示下一个广告
@@ -424,6 +425,7 @@
 			throw new Error(`Failed to get ad content for slot ${slotId}: ${error.message}`);
 		}
 	}
+
 
 
 	</script>
@@ -527,6 +529,7 @@
 			box-sizing: border-box; /* 边框大小计入盒模型 */
 			margin-right: 10px; /* 卡片间距 */
 		}
+
 
 		.refresh-button {
 			padding: 5px 10px;

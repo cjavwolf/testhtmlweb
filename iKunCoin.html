@@ -408,6 +408,7 @@
 		        adSlotDiv.appendChild(titleParagraph);
 		
 		        const contentParagraph = document.createElement("p");
+		        contentParagraph.classList.add("content"); // 添加 content 类
 		        contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
 		        adSlotDiv.appendChild(contentParagraph);
 		
@@ -432,6 +433,7 @@
 		        console.error('Error:', error);
 		        adSlotContent.innerText = `Error: ${error.message}`;
 		    });
+
 	}
 
 	async function getAdContentBySlot(slotId) {

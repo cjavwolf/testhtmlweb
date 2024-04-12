@@ -874,6 +874,16 @@
             resize: both; 
             padding: 5px; 
         }
+		.common-text-comwidth {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 100px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; /* 添加虚线框线 */
+		}
+		
 		
 
     </style>
@@ -1033,11 +1043,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-
-
-
 
 
 	<div class="separator">
@@ -1057,7 +1062,7 @@
 			
 			<div>
 				<!-- 输入条件：NFT ID、名称和元数据 -->
-				<input type="text" id="nftIdContent" class="common-text-input" placeholder="NFT ID">
+				<input type="text" id="nftIdContent" class="common-text-comwidth" placeholder="NFT ID">
 				<input type="text" id="nftName" class="common-text-input" placeholder="NFT Name">
 				<input type="text" id="nftMetadata" class="common-text-input" placeholder="NFT Metadata">
 				<button onclick="setNFTContent()" class="common-button">Set NFT Content</button>
@@ -1069,24 +1074,24 @@
 			<div>
 				<!-- 输入条件：NFT ID和接收地址 -->
 				<input type="text" id="nftId" class="common-text-input" placeholder="NFT ID">
+				<input type="text" id="nftRecipient" class="common-text-input" placeholder="Recipient Address">
 				<button onclick="transferNFT()" class="common-button">Transfer NFT</button>
-				<input type="text" id="nftRecipient" placeholder="Recipient Address">
 				<!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
 				<p id="transferNFTResult"></p>
 			</div>
 			
 			
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：NFT ID -->
-				<input type="text" id="nftIdDetail" class="common-text-input" placeholder="NFT ID">
+				<input type="text" id="nftIdDetail" class="common-text-comwidth" placeholder="NFT ID">
 				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="nftDetailResult"></p>
 			</div>
 
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：NFT代码 -->
-				<input type="text" id="nftCode" class="common-text-input" placeholder="NFT Code">
+				<input type="text" id="nftCode" class="common-text-comwidth" placeholder="NFT Code">
 				<button onclick="getNFTByCode()" class="common-button">Get NFT By Code</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="nftByCodeResult"></p>
@@ -1105,9 +1110,9 @@
 		
 		<div class="right-card-nft">
 
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：页码 -->
-				<input type="number" id="pageNumberMinted" class="common-text-input" placeholder="Page Number">
+				<input type="number" id="pageNumberMinted" class="common-text-comwidth" placeholder="Page Number">
 				<button onclick="getAllMintedNFTCodesByPage()" class="common-button">Get All Minted NFT Codes By Page</button>
 				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="mintedNFTCodesResult"></p>
@@ -1122,32 +1127,30 @@
 				<p id="sellNFTResult"></p>
 			</div>
 
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：NFT代码 -->
-				<input type="number" id="cancelSellNFTId" class="common-text-input" placeholder="NFT ID">
+				<input type="number" id="cancelSellNFTId" class="common-text-comwidth" placeholder="NFT ID">
 				<button onclick="cancelSellNFT()" class="common-button">Cancel Sell NFT</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="cancelSellNFTResult"></p>
 			</div>
 
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：页码 -->
-				<input type="number" id="pageNumberSelling" class="common-text-input" placeholder="Page Number">
+				<input type="number" id="pageNumberSelling" class="common-text-comwidth" placeholder="Page Number">
 				<button onclick="getALLSellingNFTCodesByPage()" class="common-button">Get All Selling NFT Codes By Page</button>
 				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="pageNumberSellingResult"></p>
 			</div>
 
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：NFT代码 -->
-				<input type="number" id="buyNFTId" class="common-text-input" placeholder="NFT ID">
+				<input type="number" id="buyNFTId" class="common-text-comwidth" placeholder="NFT ID">
 				<button onclick="buyNFT()" class="common-button">Buy NFT</button>
 				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="buyNFTResult"></p>
 			</div>
-			
-
-		    
+				    
 		</div>
 	</div>
 
@@ -1160,10 +1163,10 @@
 	<div class="card-container-ad">
 		<div class="left-card-ad">
 			
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：广告位ID和租期 -->
-				<input type="number" id="slotId" class="common-text-input" placeholder="Slot ID">
-				<input type="number" id="leaseDuration" class="common-text-input" placeholder="Lease Duration">
+				<input type="number" id="slotId" class="common-text-comwidth" placeholder="Slot ID">
+				<input type="number" id="leaseDuration" class="common-text-comwidth" placeholder="Lease Duration">
 				<button onclick="leaseAdvertisingSlot()" class="common-button">Lease Advertising Slot</button>
 				<!-- 输出结果：租赁成功的提示信息或错误信息 -->
 				<p id="leaseAdvertisingSlotResult"></p>
@@ -1171,7 +1174,7 @@
 			
 			<div>
 				<!-- 输入条件：广告位ID、标题和内容 -->
-				<input type="number" id="adSlotId" class="common-text-input" placeholder="Slot ID">
+				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID">
 				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
 				<input type="text" id="adContent" class="common-text-input" placeholder="Content">
 				<button onclick="setAdvertisingContent()" class="common-button">Set Advertising Content</button>
@@ -1180,9 +1183,9 @@
 			</div>
 
 
-			<div>
+			<div class="common-container">
 				<!-- 输入条件：广告位ID -->
-				<input type="number" id="adSlotIdInfo" class="common-text-input" placeholder="Slot ID">
+				<input type="number" id="adSlotIdInfo" class="common-text-comwidth" placeholder="Slot ID">
 				<button onclick="getAdvertisingSlot()" class="common-button">Get Advertising Slot</button>
 				<!-- 输出结果：JSON格式的广告位信息 -->
 				<p id="adSlotInfoResult"></p>

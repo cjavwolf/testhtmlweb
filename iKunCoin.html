@@ -319,14 +319,7 @@
         try {
             const slot = await contract.methods.getAdvertisingSlot(slotId).call();
 			const adSlotInfoResult = document.getElementById("adSlotInfoResult");
-			adSlotInfoResult.innerHTML = `
-				<p>AD ID: ${slot.id}</p>
-				<p>Title: ${slot.title}</p>
-				<p>Content: ${slot.content}</p>
-				<p>StartTime: ${new Date(slot.startTime * 1000)}</p>
-				<p>Duration: ${slot.duration}</p>
-				<p>Tenant: ${slot.tenant}</p>
-			`;
+			adSlotInfoResult.innerHTML = `{AD ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
         } catch (error) {
             console.error('Error:', error);
             document.getElementById("adSlotInfoResult").innerText = `Error: ${error.message}`;
@@ -521,7 +514,7 @@
 			position: fixed;
 			top: 20px;
 			right: 20px;
-			z-index: 9999; /* 设置一个较高的 z-index 值，确保在最顶层 */
+			z-index: 9999; 
 		}
 
 		.wallet-container {
@@ -779,6 +772,16 @@
 			margin-right: 10px; 
 		}
 		.common-text-adContent {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		
+		.common-text-nft {
 			padding: 5px 10px;
 			margin-top: 3px;
 			border-radius: 5px;
@@ -1071,9 +1074,12 @@
 				<input type="text" id="balanceaddress" class="balanceaddress" placeholder="Balance Address">
 				<button onclick="balanceof()" class="common-button">Get Address Balance</button>
 			</div>
-			<div>
+			<div class="common-container">
 				<input type="text" id="transferRecipient" class="transferRecipient" placeholder="Recipient Address">
 				<input type="number" id="transferAmount" class="transferAmount" placeholder="Amount">
+				
+			</div>
+			<div class="common-container">
 				<button onclick="transferTokens()" class="common-button">Transfer Tokens</button>
 			</div>
 			<div class="coin-result">
@@ -1097,18 +1103,22 @@
 				<p id="mintNFTResult"></p>
 			</div>
 			
-			<div>
+			<div class="common-container">
 				<input type="text" id="nftIdContent" class="common-text-comwidth" placeholder="NFT ID">
 				<input type="text" id="nftName" class="common-text-input" placeholder="NFT Name">
-				<input type="text" id="nftMetadata" class="common-text-input" placeholder="NFT Metadata">
+				<input type="text" id="nftMetadata" class="common-text-nft" placeholder="NFT Metadata">
+			</div>
+			<div class="common-container">
 				<button onclick="setNFTContent()" class="common-button">Set NFT Content</button>
 				<p id="setNFTContentResult"></p>
 			</div>
-
 			
-			<div>
+			
+			<div class="common-container">
 				<input type="text" id="nftId" class="common-text-input" placeholder="NFT ID">
-				<input type="text" id="nftRecipient" class="common-text-input" placeholder="Recipient Address">
+				<input type="text" id="nftRecipient" class="common-text-nft" placeholder="Recipient Address">
+			</div>
+			<div class="common-container">
 				<button onclick="transferNFT()" class="common-button">Transfer NFT</button>
 				<p id="transferNFTResult"></p>
 			</div>
@@ -1126,9 +1136,12 @@
 				<p id="nftByCodeResult"></p>
 			</div>
 			
-			<div>
+			<div class="common-container">
 				<input type="text" id="ownerAddress" class="common-text-input" placeholder="Owner Address">
-				<input type="number" id="pageNumberOwner" class="common-text-input" placeholder="Page Number">
+				<input type="number" id="pageNumberOwner" class="common-text-nft" placeholder="Page Number">
+			</div>
+			
+			<div class="common-container">
 				<button onclick="getOwnerNFTCodesByPage()" class="common-button">Get Owner NFT Codes By Page</button>
 				<p id="ownerNFTCodesResult"></p>
 			</div>
@@ -1143,9 +1156,12 @@
 				<p id="mintedNFTCodesResult"></p>
 			</div>
 
-			<div>
+			<div class="common-container">
 				<input type="number" id="sellNFTId" class="common-text-input" placeholder="NFT ID">
-				<input type="number" id="sellNFTPrice" class="common-text-input" placeholder="Sell price">
+				<input type="number" id="sellNFTPrice" class="common-text-nft" placeholder="Sell price">
+			</div>
+			
+			<div class="common-container">
 				<button onclick="sellNFT()" class="common-button">Sell NFT</button>
 				<p id="sellNFTResult"></p>
 			</div>

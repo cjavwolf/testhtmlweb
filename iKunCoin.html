@@ -334,7 +334,9 @@
 			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot));
 
 			showNextAd();
-			setInterval(showNextAd, 7000);
+			if (availableSlots.length > 1) {
+				setInterval(showNextAd, 10000);
+			}			
 		} catch (error) {
 			document.getElementById("adSlotsByPageResult2").innerText = `Error: ${error.message}`;
 		}
@@ -414,8 +416,13 @@
 
 	function updateScrollingText(adstr) {
 		var scrollingTextElement = document.getElementById("scrollingText");
-		var baseText = "~ iKun is a way of life."; 
-		scrollingTextElement.textContent = baseText + adstr; 
+		var baseText = "~ iKun is a way of life. "; 
+		var totalText = baseText + adstr;
+
+		scrollingTextElement.textContent = totalText;
+		if (scrollingTextElement.scrollWidth > scrollingTextElement.clientWidth) {
+			scrollingTextElement.style.animationDuration = (totalText.length * 50) + "ms";
+		}
 	}
 
 	</script>

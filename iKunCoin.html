@@ -461,20 +461,24 @@
             overflow: hidden; 
             white-space: nowrap; 
             animation: scroll 30s linear infinite; 
-        }
+        }	
+		
 		.static-text {
             font-family: monospace; 
             font-size: 8px; 
             line-height: 1.0; 
-            width: 100%; 
+            width: 98%; 
             margin: 0 auto; 
             overflow: auto; 
             max-height: 100vh; 
             white-space: pre; 
-            resize: both; 
             padding: 5px; 
         }
 		
+		.ikun-info {
+			font-size: 16px;
+		
+		}
 		.wallet-wrapper {
 			margin-top: 50px !important;
 			position: fixed;
@@ -949,8 +953,38 @@
 			white-space: nowrap;
 			animation: scroll 30s linear infinite;
 		}
-			
+		#poweredByBNB {
+			position: fixed;
+			bottom: 10px;
+			left: 10px;
+			color: #999;
+			font-size: 12px;
+			font-family: Arial, sans-serif; 
+		}
+
+
+		.ikun-info {
+			position: fixed; 
+			bottom: 10px;
+			right: 10px; 
+			max-width: calc(50% - 20px); 
+			margin: 0; 
+			padding: 5px; 
+			color: #999;
+			font-family: Arial, sans-serif; 
+		}
 		
+		.ikun-info, .link {
+			font-family: Arial, sans-serif; 
+			font-size: 18px; 
+			color: #999;
+			text-decoration: none; 
+		}
+
+		.link:hover {
+			text-decoration: underline; 
+		}		
+				
 
     </style>
 </head>
@@ -985,18 +1019,17 @@
 	QQQQQQQQQQM        QQQQQQQQQQ:::::::77MM93RCVV-)GQ$J;(VLJJ-((V2JJQQJ3   .NM0;7MMJ2QH9:J&NM&)(JJV::::::
 	QQQQQQQQQQM        QQQQQQQQQQ::::::::HM$4NQJV9-)QQVJ-C9JJ3:(1JJJJQQJ"  ...VQKM0 .4QMMQQQMQM2)1JJ::::::
 	QQQQQQQQQQM        .QQQQQQQQQ::::::::2QQRQQ492!(QQVJ-V9JJ-)(LQQLJQMJ. MQQQ;NQQ,  J4JMQQQ9FMM3LVJ::::::
-	QQQQQQQQQQ     .     QQQQQQQQ:::::::::::!QQJ9J((QQV3-99JQMJJBMMMMQQJ, NQQM-EQM.     NQQQ3RQQHJVL::::::
+	QQQQQQQQQQ     .     QQQQQQQQ:::::::::::!QQJ9J((QQV3-99JQMJJBMMMMQQJ, NQQM-EQM.     NQQQ3RQQHJVL::::::	
 	QQQQQQQQQQ    QQQQ    QQQQQQQ::::::::::::MM392J4QQV3((JJQQQMNNQ5IJJJJ ... (QMQV      ...BM$CMMQQ::::::
 	QQQQQQQQQR   QQQQQQF  .QQQQQQ::::::::::::QNJ9GMMMM93;JJ4MNO&C4IMM$.     "MMD62MM1   ..KMN;VZONM:::::::
 	QQQQQQQQQ   QQQQQQG  .QQQQQQQ::::::::::::WMQMQZ9TQMU0HMMMMOOF);;;RMMMMQMQS333339NMMMMM2)ZPZZZSM7::::::
 	QQQQQQQQQ.  QQQQQ&.WMQQQQQQQQ:::::::::::IGMMNM01COSSA8OO8OTPP(;;;;;;;NM33333333333VM2;;$ZZZZZXMZ::::::
-	QQQQQQQQQ.  QQQZL.OMQQQQQQQQQ:!:::!RMMMBP9655MM1IPPPPZPZPZZZZ;;;;;;;3MNJ333333333EMQN;;ZPZZZPRQ;:::!::
+	QQQQQQQQQ.  QQQZL.OMQQQQQQQQQ:!:::!RMMMBP9655MM1IPPPPZPZPZZZZ;;;;;;;3MNJ333333333EMQN;;ZPZZZPRQ;:::!::				
 	QQQQQQQQM  QQQQQQ  :MQQQQQQQQMM:HMMT69699996FOMR1&PZZZZZZZZPL7111177)NMMMMMMMMMNGJSM);;$PZZPTMN::HMM::
-	QQQQQQQQQ. QQQQQQQQ-3QQQQQQQQ99QW99PEMMMMMMMMMMMN11PPPPZPZZ111111711171HMN23333JBMK;;;;)PZPDMN::QW99QQ
+	QQQQQQQQQ. QQQQQQQQ-3QQQQQQQQ99QW99PEMMMMMMMMMMMN11PPPPZPZZ111111711171HMN23333JBMK;;;;)PZPDMN::QW99QQ				
 	QQQQQQQQM  QQQQQQQQQQQQQQQQQQ9969999966999999F5NQMB171111IC0RHNNNNHK0V31111I2LJ111177(;;;RMMY11(699966
-	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQMMNMMMMK69969999$TQMNQQMMMQMHRRRRBRRRRRRRENMMMMMMMH0I17775MQMQQMMU1NMMMNN
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQMMNMMMMK69969999$TQMNQQMMMQMHRRRRBRRRRRRRENMMMMMMMH0I17775MQMQQMMU1NMMMNN				
 	</div>
-
 	
 	<div class="wallet-wrapper">
 		<div class="wallet-container">
@@ -1235,5 +1268,13 @@
 		
 		</div>
 	</div>
+	<div id="poweredByBNB">
+		Powered by BNB Beacon Chain
+	</div>
+
+	<p class="ikun-info">
+		Contract address: <a href="https://testnet.bscscan.com/address/0x12025dEE2e50A8807735e9A67B63a88e3440fB58" target="_blank" class="link">0x12025dEE2e50A8807735e9A67B63a88e3440fB58</a>
+	</p>
+
 </body>
 </html>

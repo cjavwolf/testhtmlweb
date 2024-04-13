@@ -9,20 +9,16 @@
     <script>
     let contract;
     
-    // 初始化 Web3
     window.addEventListener('load', async () => {
         const connectWalletButton = document.getElementById('connectWalletButton');
         
         if (window.ethereum) {
             try {
-                // 等待用户连接钱包
                 await window.ethereum.enable();
-                console.log('Connected to wallet');
     
-                // 初始化 contract
                 const web3 = new Web3(window.ethereum);
-                const contractAddress = '0x12025dEE2e50A8807735e9A67B63a88e3440fB58'; // 合约地址
-                const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // 替换成你的合约 ABI
+                const contractAddress = '0x12025dEE2e50A8807735e9A67B63a88e3440fB58'; 
+                const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; 
                 contract = new web3.eth.Contract(contractABI, contractAddress);
             } catch (error) {
                 console.error('User denied wallet connection');
@@ -30,7 +26,6 @@
             
             connectWalletButton.addEventListener('click', async () => {
                 try {
-                    // 请求用户授权连接钱包
                     await window.ethereum.request({ method: 'eth_requestAccounts' });
                     console.log('Connected to wallet');
                 } catch (error) {
@@ -44,10 +39,8 @@
         }
     });
     
-    // 连接钱包
     async function connectWallet() {
         try {
-            // 请求用户授权连接钱包
             await window.ethereum.request({ method: 'eth_requestAccounts' });
             document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
 			init();
@@ -57,7 +50,6 @@
         }
     }
     
-    // 获取代币信息
 	async function getTokenInfo() {
 		try {
 			const info = await contract.methods.getTokenInfo().call();
@@ -102,19 +94,17 @@
 		}
 	}
     
-    // 祈祷并铸币
     async function prayAndMint() {
         try {
             await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
             console.log('Pray and mint successful');
-            document.getElementById("prayAndMintResult").innerText = "Prayed and minted successfully!";
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Prayed and minted successfully!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("prayAndMintResult").innerText = `Error: ${error.message}`;
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
         }
     }
 
-    // 余额查询
     async function balanceof() {
         const address = document.getElementById("balanceaddress").value;
         try {
@@ -127,7 +117,6 @@
         }
     }
     
-    // 转账
     async function transferTokens() {
         const recipient = document.getElementById("transferRecipient").value;
         const amount = document.getElementById("transferAmount").value;
@@ -141,20 +130,18 @@
         }
     }
     
-    // 祭奠并销毁
     async function offerIncenseAndBurn() {
         const amount = document.getElementById("burnAmount").value;
         try {
             await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
             console.log('Offer incense and burn successful');
-            document.getElementById("offerIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("offerIncenseAndBurnResult").innerText = `Error: ${error.message}`;
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
         }
     }
 
-    // 获取铸造NFT费用
     async function getMintNFTCost() {
         try {
             const cost = await contract.methods.mintNFTCost().call();
@@ -165,7 +152,6 @@
         }
     }        
     
-    // 铸造NFT
     async function mintNFT() {
         try {
             await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
@@ -177,7 +163,6 @@
         }
     }
     
-    // 转移NFT
     async function transferNFT() {
         const tokenId = document.getElementById("nftId").value;
         const recipient = document.getElementById("nftRecipient").value;
@@ -191,7 +176,6 @@
         }
     }
     
-    // 设置NFT内容
     async function setNFTContent() {
         const tokenId = document.getElementById("nftIdContent").value;
         const name = document.getElementById("nftName").value;
@@ -206,7 +190,6 @@
         }
     }
     
-    // 获取指定用户的NFT代码（按页）
     async function getOwnerNFTCodesByPage() {
         const owner = document.getElementById("ownerAddress").value;
         const page = document.getElementById("pageNumberOwner").value;
@@ -220,7 +203,6 @@
         }
     }
     
-    // 获取所有已铸造的NFT代码（按页）
     async function getAllMintedNFTCodesByPage() {
         const page = document.getElementById("pageNumberMinted").value;
         try {
@@ -233,7 +215,6 @@
         }
     }
 
-    // 获取指定NFT的详细信息
     async function getNFTById() {
         const tokenId = document.getElementById("nftIdDetail").value;
         try {
@@ -246,7 +227,6 @@
         }
     }
     
-    // 获取指定NFT代码的详细信息
     async function getNFTByCode() {
         const code = document.getElementById("nftCode").value;
         try {
@@ -259,7 +239,6 @@
         }
     }
 
-    // 出售NFT
     async function sellNFT() {
         const nftId = document.getElementById("sellNFTId").value;
         const nftPrice = document.getElementById("sellNFTPrice").value;
@@ -272,7 +251,6 @@
         }
     }
 
-    // 取消出售NFT
     async function cancelSellNFT() {
         const nftId = document.getElementById("cancelSellNFTId").value;
         try {
@@ -284,7 +262,6 @@
         }
     }
 
-    // 获取正在出售的NFT编码（按页）
     async function getALLSellingNFTCodesByPage() {
         const page = document.getElementById("pageNumberSelling").value;
         try {
@@ -297,7 +274,6 @@
     }
 
 
-    // 购买NFT
     async function buyNFT() {
         const nftId = document.getElementById("buyNFTId").value;
         try {
@@ -310,21 +286,20 @@
     }
  
     
-    // 租赁广告位
+
     async function leaseAdvertisingSlot() {
         const slotId = document.getElementById("slotId").value;
         const duration = document.getElementById("leaseDuration").value;
         try {
             await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
             console.log('Lease advertising slot successful');
-            document.getElementById("leaseAdvertisingSlotResult").innerText = "Lease advertising slot successful!";
+            document.getElementById("adResultInfo").innerText = "Lease advertising slot successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("leaseAdvertisingSlotResult").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 设置广告内容
     async function setAdvertisingContent() {
         const slotId = document.getElementById("adSlotId").value;
         const title = document.getElementById("adTitle").value;
@@ -332,20 +307,26 @@
         try {
             await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
             console.log('Set advertising content successful');
-            document.getElementById("setAdvertisingContentResult").innerText = "Set advertising content successful!";
+            document.getElementById("adResultInfo").innerText = "Set advertising content successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("setAdvertisingContentResult").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 获取广告位信息
     async function getAdvertisingSlot() {
         const slotId = document.getElementById("adSlotIdInfo").value;
         try {
             const slot = await contract.methods.getAdvertisingSlot(slotId).call();
-            console.log(slot);
-            document.getElementById("adSlotInfoResult").innerText = JSON.stringify(slot);
+			const adSlotInfoResult = document.getElementById("adSlotInfoResult");
+			adSlotInfoResult.innerHTML = `
+				<p>AD ID: ${slot.id}</p>
+				<p>Title: ${slot.title}</p>
+				<p>Content: ${slot.content}</p>
+				<p>StartTime: ${new Date(slot.startTime * 1000)}</p>
+				<p>Duration: ${slot.duration}</p>
+				<p>Tenant: ${slot.tenant}</p>
+			`;
         } catch (error) {
             console.error('Error:', error);
             document.getElementById("adSlotInfoResult").innerText = `Error: ${error.message}`;
@@ -353,19 +334,17 @@
     }
 
     
-    // 获取所有空闲广告位
     async function getAllAdvertisingSlots() {
         try {
             const slots = await contract.methods.getAvailableSlots().call();
             console.log(slots);
-            document.getElementById("adSlotsByPageResult").innerText = JSON.stringify(slots);
+            document.getElementById("adResultInfo").innerText = JSON.stringify(slots);
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
     
-    // 获取广告日天单价
     async function getAdPrice() {
         try {
             const adData = await contract.methods.getOneDayLeaseCost().call();
@@ -378,7 +357,6 @@
     }
 	
 	window.onload = function() {
-		// 执行初始化方法
 		init();
 	};
 	
@@ -389,37 +367,34 @@
 	}
 
 
-	let availableSlots = []; // 空闲广告位数组
-	let currentIndex = 0; // 当前广告索引
+	let availableSlots = []; 
+	let currentIndex = 0; 
 
 	async function getAllAdvertisingSlotsToShow() {
 		try {
-			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 获取所有广告位
-			const unUsedSlots = (await contract.methods.getAvailableSlots().call()).map(slot => parseInt(slot)); // 获取空闲广告位并转换类型
+			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+			const unUsedSlots = (await contract.methods.getAvailableSlots().call()).map(slot => parseInt(slot)); 
 			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot));
 			console.log(allSlots);
 			console.log(unUsedSlots);
 			console.log(availableSlots);
 
-			showNextAd(); // 显示下一个广告
-			setInterval(showNextAd, 7000); // 每7秒更换广告
+			showNextAd();
+			setInterval(showNextAd, 7000);
 		} catch (error) {
-			console.error('Error:', error);
-			document.getElementById("adSlotsByPageResult").innerText = `Error: ${error.message}`;
+			document.getElementById("adSlotsByPageResult2").innerText = `Error: ${error.message}`;
 		}
 	}
 
 	function showNextAd() {
 		const adSlotContent = document.getElementById("adSlotContent");
-		adSlotContent.innerHTML = ""; // 清空之前的内容
+		adSlotContent.innerHTML = ""; 
 
-		// 如果没有空闲广告位，则不显示广告
 		if (availableSlots.length === 0) {
 			adSlotContent.innerText = "Advertising Space Available.";
 			return;
 		}
 
-		// 获取当前广告位的广告内容并显示
 		getAdContentBySlot(availableSlots[currentIndex])
 			.then(adContent => {
 				const adSlotDiv = document.createElement("div");
@@ -434,7 +409,7 @@
 				adSlotDiv.appendChild(titleParagraph);
 
 				const contentParagraph = document.createElement("p");
-				contentParagraph.classList.add("content"); // 添加 content 类
+				contentParagraph.classList.add("content");
 				contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
 				adSlotDiv.appendChild(contentParagraph);
 
@@ -452,7 +427,6 @@
 
 				adSlotContent.appendChild(adSlotDiv);
 
-				// 更新索引以显示下一个广告
 				currentIndex = (currentIndex + 1) % availableSlots.length;
 			})
 			.catch(error => {
@@ -541,11 +515,13 @@
             resize: both; 
             padding: 5px; 
         }
+		
 		.wallet-wrapper {
 			margin-top: 50px !important;
 			position: fixed;
-			top: 20px; /* 距离顶部的距离 */
-			right: 20px; /* 距离右侧的距离 */
+			top: 20px;
+			right: 20px;
+			z-index: 9999; /* 设置一个较高的 z-index 值，确保在最顶层 */
 		}
 
 		.wallet-container {
@@ -554,44 +530,44 @@
 		}
 
 		.wallet-button {
-			width: 100px; /* 按钮的固定宽度 */
-			border: none; /* 移除默认边框 */
-			border-bottom: 1px dashed black; 
+			width: 100px;
+			border: none;
+			border-bottom: 1px dashed black;
 			cursor: pointer;
-			margin-top: 10px; /* 与上方卡片的间距 */
-			border-radius: 5px; /* 圆角 */
-			display: block; /* 按钮块级显示 */
-			text-align: center; /* 按钮文本居中 */
+			margin-top: 10px;
+			border-radius: 5px;
+			display: block;
+			text-align: center;
 			background-image: linear-gradient(to right, black 50%, transparent 50%);
 			background-size: 2px 100%;
 			background-repeat: repeat-x;
-			color: white; /* 设置文本颜色为白色 */
+			color: white;
 			font-size: 16px;
 		}
 
 		.wallet-result {
-			margin-left: 5px; /* 结果与按钮之间的间距 */
+			margin-left: 5px;
 		}
 
 		.separator {
-			display: flex; /* 使用 Flexbox 布局 */
-			align-items: center; /* 垂直居中对齐 */
-			margin-top: 20px; /* 设置分隔符与上方元素的间距 */
-			margin-bottom: 20px; /* 设置分隔符与下方元素的间距 */
+			display: flex; 
+			align-items: center; 
+			margin-top: 20px;
+			margin-bottom: 20px;
 		}
 
 		.separator-title {
-			margin-right: 10px; /* 设置标题和标记之间的间距 */
-			font-weight: bold; /* 设置标题的粗体 */
+			margin-right: 10px; 
+			font-weight: bold; 
 			border: 1px dashed black;
 			transform: skewX(-10deg);
-			padding: 5px 10px; /* 设置外边框的内边距 */
-			border-radius: 5px; /* 圆角 */
+			padding: 5px 10px; 
+			border-radius: 5px; 
 		}
 
 		.separator-line {
-			flex: 1; /* 让分隔线占据剩余的空间 */
-			border-top: 1px solid #ccc; /* 设置分隔符的顶部边框 */
+			flex: 1;
+			border-top: 1px solid #ccc;
 		}
 
 		
@@ -615,7 +591,7 @@
 		    box-sizing: border-box;
 		    margin-right: 10px;
 		    position: relative;
-		    overflow: hidden; /* 隐藏溢出内容 */
+		    overflow: hidden;
 		}
 		
 		.ad-slot {
@@ -645,19 +621,17 @@
 
 		.refresh-button {
 			padding: 5px 10px;
-			/* background-color: #007bff;
-			color: #fff;*/
 			border: none;
 			cursor: pointer;
-			margin-top: 10px; /* 与上方卡片的间距 */
-			border-radius: 5px; /* 圆角 */
-			display: block; /* 按钮块级显示 */
-			width: 100%; /* 按钮宽度填充卡片宽度 */
-			text-align: center; /* 按钮文本居中 */
+			margin-top: 10px;
+			border-radius: 5px;
+			display: block; 
+			width: 100%; 
+			text-align: center;
 			background-image: linear-gradient(to right, black 50%, transparent 50%);
 			background-size: 2px 100%;
 			background-repeat: repeat-x;
-			color: white; /* 设置文本颜色为白色 */
+			color: white; 
 			font-size: 16px;
 		}
 
@@ -665,7 +639,7 @@
 		.button-container {
 			display: flex;
 			justify-content: space-between;
-			margin-top: 5px; /* 按钮之间的间距 */
+			margin-top: 5px; 
 		}
 		
 		.card-container-button {
@@ -673,8 +647,8 @@
 			border: none;
 			justify-content: space-between;
 			align-items: flex-start;
-			width: 95%; /* 或者您想要的宽度 */
-			margin: 0 auto; /* 水平居中 */
+			width: 95%; 
+			margin: 0 auto;
 		}
 		
 		.left-card-button,
@@ -708,7 +682,7 @@
 		    box-sizing: border-box;
 		    margin-right: 10px;
 		    position: relative;
-		    overflow: hidden; /* 隐藏溢出内容 */
+		    overflow: hidden; 
 		}
 		.static-text-coin {
             font-family: monospace; 
@@ -725,30 +699,28 @@
 		
 		.offer-incense-container {
 			display: flex;
-			align-items: center; /* 垂直居中 */
+			align-items: center;
 		}
 
 		.offer-incense-container input[type="number"] {
-			flex: 1; /* 让输入框占据剩余空间 */
-			margin-right: 10px; /* 添加间距 */
+			flex: 1; 
+			margin-right: 10px; 
 		}
 		
 		
 		.common-button {
 			padding: 5px 10px;
-			/* background-color: #007bff;
-			color: #fff;*/
 			border: none;
 			cursor: pointer;
-			margin-top: 3px; /* 与上方卡片的间距 */
-			border-radius: 5px; /* 圆角 */
-			display: block; /* 按钮块级显示 */
-			width: 100%; /* 按钮宽度填充卡片宽度 */
-			text-align: center; /* 按钮文本居中 */
+			margin-top: 3px;
+			border-radius: 5px; 
+			display: block;
+			width: 100%;
+			text-align: center;
 			background-image: linear-gradient(to right, black 50%, transparent 50%);
 			background-size: 2px 100%;
 			background-repeat: repeat-x;
-			color: white; /* 设置文本颜色为白色 */
+			color: white;
 			font-size: 16px;
 		}
 		
@@ -759,7 +731,7 @@
 			width: 300px;
 			text-align: center;
 			font-size: 16px;
-			border: 1px dashed #ccc; /* 添加虚线框线 */
+			border: 1px dashed #ccc;
 		}
 		.balanceaddress {
 			padding: 5px 10px;
@@ -768,7 +740,7 @@
 			width: 300px;
 			text-align: center;
 			font-size: 16px;
-			border: 1px dashed #ccc; /* 添加虚线框线 */
+			border: 1px dashed #ccc; 
 		}
 		.transferRecipient {
 			padding: 5px 10px;
@@ -777,7 +749,7 @@
 			width: 60%;
 			text-align: center;
 			font-size: 16px;
-			border: 1px dashed #ccc; /* 添加虚线框线 */
+			border: 1px dashed #ccc;
 		}
 		.transferAmount {
 			padding: 5px 10px;
@@ -786,7 +758,7 @@
 			width: 33%;
 			text-align: center;
 			font-size: 16px;
-			border: 1px dashed #ccc; /* 添加虚线框线 */
+			border: 1px dashed #ccc;
 		}
 		.common-text-input {
 			padding: 5px 10px;
@@ -795,16 +767,25 @@
 			width: 30%;
 			text-align: center;
 			font-size: 16px;
-			border: 1px dashed #ccc; /* 添加虚线框线 */
+			border: 1px dashed #ccc;
 		}
 		.common-container {
 			display: flex;
-			align-items: center; /* 垂直居中 */
+			align-items: center; 
 		}
 
 		.common-container input[type="number"] {
-			flex: 1; /* 让输入框占据剩余空间 */
-			margin-right: 10px; /* 添加间距 */
+			flex: 1; 
+			margin-right: 10px; 
+		}
+		.common-text-adContent {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
 		}
 		
 		
@@ -827,7 +808,7 @@
 		    box-sizing: border-box;
 		    margin-right: 10px;
 		    position: relative;
-		    overflow: hidden; /* 隐藏溢出内容 */
+		    overflow: hidden;
 		}
 		.static-text-nft {
             font-family: monospace; 
@@ -860,7 +841,7 @@
 		    box-sizing: border-box;
 		    margin-right: 10px;
 		    position: relative;
-		    overflow: hidden; /* 隐藏溢出内容 */
+		    overflow: hidden;
 		}
 		.static-text-ad {
             font-family: monospace; 
@@ -881,7 +862,74 @@
 			width: 100px;
 			text-align: center;
 			font-size: 16px;
-			border: 1px dashed #ccc; /* 添加虚线框线 */
+			border: 1px dashed #ccc;
+		}
+		.coin-result {
+			width: 100%;
+			height: 266px;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.coin-info-top {
+			margin-top: 25px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 12s linear infinite;
+		}
+		
+		.coin-info-under {
+			margin-top: 50px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 12s linear infinite;
+		}
+
+		@keyframes scroll {
+			0% {
+				transform: translateX(100%);
+				opacity: 1; /* 初始不透明 */
+			}
+			50% {
+				opacity: 1; /* 保持不透明，直到滚动到一半位置 */
+			}
+			100% {
+				transform: translateX(-100%);
+				opacity: 0; /* 完全透明，即消失 */
+			}
+		}
+		.ad-result {
+			width: 100%;
+			height: 60px;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+		.ad-info-top {
+			margin-top: 25px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 12s linear infinite;
+		}
+		
+		.ad-info-under {
+			margin-top: 50px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 12s linear infinite;
 		}
 		
 		
@@ -1011,17 +1059,10 @@
 			</div>
 			<div>
 				<button class="common-button" onclick="prayAndMint()" >Pray and Mint</button>
-				<div>
-					<p id="prayAndMintResult"></p>
-				</div>
 			</div>
 			<div class="offer-incense-container">
 				<input type="number" id="burnAmount" class="burnAmount" placeholder="Amount to Burn">
-
 				<button class="common-button" onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
-			</div>
-			<div>
-				<p id="offerIncenseAndBurnResult"></p>
 			</div>
 		</div>
 		<div class="right-card-coin">
@@ -1029,17 +1070,16 @@
 			<div class="common-container">
 				<input type="text" id="balanceaddress" class="balanceaddress" placeholder="Balance Address">
 				<button onclick="balanceof()" class="common-button">Get Address Balance</button>
-				<p id="balanceofResult"></p>
 			</div>
-
-			
 			<div>
-				<!-- 输入条件：接收地址和数量 -->
 				<input type="text" id="transferRecipient" class="transferRecipient" placeholder="Recipient Address">
 				<input type="number" id="transferAmount" class="transferAmount" placeholder="Amount">
 				<button onclick="transferTokens()" class="common-button">Transfer Tokens</button>
-				<!-- 输出结果：转账成功的提示信息或错误信息 -->
-				<p id="transferTokensResult"></p>
+			</div>
+			<div class="coin-result">
+				<p id="prayAndMintAndOfferIncenseAndBurnResult" class="coin-info-top"></p>
+				<p id="balanceofResult" class="coin-info-under"></p>
+				<p id="transferTokensResult" class="coin-info-under"></p>
 			</div>
 		</div>
 	</div>
@@ -1052,57 +1092,44 @@
 	
 	<div class="card-container-nft">
 		<div class="left-card-nft">
-			<!-- 6. 铸造NFT -->
 			<button onclick="mintNFT()" class="common-button">Mint NFT</button>
 			<div>
-				<!-- 输入条件：无 -->
-				<!-- 输出结果：NFT铸造成功的提示信息或错误信息 -->
 				<p id="mintNFTResult"></p>
 			</div>
 			
 			<div>
-				<!-- 输入条件：NFT ID、名称和元数据 -->
 				<input type="text" id="nftIdContent" class="common-text-comwidth" placeholder="NFT ID">
 				<input type="text" id="nftName" class="common-text-input" placeholder="NFT Name">
 				<input type="text" id="nftMetadata" class="common-text-input" placeholder="NFT Metadata">
 				<button onclick="setNFTContent()" class="common-button">Set NFT Content</button>
-				<!-- 输出结果：设置成功的提示信息或错误信息 -->
 				<p id="setNFTContentResult"></p>
 			</div>
 
 			
 			<div>
-				<!-- 输入条件：NFT ID和接收地址 -->
 				<input type="text" id="nftId" class="common-text-input" placeholder="NFT ID">
 				<input type="text" id="nftRecipient" class="common-text-input" placeholder="Recipient Address">
 				<button onclick="transferNFT()" class="common-button">Transfer NFT</button>
-				<!-- 输出结果：NFT转移成功的提示信息或错误信息 -->
 				<p id="transferNFTResult"></p>
 			</div>
 			
 			
 			<div class="common-container">
-				<!-- 输入条件：NFT ID -->
 				<input type="text" id="nftIdDetail" class="common-text-comwidth" placeholder="NFT ID">
 				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
-				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="nftDetailResult"></p>
 			</div>
 
 			<div class="common-container">
-				<!-- 输入条件：NFT代码 -->
 				<input type="text" id="nftCode" class="common-text-comwidth" placeholder="NFT Code">
 				<button onclick="getNFTByCode()" class="common-button">Get NFT By Code</button>
-				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="nftByCodeResult"></p>
 			</div>
 			
 			<div>
-				<!-- 输入条件：用户地址和页码 -->
 				<input type="text" id="ownerAddress" class="common-text-input" placeholder="Owner Address">
 				<input type="number" id="pageNumberOwner" class="common-text-input" placeholder="Page Number">
 				<button onclick="getOwnerNFTCodesByPage()" class="common-button">Get Owner NFT Codes By Page</button>
-				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="ownerNFTCodesResult"></p>
 			</div>
 		</div>
@@ -1111,43 +1138,33 @@
 		<div class="right-card-nft">
 
 			<div class="common-container">
-				<!-- 输入条件：页码 -->
 				<input type="number" id="pageNumberMinted" class="common-text-comwidth" placeholder="Page Number">
 				<button onclick="getAllMintedNFTCodesByPage()" class="common-button">Get All Minted NFT Codes By Page</button>
-				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="mintedNFTCodesResult"></p>
 			</div>
 
 			<div>
-				<!-- 输入条件：NFT代码 -->
 				<input type="number" id="sellNFTId" class="common-text-input" placeholder="NFT ID">
 				<input type="number" id="sellNFTPrice" class="common-text-input" placeholder="Sell price">
 				<button onclick="sellNFT()" class="common-button">Sell NFT</button>
-				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="sellNFTResult"></p>
 			</div>
 
 			<div class="common-container">
-				<!-- 输入条件：NFT代码 -->
 				<input type="number" id="cancelSellNFTId" class="common-text-comwidth" placeholder="NFT ID">
 				<button onclick="cancelSellNFT()" class="common-button">Cancel Sell NFT</button>
-				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="cancelSellNFTResult"></p>
 			</div>
 
 			<div class="common-container">
-				<!-- 输入条件：页码 -->
 				<input type="number" id="pageNumberSelling" class="common-text-comwidth" placeholder="Page Number">
 				<button onclick="getALLSellingNFTCodesByPage()" class="common-button">Get All Selling NFT Codes By Page</button>
-				<!-- 输出结果：JSON格式的NFT代码列表 -->
 				<p id="pageNumberSellingResult"></p>
 			</div>
 
 			<div class="common-container">
-				<!-- 输入条件：NFT代码 -->
 				<input type="number" id="buyNFTId" class="common-text-comwidth" placeholder="NFT ID">
 				<button onclick="buyNFT()" class="common-button">Buy NFT</button>
-				<!-- 输出结果：JSON格式的NFT详细信息 -->
 				<p id="buyNFTResult"></p>
 			</div>
 				    
@@ -1162,33 +1179,35 @@
 
 	<div class="card-container-ad">
 		<div class="left-card-ad">
+			<div class="ad-result">
+				<p id="adResultInfo" class="ad-info-top"></p>
+				<p id="adSlotInfoResult" class="ad-info-top"></p>
+			</div>
+		
+			<div class="common-container">
+				<button onclick="getAllAdvertisingSlots()" class="common-button">Get Available Ad Slots</button>
+			</div>
 			
 			<div class="common-container">
-				<!-- 输入条件：广告位ID和租期 -->
 				<input type="number" id="slotId" class="common-text-comwidth" placeholder="Slot ID">
 				<input type="number" id="leaseDuration" class="common-text-comwidth" placeholder="Lease Duration">
 				<button onclick="leaseAdvertisingSlot()" class="common-button">Lease Advertising Slot</button>
-				<!-- 输出结果：租赁成功的提示信息或错误信息 -->
-				<p id="leaseAdvertisingSlotResult"></p>
 			</div>
 			
-			<div>
-				<!-- 输入条件：广告位ID、标题和内容 -->
+			<div class="common-container">
 				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID">
 				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
-				<input type="text" id="adContent" class="common-text-input" placeholder="Content">
+				<input type="text" id="adContent" class="common-text-adContent" placeholder="Content">
+			</div>
+			
+			<div class="common-container">
 				<button onclick="setAdvertisingContent()" class="common-button">Set Advertising Content</button>
-				<!-- 输出结果：设置成功的提示信息或错误信息 -->
-				<p id="setAdvertisingContentResult"></p>
 			</div>
 
 
 			<div class="common-container">
-				<!-- 输入条件：广告位ID -->
 				<input type="number" id="adSlotIdInfo" class="common-text-comwidth" placeholder="Slot ID">
 				<button onclick="getAdvertisingSlot()" class="common-button">Get Advertising Slot</button>
-				<!-- 输出结果：JSON格式的广告位信息 -->
-				<p id="adSlotInfoResult"></p>
 			</div>
 		
 		</div>

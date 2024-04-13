@@ -24,6 +24,10 @@
             
         } 
     });
+	
+	window.onload = function() {
+		connectWallet();
+	};
     
     async function connectWallet() {
         try {
@@ -304,10 +308,6 @@
             document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
         }
     }
-	
-	window.onload = function() {
-		init();
-	};
 	
 	function init() {
 		getTokenInfo();

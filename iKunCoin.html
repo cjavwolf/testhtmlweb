@@ -156,10 +156,10 @@
         try {
             await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
             console.log('Mint NFT successful');
-            document.getElementById("mintNFTResult").innerText = "Mint NFT successful!";
+            document.getElementById("nftLeftInfoResult").innerText = "Mint NFT successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("mintNFTResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
@@ -169,10 +169,10 @@
         try {
             await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
             console.log('Transfer NFT successful');
-            document.getElementById("transferNFTResult").innerText = "Transfer NFT successful!";
+            document.getElementById("nftLeftInfoResult").innerText = "Transfer NFT successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("transferNFTResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
@@ -183,10 +183,10 @@
         try {
             await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
             console.log('Set NFT content successful');
-            document.getElementById("setNFTContentResult").innerText = "Set NFT content successful!";
+            document.getElementById("nftLeftInfoResult").innerText = "Set NFT content successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("setNFTContentResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
@@ -196,10 +196,10 @@
         try {
             const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
             console.log(codes);
-            document.getElementById("ownerNFTCodesResult").innerText = JSON.stringify(codes);
+            document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("ownerNFTCodesResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
@@ -208,10 +208,10 @@
         try {
             const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
             console.log(codes);
-            document.getElementById("mintedNFTCodesResult").innerText = JSON.stringify(codes);
+            document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("mintedNFTCodesResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -219,11 +219,20 @@
         const tokenId = document.getElementById("nftIdDetail").value;
         try {
             const nft = await contract.methods.getNFTById(tokenId).call();
-            console.log(nft);
-            document.getElementById("nftDetailResult").innerText = JSON.stringify(nft);
+			const nftInfo = document.getElementById("nftRightInfoResult");
+			nftInfo.innerHTML = `
+				<p>NFT TokenID: ${nft.tokenId}</p>
+				<p>NFT Code: ${nft.tokenId}</p>
+				<p>Name: ${nft.tokenId}</p>
+				<p>Metadata: ${nft.metadata}</p>
+				<p>isAssigned: ${nft.isAssigned}</p>
+				<p>owner: ${nft.owner}</p>
+				<p>isForSale: ${nft.isForSale}</p>
+				<p>price: ${nft.price}</p>
+			`;
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("nftDetailResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
     
@@ -232,10 +241,10 @@
         try {
             const nft = await contract.methods.getNFTByCode(code).call();
             console.log(nft);
-            document.getElementById("nftByCodeResult").innerText = JSON.stringify(nft);
+            document.getElementById("nftRightInfoResult").innerText = JSON.stringify(nft);
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("nftByCodeResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -244,10 +253,10 @@
         const nftPrice = document.getElementById("sellNFTPrice").value;
         try {
             await contract.methods.sellNFT(nftId, nftPrice).send({ from: window.ethereum.selectedAddress });
-            document.getElementById("sellNFTResult").innerText = "NFT is Selling!";
+            document.getElementById("nftRightInfoResult").innerText = "NFT is Selling!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("sellNFTResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -255,10 +264,10 @@
         const nftId = document.getElementById("cancelSellNFTId").value;
         try {
             await contract.methods.cancelSellNFT(nftId).send({ from: window.ethereum.selectedAddress });
-            document.getElementById("cancelSellNFTResult").innerText = "cancelSellNFT Successful!";
+            document.getElementById("nftRightInfoResult").innerText = "cancelSellNFT Successful!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("cancelSellNFTResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -266,10 +275,10 @@
         const page = document.getElementById("pageNumberSelling").value;
         try {
             const codes = await contract.methods.getAllSellingNFTCodesByPage(page).call();
-            document.getElementById("pageNumberSellingResult").innerText = JSON.stringify(codes);
+            document.getElementById("nftRightInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("pageNumberSellingResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -278,10 +287,10 @@
         const nftId = document.getElementById("buyNFTId").value;
         try {
             await contract.methods.buyNFT(nftId).send({ from: window.ethereum.selectedAddress });
-            document.getElementById("buyNFTResult").innerText = "Buy NFT successful!!";
+            document.getElementById("nftRightInfoResult").innerText = "Buy NFT successful!!";
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("buyNFTResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
  
@@ -447,9 +456,6 @@
 	    }
 	    return lines.slice(0, maxLines).join('\n') + '...';
 	}
-
-
-
 
 	</script>
     <style>
@@ -766,6 +772,11 @@
 			display: flex;
 			align-items: center; 
 		}
+		.common-container-margin {
+			display: flex;
+			align-items: center; 
+			margin-top: 15px;
+		}
 
 		.common-container input[type="number"] {
 			flex: 1; 
@@ -836,7 +847,7 @@
 
 		.left-card-ad {
 		    width: 100%;
-		    height: 266px;
+		    height: 340px;
 		    border: 1px solid #ccc;
 		    padding: 10px;
 		    font-family: Arial, sans-serif;
@@ -867,14 +878,24 @@
 			font-size: 16px;
 			border: 1px dashed #ccc;
 		}
+		.common-text-comwidth-max {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 180px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
 		.coin-result {
 			width: 100%;
-			height: 266px;
+			height: 67%;
 			border: 1px solid #ccc;
 			font-family: Arial, sans-serif;
 			border-radius: 10px;
 			box-sizing: border-box;
 			margin-top: 15px;
+			margin-bottom: 15px;
 			position: relative;
 			overflow: hidden;
 		}
@@ -910,7 +931,7 @@
 		}
 		.ad-result {
 			width: 100%;
-			height: 60px;
+			height: 65px;
 			border: 1px solid #ccc;
 			font-family: Arial, sans-serif;
 			border-radius: 10px;
@@ -924,17 +945,35 @@
 			left: 0;
 			top: 0;
 			white-space: nowrap;
-			animation: scroll 12s linear infinite;
+			animation: scroll 18s linear infinite;
 		}
 		
-		.ad-info-under {
-			margin-top: 50px;
-			left: 0;
-			top: 0;
-			white-space: nowrap;
-			animation: scroll 12s linear infinite;
+		.nft-result-left {
+			width: 100%;
+			height: 30%;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 10px;
+			margin-bottom: 15px;
+			position: relative;
+			overflow: hidden;
 		}
 		
+		.nft-result-right {
+			width: 100%;
+			height: 30%;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 10px;
+			margin-bottom: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+			
 		
 
     </style>
@@ -1060,10 +1099,10 @@
 	,,,,,,,,,,,,,,,,,,,-,,,,,,,,,,,,,,.,.,,,,,,,,,,,,,,,,,,.!,,,,,,,,
 	:,,,,,,,,,,,,,,,,-".,,,,,,,,,,,,,,,,-,,,,,,,,,,,,,,,,."-,,,,,,,,,
 			</div>
-			<div>
+			<div class="common-container">
 				<button class="common-button" onclick="prayAndMint()" >Pray and Mint</button>
 			</div>
-			<div class="offer-incense-container">
+			<div class="common-container-margin">
 				<input type="number" id="burnAmount" class="burnAmount" placeholder="Amount to Burn">
 				<button class="common-button" onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
 			</div>
@@ -1074,7 +1113,7 @@
 				<input type="text" id="balanceaddress" class="balanceaddress" placeholder="Balance Address">
 				<button onclick="balanceof()" class="common-button">Get Address Balance</button>
 			</div>
-			<div class="common-container">
+			<div class="common-container-margin">
 				<input type="text" id="transferRecipient" class="transferRecipient" placeholder="Recipient Address">
 				<input type="number" id="transferAmount" class="transferAmount" placeholder="Amount">
 				
@@ -1098,92 +1137,84 @@
 	
 	<div class="card-container-nft">
 		<div class="left-card-nft">
-			<button onclick="mintNFT()" class="common-button">Mint NFT</button>
-			<div>
-				<p id="mintNFTResult"></p>
+		
+			<div class="nft-result-left">
+				<p id="nftLeftInfoResult"></p>
 			</div>
-			
 			<div class="common-container">
+				<button onclick="mintNFT()" class="common-button">Mint NFT</button>
+			</div>			
+			
+			<div class="common-container-margin">
 				<input type="text" id="nftIdContent" class="common-text-comwidth" placeholder="NFT ID">
 				<input type="text" id="nftName" class="common-text-input" placeholder="NFT Name">
 				<input type="text" id="nftMetadata" class="common-text-nft" placeholder="NFT Metadata">
 			</div>
 			<div class="common-container">
 				<button onclick="setNFTContent()" class="common-button">Set NFT Content</button>
-				<p id="setNFTContentResult"></p>
 			</div>
 			
-			
-			<div class="common-container">
+			<div class="common-container-margin">
 				<input type="text" id="nftId" class="common-text-input" placeholder="NFT ID">
 				<input type="text" id="nftRecipient" class="common-text-nft" placeholder="Recipient Address">
 			</div>
 			<div class="common-container">
 				<button onclick="transferNFT()" class="common-button">Transfer NFT</button>
-				<p id="transferNFTResult"></p>
 			</div>
-			
-			
-			<div class="common-container">
-				<input type="text" id="nftIdDetail" class="common-text-comwidth" placeholder="NFT ID">
-				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
-				<p id="nftDetailResult"></p>
-			</div>
-
-			<div class="common-container">
-				<input type="text" id="nftCode" class="common-text-comwidth" placeholder="NFT Code">
-				<button onclick="getNFTByCode()" class="common-button">Get NFT By Code</button>
-				<p id="nftByCodeResult"></p>
-			</div>
-			
-			<div class="common-container">
-				<input type="text" id="ownerAddress" class="common-text-input" placeholder="Owner Address">
-				<input type="number" id="pageNumberOwner" class="common-text-nft" placeholder="Page Number">
+			<div class="common-container-margin">
+				<input type="number" id="pageNumberOwner" class="common-text-input" placeholder="Page Number">
+				<input type="text" id="ownerAddress" class="common-text-nft" placeholder="Owner Address">
 			</div>
 			
 			<div class="common-container">
 				<button onclick="getOwnerNFTCodesByPage()" class="common-button">Get Owner NFT Codes By Page</button>
-				<p id="ownerNFTCodesResult"></p>
+			</div>
+			
+			<div class="common-container-margin">
+				<input type="number" id="pageNumberMinted" class="common-text-input" placeholder="Page Number">
+				<button onclick="getAllMintedNFTCodesByPage()" class="common-button">Get All Minted NFT Codes By Page</button>
 			</div>
 		</div>
 		
 		
 		<div class="right-card-nft">
-
+			<div class="nft-result-right">
+				<p id="nftRightInfoResult"></p>
+			</div>
+		
 			<div class="common-container">
-				<input type="number" id="pageNumberMinted" class="common-text-comwidth" placeholder="Page Number">
-				<button onclick="getAllMintedNFTCodesByPage()" class="common-button">Get All Minted NFT Codes By Page</button>
-				<p id="mintedNFTCodesResult"></p>
+				<input type="text" id="nftIdDetail" class="common-text-input" placeholder="NFT ID">
+				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
 			</div>
 
-			<div class="common-container">
+			<div class="common-container-margin">
+				<input type="text" id="nftCode" class="common-text-input" placeholder="NFT Code">
+				<button onclick="getNFTByCode()" class="common-button">Get NFT By Code</button>
+			</div>
+
+			<div class="common-container-margin">
 				<input type="number" id="sellNFTId" class="common-text-input" placeholder="NFT ID">
 				<input type="number" id="sellNFTPrice" class="common-text-nft" placeholder="Sell price">
 			</div>
 			
 			<div class="common-container">
 				<button onclick="sellNFT()" class="common-button">Sell NFT</button>
-				<p id="sellNFTResult"></p>
 			</div>
 
-			<div class="common-container">
-				<input type="number" id="cancelSellNFTId" class="common-text-comwidth" placeholder="NFT ID">
+			<div class="common-container-margin">
+				<input type="number" id="cancelSellNFTId" class="common-text-input" placeholder="NFT ID">
 				<button onclick="cancelSellNFT()" class="common-button">Cancel Sell NFT</button>
-				<p id="cancelSellNFTResult"></p>
 			</div>
 
-			<div class="common-container">
-				<input type="number" id="pageNumberSelling" class="common-text-comwidth" placeholder="Page Number">
+			<div class="common-container-margin">
+				<input type="number" id="pageNumberSelling" class="common-text-input" placeholder="Page Number">
 				<button onclick="getALLSellingNFTCodesByPage()" class="common-button">Get All Selling NFT Codes By Page</button>
-				<p id="pageNumberSellingResult"></p>
 			</div>
 
-			<div class="common-container">
-				<input type="number" id="buyNFTId" class="common-text-comwidth" placeholder="NFT ID">
+			<div class="common-container-margin">
+				<input type="number" id="buyNFTId" class="common-text-input" placeholder="NFT ID">
 				<button onclick="buyNFT()" class="common-button">Buy NFT</button>
-				<p id="buyNFTResult"></p>
 			</div>
-				    
 		</div>
 	</div>
 
@@ -1199,17 +1230,17 @@
 				<p id="adResultInfo" class="ad-info-top"></p>
 			</div>
 		
-			<div class="common-container">
+			<div class="common-container-margin">
 				<button onclick="getAllAdvertisingSlots()" class="common-button">Get Available Ad Slots</button>
 			</div>
 			
-			<div class="common-container">
+			<div class="common-container-margin">
 				<input type="number" id="slotId" class="common-text-comwidth" placeholder="Slot ID">
-				<input type="number" id="leaseDuration" class="common-text-comwidth" placeholder="Lease Duration">
+				<input type="number" id="leaseDuration" class="common-text-comwidth-max" placeholder="Lease Duration">
 				<button onclick="leaseAdvertisingSlot()" class="common-button">Lease Advertising Slot</button>
 			</div>
 			
-			<div class="common-container">
+			<div class="common-container-margin">
 				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID">
 				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
 				<input type="text" id="adContent" class="common-text-adContent" placeholder="Content">
@@ -1220,7 +1251,7 @@
 			</div>
 
 
-			<div class="common-container">
+			<div class="common-container-margin">
 				<input type="number" id="adSlotIdInfo" class="common-text-comwidth" placeholder="Slot ID">
 				<button onclick="getAdvertisingSlot()" class="common-button">Get Advertising Slot</button>
 			</div>

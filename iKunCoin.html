@@ -36,16 +36,21 @@
 			init();
         } catch (error) {
             document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
-			var str = 'Please ensure your wallet is connected before proceeding with any actions!!!';
-			updateScrollingText(str);
-			document.getElementById("tokenInfoContent").innerText = str;
-			document.getElementById("adSlotContent").innerText = str;
-			document.getElementById("anotherCard").innerText = str;		
-			document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = str;		
-            document.getElementById("nftLeftInfoResult").innerText = str;		
-			document.getElementById("adResultInfo").innerText = str;
+			var msg = 'Please ensure your wallet is connected before proceeding with any actions!!!';
+			changeAllMsg(msg);
+			
         }
     }
+	
+	function changeAllMsg(msg) {
+		updateScrollingText(msg);
+		document.getElementById("tokenInfoContent").innerText = msg;
+		document.getElementById("adSlotContent").innerText = msg;
+		document.getElementById("anotherCard").innerText = msg;		
+		document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = msg;		
+		document.getElementById("nftLeftInfoResult").innerText = msg;		
+		document.getElementById("adResultInfo").innerText = msg;
+	}
     
 	async function getTokenInfo() {
 		try {

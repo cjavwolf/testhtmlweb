@@ -318,11 +318,11 @@
         const slotId = document.getElementById("adSlotIdInfo").value;
         try {
             const slot = await contract.methods.getAdvertisingSlot(slotId).call();
-			const adSlotInfoResult = document.getElementById("adSlotInfoResult");
+			const adSlotInfoResult = document.getElementById("adResultInfo");
 			adSlotInfoResult.innerHTML = `{AD ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById("adSlotInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
 
@@ -1197,7 +1197,6 @@
 		<div class="left-card-ad">
 			<div class="ad-result">
 				<p id="adResultInfo" class="ad-info-top"></p>
-				<p id="adSlotInfoResult" class="ad-info-top"></p>
 			</div>
 		
 			<div class="common-container">

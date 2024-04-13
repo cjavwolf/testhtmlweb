@@ -21,22 +21,16 @@
                 const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; 
                 contract = new web3.eth.Contract(contractABI, contractAddress);
             } catch (error) {
-                console.error('User denied wallet connection');
             }
             
             connectWalletButton.addEventListener('click', async () => {
                 try {
                     await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    console.log('Connected to wallet');
                 } catch (error) {
-                    console.error('User denied wallet connection');
                 }
             });
             
-            console.log('Web3 provider detected');
-        } else {
-            console.error('Web3 provider not detected');
-        }
+        } 
     });
     
     async function connectWallet() {
@@ -45,7 +39,6 @@
             document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
 			init();
         } catch (error) {
-            console.error('User denied wallet connection');
             document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
         }
     }
@@ -53,7 +46,6 @@
 	async function getTokenInfo() {
 		try {
 			const info = await contract.methods.getTokenInfo().call();
-			console.log(info);
 			
 			const tokenInfoContent = document.getElementById("tokenInfoContent");
 			tokenInfoContent.innerHTML = `
@@ -70,7 +62,6 @@
 				<p>Total Burned Num: ${info.totalBurnedNum}</p>
 			`;
 		} catch (error) {
-			console.error('Error:', error);
 			document.getElementById("tokenInfoContent").innerText = `Error: ${error.message}`;
 		}
 	}
@@ -80,8 +71,6 @@
 			const cost = await contract.methods.mintNFTCost().call();
 			const adData = await contract.methods.getOneDayLeaseCost().call();
 			const slots = await contract.methods.getAvailableSlots().call();
-
-			
 			const anotherCard = document.getElementById("anotherCard");
 			anotherCard.innerHTML = `
 				<p>Mint NFT Cost: ${cost}</p>
@@ -89,7 +78,6 @@
 				<p>Available Ad Slots: ${slots}</p>
 			`;
 		} catch (error) {
-			console.error('Error:', error);
 			document.getElementById("anotherCard").innerText = `Error: ${error.message}`;
 		}
 	}
@@ -97,10 +85,9 @@
     async function prayAndMint() {
         try {
             await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
-            console.log('Pray and mint successful');
             document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Prayed and minted successfully!";
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -109,10 +96,8 @@
         const address = document.getElementById("balanceaddress").value;
         try {
             const info = await contract.methods.balanceOf(address).call();
-            console.log(info);
             document.getElementById("balanceofResult").innerText = JSON.stringify(info);
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("balanceofResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -122,10 +107,8 @@
         const amount = document.getElementById("transferAmount").value;
         try {
             await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
-            console.log('Transfer successful');
             document.getElementById("transferTokensResult").innerText = "Transfer successful!";
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("transferTokensResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -134,10 +117,8 @@
         const amount = document.getElementById("burnAmount").value;
         try {
             await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
-            console.log('Offer incense and burn successful');
             document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -147,7 +128,6 @@
             const cost = await contract.methods.mintNFTCost().call();
             document.getElementById("getMintNFTCostResult").innerText = JSON.stringify(cost);
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("getMintNFTCostResult").innerText = `Error: ${error.message}`;
         }
     }        
@@ -155,10 +135,8 @@
     async function mintNFT() {
         try {
             await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
-            console.log('Mint NFT successful');
             document.getElementById("nftLeftInfoResult").innerText = "Mint NFT successful!";
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -168,10 +146,8 @@
         const recipient = document.getElementById("nftRecipient").value;
         try {
             await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
-            console.log('Transfer NFT successful');
             document.getElementById("nftLeftInfoResult").innerText = "Transfer NFT successful!";
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -182,10 +158,8 @@
         const metadata = document.getElementById("nftMetadata").value;
         try {
             await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
-            console.log('Set NFT content successful');
             document.getElementById("nftLeftInfoResult").innerText = "Set NFT content successful!";
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -195,10 +169,8 @@
         const page = document.getElementById("pageNumberOwner").value;
         try {
             const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
-            console.log(codes);
             document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -207,10 +179,8 @@
         const page = document.getElementById("pageNumberMinted").value;
         try {
             const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
-            console.log(codes);
             document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -220,18 +190,8 @@
         try {
             const nft = await contract.methods.getNFTById(tokenId).call();
 			const nftInfo = document.getElementById("nftRightInfoResult");
-			nftInfo.innerHTML = `
-				<p>NFT TokenID: ${nft.tokenId}</p>
-				<p>NFT Code: ${nft.tokenId}</p>
-				<p>Name: ${nft.tokenId}</p>
-				<p>Metadata: ${nft.metadata}</p>
-				<p>isAssigned: ${nft.isAssigned}</p>
-				<p>owner: ${nft.owner}</p>
-				<p>isForSale: ${nft.isForSale}</p>
-				<p>price: ${nft.price}</p>
-			`;
+			nftInfo.innerHTML = `{NFT TokenID: ${nft.id},   NFT Code: ${nft.code},   Name: ${nft.nftName},   Metadata: ${nft.metadata},   isAssigned: ${nft.isAssigned},   owner: ${nft.owner},   isForSale: ${nft.isForSale},   price: ${nft.price} }`;
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -240,10 +200,9 @@
         const code = document.getElementById("nftCode").value;
         try {
             const nft = await contract.methods.getNFTByCode(code).call();
-            console.log(nft);
-            document.getElementById("nftRightInfoResult").innerText = JSON.stringify(nft);
+            const nftInfo = document.getElementById("nftRightInfoResult");
+			nftInfo.innerHTML = `{NFT TokenID: ${nft.id},   NFT Code: ${nft.code},   Name: ${nft.nftName},   Metadata: ${nft.metadata},   isAssigned: ${nft.isAssigned},   owner: ${nft.owner},   isForSale: ${nft.isForSale},   price: ${nft.price} }`;
         } catch (error) {
-            console.error('Error:', error);
             document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -255,7 +214,7 @@
             await contract.methods.sellNFT(nftId, nftPrice).send({ from: window.ethereum.selectedAddress });
             document.getElementById("nftRightInfoResult").innerText = "NFT is Selling!";
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -266,7 +225,7 @@
             await contract.methods.cancelSellNFT(nftId).send({ from: window.ethereum.selectedAddress });
             document.getElementById("nftRightInfoResult").innerText = "cancelSellNFT Successful!";
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -277,7 +236,7 @@
             const codes = await contract.methods.getAllSellingNFTCodesByPage(page).call();
             document.getElementById("nftRightInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -289,7 +248,7 @@
             await contract.methods.buyNFT(nftId).send({ from: window.ethereum.selectedAddress });
             document.getElementById("nftRightInfoResult").innerText = "Buy NFT successful!!";
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -301,10 +260,9 @@
         const duration = document.getElementById("leaseDuration").value;
         try {
             await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
-            console.log('Lease advertising slot successful');
             document.getElementById("adResultInfo").innerText = "Lease advertising slot successful!";
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
@@ -315,10 +273,9 @@
         const content = document.getElementById("adContent").value;
         try {
             await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
-            console.log('Set advertising content successful');
             document.getElementById("adResultInfo").innerText = "Set advertising content successful!";
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
@@ -330,7 +287,7 @@
 			const adSlotInfoResult = document.getElementById("adResultInfo");
 			adSlotInfoResult.innerHTML = `{AD ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
@@ -339,10 +296,9 @@
     async function getAllAdvertisingSlots() {
         try {
             const slots = await contract.methods.getAvailableSlots().call();
-            console.log(slots);
             document.getElementById("adResultInfo").innerText = JSON.stringify(slots);
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
     }
@@ -350,10 +306,9 @@
     async function getAdPrice() {
         try {
             const adData = await contract.methods.getOneDayLeaseCost().call();
-            console.log(adData);
             document.getElementById("adDataResult").innerText = JSON.stringify(adData);
         } catch (error) {
-            console.error('Error:', error);
+  
             document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
         }
     }
@@ -377,9 +332,6 @@
 			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 			const unUsedSlots = (await contract.methods.getAvailableSlots().call()).map(slot => parseInt(slot)); 
 			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot));
-			console.log(allSlots);
-			console.log(unUsedSlots);
-			console.log(availableSlots);
 
 			showNextAd();
 			setInterval(showNextAd, 7000);
@@ -432,7 +384,6 @@
 				currentIndex = (currentIndex + 1) % availableSlots.length;
 			})
 			.catch(error => {
-				console.error('Error:', error);
 				adSlotContent.innerText = `Error: ${error.message}`;
 			});
 
@@ -441,10 +392,8 @@
 	async function getAdContentBySlot(slotId) {
 		try {
 			const adContent = await contract.methods.getAdvertisingSlot(slotId).call();
-			console.log("Ad content for slot " + slotId + ":", adContent);
 			return adContent;
 		} catch (error) {
-			console.error('Error:', error);
 			throw new Error(`Failed to get ad content for slot ${slotId}: ${error.message}`);
 		}
 	}
@@ -973,6 +922,14 @@
 			position: relative;
 			overflow: hidden;
 		}
+		
+		.nft-info-top {
+			margin-top: 25px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 12s linear infinite;
+		}
 			
 		
 
@@ -1139,7 +1096,7 @@
 		<div class="left-card-nft">
 		
 			<div class="nft-result-left">
-				<p id="nftLeftInfoResult"></p>
+				<p id="nftLeftInfoResult" class="nft-info-top"></p>
 			</div>
 			<div class="common-container">
 				<button onclick="mintNFT()" class="common-button">Mint NFT</button>
@@ -1179,7 +1136,7 @@
 		
 		<div class="right-card-nft">
 			<div class="nft-result-right">
-				<p id="nftRightInfoResult"></p>
+				<p id="nftRightInfoResult" class="nft-info-top"></p>
 			</div>
 		
 			<div class="common-container">

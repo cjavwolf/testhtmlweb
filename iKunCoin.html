@@ -285,7 +285,7 @@
         try {
             const slot = await contract.methods.getAdvertisingSlot(slotId).call();
 			const adSlotInfoResult = document.getElementById("adResultInfo");
-			adSlotInfoResult.innerHTML = `{AD ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
+			adSlotInfoResult.innerHTML = `{Slot ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
         } catch (error) {
   
             document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
@@ -380,6 +380,10 @@
 				adSlotDiv.appendChild(tenantParagraph);
 
 				adSlotContent.appendChild(adSlotDiv);
+				
+				
+				var adstr = `{Slot ID: ${availableSlots[currentIndex]},   Title: ${adContent.title},   Content: ${adContent.content},   StartTime: ${new Date(adContent.startTime * 1000)},   Duration: ${adContent.duration},   Tenant: ${adContent.tenant} }	`;
+				updateScrollingText(adstr);
 
 				currentIndex = (currentIndex + 1) % availableSlots.length;
 			})
@@ -404,6 +408,14 @@
 	        return text;
 	    }
 	    return lines.slice(0, maxLines).join('\n') + '...';
+	}
+	
+
+
+	function updateScrollingText(adstr) {
+		var scrollingTextElement = document.getElementById("scrollingText");
+		var baseText = "~ iKun is a way of life."; 
+		scrollingTextElement.textContent = baseText + adstr; 
 	}
 
 	</script>
@@ -763,7 +775,19 @@
 		.left-card-nft,
 		.right-card-nft {
 		    width: 50%;
-		    height: 516px;
+		    height: 366px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden;
+		}
+		.top-card-nft {
+		    width: 100%;
+		    height: 200px;
 		    border: 1px solid #ccc;
 		    padding: 10px;
 		    font-family: Arial, sans-serif;
@@ -868,14 +892,9 @@
 		@keyframes scroll {
 			0% {
 				transform: translateX(100%);
-				opacity: 1; /* 初始不透明 */
-			}
-			50% {
-				opacity: 1; /* 保持不透明，直到滚动到一半位置 */
 			}
 			100% {
 				transform: translateX(-100%);
-				opacity: 0; /* 完全透明，即消失 */
 			}
 		}
 		.ad-result {
@@ -897,19 +916,20 @@
 			animation: scroll 18s linear infinite;
 		}
 		
-		.nft-result-left {
+		.nft-result-top {
 			width: 100%;
-			height: 30%;
+			height: 90%;
 			border: 1px solid #ccc;
 			font-family: Arial, sans-serif;
 			border-radius: 10px;
 			box-sizing: border-box;
-			margin-top: 10px;
+			margin-top: 5px;
 			margin-bottom: 15px;
 			position: relative;
 			overflow: hidden;
 		}
 		
+		.nft-result-left,
 		.nft-result-right {
 			width: 100%;
 			height: 30%;
@@ -947,7 +967,7 @@
     	|__|____|__ \____/|___|  /  	 \______  /\____/|__|___|  /
     	           \/          \/   	        \/               \/  
 	</div>
-	<div class="scrolling-text">
+	<div class="scrolling-text"  id="scrollingText">
 		~ iKun is a way of life.
 	</div>
 	
@@ -1091,14 +1111,18 @@
 		<span class="separator-title">iKunNFT</span>
 		<div class="separator-line"></div>
 	</div>
+	<div class="card-container-nft">
+		<div class="top-card-nft">
+			<div class="nft-result-top">
+				<p id="nftLeftInfoResult" class="nft-info-top"></p>
+				<p id="nftRightInfoResult" class="nft-info-top"></p>
+			</div>
+		</div>
+	</div>
 	
 	<div class="card-container-nft">
 		<div class="left-card-nft">
-		
-			<div class="nft-result-left">
-				<p id="nftLeftInfoResult" class="nft-info-top"></p>
-			</div>
-			<div class="common-container">
+			<div class="common-container-margin">
 				<button onclick="mintNFT()" class="common-button">Mint NFT</button>
 			</div>			
 			
@@ -1135,11 +1159,8 @@
 		
 		
 		<div class="right-card-nft">
-			<div class="nft-result-right">
-				<p id="nftRightInfoResult" class="nft-info-top"></p>
-			</div>
 		
-			<div class="common-container">
+			<div class="common-container-margin">
 				<input type="text" id="nftIdDetail" class="common-text-input" placeholder="NFT ID">
 				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
 			</div>

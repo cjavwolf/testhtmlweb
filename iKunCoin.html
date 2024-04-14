@@ -279,7 +279,7 @@
     async function setAdvertisingContent() {
         const slotId = document.getElementById("adSlotId").value;
         const title = document.getElementById("adTitle").value;
-        const content = document.getElementById("adContent").value;
+        const content = document.getElementById("adContentInfo").value;
         try {
             await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
             document.getElementById("adResultInfo").innerText = "Set advertising content successful!";
@@ -736,10 +736,6 @@
 			margin-right: 10px; 
 		}
 		
-		.common-container-margin input[] {
-			flex: 1; 
-		}
-		
 		.common-text-nft {
 			padding: 5px 10px;
 			margin-top: 3px;
@@ -754,7 +750,7 @@
 			padding: 5px 10px;
 			margin-top: 3px;
 			border-radius: 5px;
-			width: 70%;
+			width: 100%;
 			text-align: center;
 			font-size: 16px;
 			border: 1px dashed #ccc;
@@ -1254,8 +1250,8 @@
 			
 			<div class="common-container-margin">
 				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID">
-				<input type="text" id="adContent" class="common-text-ad" placeholder="Content">  
 				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
+				<input type="text" id="adContentInfo" class="common-text-ad" placeholder="Content">  
 
 			</div>
 			

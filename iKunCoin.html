@@ -97,7 +97,7 @@
             document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Prayed and minted successfully!";
         } catch (error) {
   
-            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -107,7 +107,7 @@
             const info = await contract.methods.balanceOf(address).call();
             document.getElementById("balanceofResult").innerText = JSON.stringify(info);
         } catch (error) {
-            document.getElementById("balanceofResult").innerText = `Error: ${error.message}`;
+            document.getElementById("balanceofResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -118,7 +118,7 @@
             await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
             document.getElementById("transferTokensResult").innerText = "Transfer successful!";
         } catch (error) {
-            document.getElementById("transferTokensResult").innerText = `Error: ${error.message}`;
+            document.getElementById("transferTokensResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -128,7 +128,7 @@
             await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
             document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
         } catch (error) {
-            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -137,7 +137,7 @@
             const cost = await contract.methods.mintNFTCost().call();
             document.getElementById("getMintNFTCostResult").innerText = JSON.stringify(cost);
         } catch (error) {
-            document.getElementById("getMintNFTCostResult").innerText = `Error: ${error.message}`;
+            document.getElementById("getMintNFTCostResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }        
     
@@ -146,7 +146,7 @@
             await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
             document.getElementById("nftLeftInfoResult").innerText = "Mint NFT successful!";
         } catch (error) {
-            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -157,7 +157,7 @@
             await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
             document.getElementById("nftLeftInfoResult").innerText = "Transfer NFT successful!";
         } catch (error) {
-            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -169,7 +169,7 @@
             await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
             document.getElementById("nftLeftInfoResult").innerText = "Set NFT content successful!";
         } catch (error) {
-            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -180,7 +180,7 @@
             const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
             document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
-            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -190,7 +190,7 @@
             const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
             document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
-            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -201,7 +201,7 @@
 			const nftInfo = document.getElementById("nftRightInfoResult");
 			nftInfo.innerHTML = `{NFT TokenID: ${nft.id},   NFT Code: ${nft.code},   Name: ${nft.nftName},   Metadata: ${nft.metadata},   isAssigned: ${nft.isAssigned},   owner: ${nft.owner},   isForSale: ${nft.isForSale},   price: ${nft.price} }`;
         } catch (error) {
-            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -212,7 +212,7 @@
             const nftInfo = document.getElementById("nftRightInfoResult");
 			nftInfo.innerHTML = `{NFT TokenID: ${nft.id},   NFT Code: ${nft.code},   Name: ${nft.nftName},   Metadata: ${nft.metadata},   isAssigned: ${nft.isAssigned},   owner: ${nft.owner},   isForSale: ${nft.isForSale},   price: ${nft.price} }`;
         } catch (error) {
-            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -224,7 +224,7 @@
             document.getElementById("nftRightInfoResult").innerText = "NFT is Selling!";
         } catch (error) {
   
-            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -235,7 +235,7 @@
             document.getElementById("nftRightInfoResult").innerText = "NFT sale cancellation successful!";
         } catch (error) {
   
-            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -246,7 +246,7 @@
             document.getElementById("nftRightInfoResult").innerText = JSON.stringify(codes);
         } catch (error) {
   
-            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -258,7 +258,7 @@
             document.getElementById("nftRightInfoResult").innerText = "Purchase of NFT successful!";
         } catch (error) {
   
-            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
  
@@ -272,7 +272,7 @@
             document.getElementById("adResultInfo").innerText = "Lease advertising slot successful!";
         } catch (error) {
   
-            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -285,7 +285,7 @@
             document.getElementById("adResultInfo").innerText = "Set advertising content successful!";
         } catch (error) {
   
-            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -296,7 +296,7 @@
 			const adSlotInfoResult = document.getElementById("adResultInfo");
 			adSlotInfoResult.innerText = `{Slot ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
         } catch (error) {
-            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 
@@ -307,7 +307,7 @@
             document.getElementById("adResultInfo").innerText = JSON.stringify(slots);
         } catch (error) {
   
-            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+            document.getElementById("adResultInfo").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
     
@@ -316,7 +316,7 @@
             const adData = await contract.methods.getOneDayLeaseCost().call();
             document.getElementById("adDataResult").innerText = JSON.stringify(adData);
         } catch (error) {
-            document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
+            document.getElementById("adDataResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
 	
@@ -341,7 +341,7 @@
 				setInterval(showNextAd, 10000);
 			}			
 		} catch (error) {
-			document.getElementById("adSlotContent").innerText = `Error: ${error.message}`;
+			document.getElementById("adSlotContent").innerText = `Error: ${JSON.stringify(error.message)}`;
 		}
 	}
 
@@ -381,7 +381,7 @@
 			const adContent = await contract.methods.getAdvertisingSlot(slotId).call();
 			return adContent;
 		} catch (error) {
-			throw new Error(`Failed to get ad content for slot ${slotId}: ${error.message}`);
+			throw new Error(`Failed to get ad content for slot ${slotId}: ${JSON.stringify(error.message)}`);
 		}
 	}
 

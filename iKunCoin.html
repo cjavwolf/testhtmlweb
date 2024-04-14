@@ -294,7 +294,7 @@
         try {
             const slot = await contract.methods.getAdvertisingSlot(slotId).call();
 			const adSlotInfoResult = document.getElementById("adResultInfo");
-			adSlotInfoResult.innerHTML = `{Slot ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
+			adSlotInfoResult.innerText = `{Slot ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
         } catch (error) {
             document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
         }
@@ -356,36 +356,14 @@
 
 		getAdContentBySlot(availableSlots[currentIndex])
 			.then(adContent => {
-				const adSlotDiv = document.createElement("div");
-				adSlotDiv.classList.add("ad-slot");
-
-				const slotIdParagraph = document.createElement("p");
-				slotIdParagraph.innerText = `Slot ID: ${availableSlots[currentIndex]}`;
-				adSlotDiv.appendChild(slotIdParagraph);
-
-				const titleParagraph = document.createElement("p");
-				titleParagraph.innerText = `Title: ${truncateText(adContent.title, 2)}`;
-				adSlotDiv.appendChild(titleParagraph);
-
-				const contentParagraph = document.createElement("p");
-				contentParagraph.classList.add("content");
-				contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
-				adSlotDiv.appendChild(contentParagraph);
-
-				const durationParagraph = document.createElement("p");
-				durationParagraph.innerText = `Duration: ${adContent.duration}`;
-				adSlotDiv.appendChild(durationParagraph);
-
-				const startTimeParagraph = document.createElement("p");
-				startTimeParagraph.innerText = `Start Time: ${new Date(adContent.startTime * 1000)}`;
-				adSlotDiv.appendChild(startTimeParagraph);
-
-				const tenantParagraph = document.createElement("p");
-				tenantParagraph.innerText = `Tenant: ${adContent.tenant}`;
-				adSlotDiv.appendChild(tenantParagraph);
-
-				adSlotContent.appendChild(adSlotDiv);
-				
+				adSlotContent.innerHTML = `
+					<p>Slot ID: ${availableSlots[currentIndex]}</p>
+					<p>Title: ${truncateText(adContent.title, 2)}</p>
+					<p>Content: ${truncateText(adContent.content, 5)}</p>
+					<p>Duration: ${adContent.duration}</p>
+					<p>Start Time: ${new Date(adContent.startTime * 1000)}</p>
+					<p>Tenant: ${adContent.tenant}</p>
+				`;
 				
 				var adstr = `{Slot ID: ${availableSlots[currentIndex]},   Title: ${adContent.title},   Content: ${adContent.content},   StartTime: ${new Date(adContent.startTime * 1000)},   Duration: ${adContent.duration},   Tenant: ${adContent.tenant} }	`;
 				updateScrollingText(adstr);
@@ -844,6 +822,7 @@
 		    position: relative;
 		    overflow: hidden;
 		}
+		
 		.static-text-ad {
             font-family: monospace; 
             font-size: 8px; 
@@ -911,6 +890,7 @@
 				transform: translateX(-100%);
 			}
 		}
+		
 		.ad-result {
 			width: 100%;
 			height: 65px;
@@ -922,6 +902,7 @@
 			position: relative;
 			overflow: hidden;
 		}
+		
 		.ad-info-top {
 			margin-top: 25px;
 			left: 0;
@@ -964,6 +945,7 @@
 			white-space: nowrap;
 			animation: scroll 30s linear infinite;
 		}
+		
 		#poweredByBNB {
 			position: fixed;
 			bottom: 10px;

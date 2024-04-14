@@ -1,1 +1,1292 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSC TEST iKunCoin Web3</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
+    <script>
+    let contract;
+    
+    window.addEventListener('load', async () => {
+        
+        if (window.ethereum) {
+            try {
+                await window.ethereum.enable();
+    
+                const web3 = new Web3(window.ethereum);
+                const contractAddress = '0x12025dEE2e50A8807735e9A67B63a88e3440fB58'; 
+                const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; 
+                contract = new web3.eth.Contract(contractABI, contractAddress);
+            } catch (error) {
+            }
+            
+        } 
+    });
+	
+	window.onload = function() {
+		connectWallet();
+	};
+    
+    async function connectWallet() {
+        try {
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
+			init();
+        } catch (error) {
+            document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
+			var msg = 'Please ensure your wallet is connected before proceeding with any actions!!!';
+			changeAllMsg(msg);
+			
+        }
+    }
+	
+	function changeAllMsg(msg) {
+		updateScrollingText(msg);
+		document.getElementById("tokenInfoContent").innerText = msg;
+		document.getElementById("adSlotContent").innerText = msg;
+		document.getElementById("anotherCard").innerText = msg;		
+		document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = msg;		
+		document.getElementById("nftLeftInfoResult").innerText = msg;		
+		document.getElementById("adResultInfo").innerText = msg;
+	}
+    
+	async function getTokenInfo() {
+		try {
+			const info = await contract.methods.getTokenInfo().call();
+			
+			const tokenInfoContent = document.getElementById("tokenInfoContent");
+			tokenInfoContent.innerHTML = `
+				<p>Coin Name: ${info.coinName}</p>
+				<p>Coin Symbol: ${info.coinSymbol}</p>
+				<p>Mission: ${info.mission}</p>
+				<p>Spirit: ${info.spirit}</p>
+				<p>Slogan: ${info.slogan}</p>
+				<p>Coin Decimals: ${info.coinDecimals}</p>
+				<p>Max Circulation: ${info.maxCirculation}</p>
+				<p>Current Supply Num: ${info.currentSupplyNum}</p>
+				<p>Percentage: ${info.percentage}</p>
+				<p>Current Rate: ${info.currentRate}</p>
+				<p>Total Burned Num: ${info.totalBurnedNum}</p>
+			`;
+		} catch (error) {
+			document.getElementById("tokenInfoContent").innerText = `Error: ${error.message}`;
+		}
+	}
+	
+	async function getOtherInfo() {
+		try {
+			const cost = await contract.methods.mintNFTCost().call();
+			const adData = await contract.methods.getOneDayLeaseCost().call();
+			const slots = await contract.methods.getAvailableSlots().call();
+			const anotherCard = document.getElementById("anotherCard");
+			anotherCard.innerHTML = `
+				<p>Mint NFT Cost: ${cost}</p>
+				<p>Ad Price OneDay: ${adData}</p>
+				<p>Available Ad Slots: ${slots}</p>
+			`;
+		} catch (error) {
+			document.getElementById("anotherCard").innerText = `Error: ${error.message}`;
+		}
+	}
+    
+    async function prayAndMint() {
+        try {
+            await contract.methods.prayAndMint().send({ from: window.ethereum.selectedAddress });
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Prayed and minted successfully!";
+        } catch (error) {
+  
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function balanceof() {
+        const address = document.getElementById("balanceaddress").value;
+        try {
+            const info = await contract.methods.balanceOf(address).call();
+            document.getElementById("balanceofResult").innerText = JSON.stringify(info);
+        } catch (error) {
+            document.getElementById("balanceofResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function transferTokens() {
+        const recipient = document.getElementById("transferRecipient").value;
+        const amount = document.getElementById("transferAmount").value;
+        try {
+            await contract.methods.transfer(recipient, amount).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("transferTokensResult").innerText = "Transfer successful!";
+        } catch (error) {
+            document.getElementById("transferTokensResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function offerIncenseAndBurn() {
+        const amount = document.getElementById("burnAmount").value;
+        try {
+            await contract.methods.offerIncenseAndBurn(amount).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = "Offer incense and burn successful!";
+        } catch (error) {
+            document.getElementById("prayAndMintAndOfferIncenseAndBurnResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function getMintNFTCost() {
+        try {
+            const cost = await contract.methods.mintNFTCost().call();
+            document.getElementById("getMintNFTCostResult").innerText = JSON.stringify(cost);
+        } catch (error) {
+            document.getElementById("getMintNFTCostResult").innerText = `Error: ${error.message}`;
+        }
+    }        
+    
+    async function mintNFT() {
+        try {
+            await contract.methods.mintNFT().send({ from: window.ethereum.selectedAddress });
+            document.getElementById("nftLeftInfoResult").innerText = "Mint NFT successful!";
+        } catch (error) {
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function transferNFT() {
+        const tokenId = document.getElementById("nftId").value;
+        const recipient = document.getElementById("nftRecipient").value;
+        try {
+            await contract.methods.transferNFT(tokenId, recipient).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("nftLeftInfoResult").innerText = "Transfer NFT successful!";
+        } catch (error) {
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function setNFTContent() {
+        const tokenId = document.getElementById("nftIdContent").value;
+        const name = document.getElementById("nftName").value;
+        const metadata = document.getElementById("nftMetadata").value;
+        try {
+            await contract.methods.setNFTContentByNFTId(tokenId, name, metadata).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("nftLeftInfoResult").innerText = "Set NFT content successful!";
+        } catch (error) {
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function getOwnerNFTCodesByPage() {
+        const owner = document.getElementById("ownerAddress").value;
+        const page = document.getElementById("pageNumberOwner").value;
+        try {
+            const codes = await contract.methods.getOwnerNFTCodesByPage(owner, page).call();
+            document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
+        } catch (error) {
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function getAllMintedNFTCodesByPage() {
+        const page = document.getElementById("pageNumberMinted").value;
+        try {
+            const codes = await contract.methods.getAllMintedNFTCodesByPage(page).call();
+            document.getElementById("nftLeftInfoResult").innerText = JSON.stringify(codes);
+        } catch (error) {
+            document.getElementById("nftLeftInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function getNFTById() {
+        const tokenId = document.getElementById("nftIdDetail").value;
+        try {
+            const nft = await contract.methods.getNFTById(tokenId).call();
+			const nftInfo = document.getElementById("nftRightInfoResult");
+			nftInfo.innerHTML = `{NFT TokenID: ${nft.id},   NFT Code: ${nft.code},   Name: ${nft.nftName},   Metadata: ${nft.metadata},   isAssigned: ${nft.isAssigned},   owner: ${nft.owner},   isForSale: ${nft.isForSale},   price: ${nft.price} }`;
+        } catch (error) {
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function getNFTByCode() {
+        const code = document.getElementById("nftCode").value;
+        try {
+            const nft = await contract.methods.getNFTByCode(code).call();
+            const nftInfo = document.getElementById("nftRightInfoResult");
+			nftInfo.innerHTML = `{NFT TokenID: ${nft.id},   NFT Code: ${nft.code},   Name: ${nft.nftName},   Metadata: ${nft.metadata},   isAssigned: ${nft.isAssigned},   owner: ${nft.owner},   isForSale: ${nft.isForSale},   price: ${nft.price} }`;
+        } catch (error) {
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function sellNFT() {
+        const nftId = document.getElementById("sellNFTId").value;
+        const nftPrice = document.getElementById("sellNFTPrice").value;
+        try {
+            await contract.methods.sellNFT(nftId, nftPrice).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("nftRightInfoResult").innerText = "NFT is Selling!";
+        } catch (error) {
+  
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function cancelSellNFT() {
+        const nftId = document.getElementById("cancelSellNFTId").value;
+        try {
+            await contract.methods.cancelSellNFT(nftId).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("nftRightInfoResult").innerText = "NFT sale cancellation successful!";
+        } catch (error) {
+  
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function getALLSellingNFTCodesByPage() {
+        const page = document.getElementById("pageNumberSelling").value;
+        try {
+            const codes = await contract.methods.getAllSellingNFTCodesByPage(page).call();
+            document.getElementById("nftRightInfoResult").innerText = JSON.stringify(codes);
+        } catch (error) {
+  
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+
+
+    async function buyNFT() {
+        const nftId = document.getElementById("buyNFTId").value;
+        try {
+            await contract.methods.buyNFT(nftId).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("nftRightInfoResult").innerText = "Purchase of NFT successful!";
+        } catch (error) {
+  
+            document.getElementById("nftRightInfoResult").innerText = `Error: ${error.message}`;
+        }
+    }
+ 
+    
+
+    async function leaseAdvertisingSlot() {
+        const slotId = document.getElementById("slotId").value;
+        const duration = document.getElementById("leaseDuration").value;
+        try {
+            await contract.methods.leaseAdvertisingSlot(slotId, duration).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("adResultInfo").innerText = "Lease advertising slot successful!";
+        } catch (error) {
+  
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function setAdvertisingContent() {
+        const slotId = document.getElementById("adSlotId").value;
+        const title = document.getElementById("adTitle").value;
+        const content = document.getElementById("adContent").value;
+        try {
+            await contract.methods.setAdvertisingContent(slotId, title, content).send({ from: window.ethereum.selectedAddress });
+            document.getElementById("adResultInfo").innerText = "Set advertising content successful!";
+        } catch (error) {
+  
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function getAdvertisingSlot() {
+        const slotId = document.getElementById("adSlotIdInfo").value;
+        try {
+            const slot = await contract.methods.getAdvertisingSlot(slotId).call();
+			const adSlotInfoResult = document.getElementById("adResultInfo");
+			adSlotInfoResult.innerHTML = `{Slot ID: ${slot.id},   Title: ${slot.title},   Content: ${slot.content},   StartTime: ${new Date(slot.startTime * 1000)},   Duration: ${slot.duration},   Tenant: ${slot.tenant} }	`;
+        } catch (error) {
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+        }
+    }
+
+    
+    async function getAllAdvertisingSlots() {
+        try {
+            const slots = await contract.methods.getAvailableSlots().call();
+            document.getElementById("adResultInfo").innerText = JSON.stringify(slots);
+        } catch (error) {
+  
+            document.getElementById("adResultInfo").innerText = `Error: ${error.message}`;
+        }
+    }
+    
+    async function getAdPrice() {
+        try {
+            const adData = await contract.methods.getOneDayLeaseCost().call();
+            document.getElementById("adDataResult").innerText = JSON.stringify(adData);
+        } catch (error) {
+            document.getElementById("adDataResult").innerText = `Error: ${error.message}`;
+        }
+    }
+	
+	function init() {
+		getTokenInfo();
+		getAllAdvertisingSlotsToShow();
+		getOtherInfo();
+	}
+
+
+	let availableSlots = []; 
+	let currentIndex = 0; 
+
+	async function getAllAdvertisingSlotsToShow() {
+		try {
+			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+			const unUsedSlots = (await contract.methods.getAvailableSlots().call()).map(slot => parseInt(slot)); 
+			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot));
+
+			showNextAd();
+			if (availableSlots.length > 1) {
+				setInterval(showNextAd, 10000);
+			}			
+		} catch (error) {
+			document.getElementById("adSlotContent").innerText = `Error: ${error.message}`;
+		}
+	}
+
+	function showNextAd() {
+		const adSlotContent = document.getElementById("adSlotContent");
+		adSlotContent.innerHTML = ""; 
+
+		if (availableSlots.length === 0) {
+			adSlotContent.innerText = "Advertising Space Available.";
+			return;
+		}
+
+		getAdContentBySlot(availableSlots[currentIndex])
+			.then(adContent => {
+				const adSlotDiv = document.createElement("div");
+				adSlotDiv.classList.add("ad-slot");
+
+				const slotIdParagraph = document.createElement("p");
+				slotIdParagraph.innerText = `Slot ID: ${availableSlots[currentIndex]}`;
+				adSlotDiv.appendChild(slotIdParagraph);
+
+				const titleParagraph = document.createElement("p");
+				titleParagraph.innerText = `Title: ${truncateText(adContent.title, 2)}`;
+				adSlotDiv.appendChild(titleParagraph);
+
+				const contentParagraph = document.createElement("p");
+				contentParagraph.classList.add("content");
+				contentParagraph.innerText = `Content: ${truncateText(adContent.content, 5)}`;
+				adSlotDiv.appendChild(contentParagraph);
+
+				const durationParagraph = document.createElement("p");
+				durationParagraph.innerText = `Duration: ${adContent.duration}`;
+				adSlotDiv.appendChild(durationParagraph);
+
+				const startTimeParagraph = document.createElement("p");
+				startTimeParagraph.innerText = `Start Time: ${new Date(adContent.startTime * 1000)}`;
+				adSlotDiv.appendChild(startTimeParagraph);
+
+				const tenantParagraph = document.createElement("p");
+				tenantParagraph.innerText = `Tenant: ${adContent.tenant}`;
+				adSlotDiv.appendChild(tenantParagraph);
+
+				adSlotContent.appendChild(adSlotDiv);
+				
+				
+				var adstr = `{Slot ID: ${availableSlots[currentIndex]},   Title: ${adContent.title},   Content: ${adContent.content},   StartTime: ${new Date(adContent.startTime * 1000)},   Duration: ${adContent.duration},   Tenant: ${adContent.tenant} }	`;
+				updateScrollingText(adstr);
+
+				currentIndex = (currentIndex + 1) % availableSlots.length;
+			})
+			.catch(error => {
+				adSlotContent.innerText = `Error: ${error.message}`;
+			});
+
+	}
+
+	async function getAdContentBySlot(slotId) {
+		try {
+			const adContent = await contract.methods.getAdvertisingSlot(slotId).call();
+			return adContent;
+		} catch (error) {
+			throw new Error(`Failed to get ad content for slot ${slotId}: ${error.message}`);
+		}
+	}
+
+	function truncateText(text, maxLines) {
+	    const lines = text.split('\n');
+	    if (lines.length <= maxLines) {
+	        return text;
+	    }
+	    return lines.slice(0, maxLines).join('\n') + '...';
+	}
+	
+
+
+	function updateScrollingText(adstr) {
+		var scrollingTextElement = document.getElementById("scrollingText");
+		var baseText = "~ iKun is a way of life. "; 
+		var totalText = baseText + adstr;
+
+		scrollingTextElement.textContent = totalText;
+		if (scrollingTextElement.scrollWidth > scrollingTextElement.clientWidth) {
+			scrollingTextElement.style.animationDuration = (totalText.length * 50) + "ms";
+		}
+	}
+
+	</script>
+    <style>
+	
+	
+		h1 {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 10px;
+			margin: 0;
+			text-align: center;
+			z-index: 9999;
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white; 
+		}
+
+        .text-container {
+            margin-top: 50px !important;
+            white-space: pre;
+            font-family: monospace;
+            line-height: 1.0;
+            width: 100%;
+            margin: 0 auto;
+            overflow: auto;
+            max-height: calc(100vh - 50px); 
+            padding: 5px;
+        }
+		
+		@keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scrolling-text {
+            overflow: hidden; 
+            white-space: nowrap; 
+            animation: scroll 30s linear infinite; 
+        }	
+		
+		.static-text {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 98%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            padding: 5px; 
+        }
+		
+		.ikun-info {
+			font-size: 16px;
+		
+		}
+		.wallet-wrapper {
+			margin-top: 50px !important;
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 9999; 
+		}
+
+		.wallet-container {
+			display: flex;
+			align-items: center;
+		}
+
+		.wallet-button {
+			width: 100px;
+			border: none;
+			border-bottom: 1px dashed black;
+			cursor: pointer;
+			margin-top: 10px;
+			border-radius: 5px;
+			display: block;
+			text-align: center;
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white;
+			font-size: 16px;
+		}
+
+		.wallet-result {
+			margin-left: 5px;
+		}
+
+		.separator {
+			display: flex; 
+			align-items: center; 
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		.separator-title {
+			margin-right: 10px; 
+			font-weight: bold; 
+			border: 1px dashed black;
+			transform: skewX(-10deg);
+			padding: 5px 10px; 
+			border-radius: 5px; 
+		}
+
+		.separator-line {
+			flex: 1;
+			border-top: 1px solid #ccc;
+		}
+
+		
+		.card-container {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+		
+		.left-card,
+		.center-card,
+		.right-card {
+		    width: 33%;
+		    height: 416px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden;
+		}
+		
+		.ad-slot {
+		    margin: 10px 0;
+		    line-height: 2;
+		}
+		
+		.ad-slot p {
+		    margin: 0;			
+			  word-wrap: break-word;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			  display: -webkit-box;
+			  -webkit-box-orient: vertical;
+			  -webkit-line-clamp: 2; 
+		}
+		
+		.ad-slot .content p {
+		    word-wrap: break-word;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		  display: -webkit-box;
+		  -webkit-box-orient: vertical;
+		  -webkit-line-clamp: 5; 
+		}
+
+
+		.refresh-button {
+			padding: 5px 10px;
+			border: none;
+			cursor: pointer;
+			margin-top: 10px;
+			border-radius: 5px;
+			display: block; 
+			width: 100%; 
+			text-align: center;
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white; 
+			font-size: 16px;
+		}
+
+
+		.button-container {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 5px; 
+		}
+		
+		.card-container-button {
+			display: flex;
+			border: none;
+			justify-content: space-between;
+			align-items: flex-start;
+			width: 95%; 
+			margin: 0 auto;
+		}
+		
+		.left-card-button,
+		.center-card-button,
+		.right-card-button {
+			flex: 1;
+			border: none;
+			padding: 0px;
+			font-family: Arial, sans-serif;
+			border-radius: 10px; 
+			box-sizing: border-box; 
+			margin-right: 10px; 
+		}
+		
+		.card-container-coin {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+
+		.left-card-coin,
+		.right-card-coin {
+		    width: 50%;
+		    height: 416px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden; 
+		}
+		.static-text-coin {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
+		
+		.offer-incense-container {
+			display: flex;
+			align-items: center;
+		}
+
+		.offer-incense-container input[type="number"] {
+			flex: 1; 
+			margin-right: 10px; 
+		}
+		
+		
+		.common-button {
+			padding: 5px 10px;
+			border: none;
+			cursor: pointer;
+			margin-top: 3px;
+			border-radius: 5px; 
+			display: block;
+			width: 100%;
+			text-align: center;
+			background-image: linear-gradient(to right, black 50%, transparent 50%);
+			background-size: 2px 100%;
+			background-repeat: repeat-x;
+			color: white;
+			font-size: 16px;
+		}
+		
+		.burnAmount {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 300px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		.balanceaddress {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 300px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc; 
+		}
+		.transferRecipient {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 60%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		.transferAmount {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 33%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		.common-text-input {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 30%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		.common-container {
+			display: flex;
+			align-items: center; 
+		}
+		.common-container-margin {
+			display: flex;
+			align-items: center; 
+			margin-top: 15px;
+		}
+
+		.common-container input[type="number"] {
+			flex: 1; 
+			margin-right: 10px; 
+		}
+		.common-text-adContent {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		
+		.common-text-nft {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		
+		
+		.card-container-nft {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+
+		.left-card-nft,
+		.right-card-nft {
+		    width: 50%;
+		    height: 366px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden;
+		}
+		.top-card-nft {
+		    width: 100%;
+		    height: 200px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden;
+		}
+		.static-text-nft {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
+		
+		.card-container-ad {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		    width: 95%;
+		    margin: 0 auto;
+		}
+
+		.left-card-ad {
+		    width: 100%;
+		    height: 340px;
+		    border: 1px solid #ccc;
+		    padding: 10px;
+		    font-family: Arial, sans-serif;
+		    border-radius: 10px;
+		    box-sizing: border-box;
+		    margin-right: 10px;
+		    position: relative;
+		    overflow: hidden;
+		}
+		.static-text-ad {
+            font-family: monospace; 
+            font-size: 8px; 
+            line-height: 1.0; 
+            width: 100%; 
+            margin: 0 auto; 
+            overflow: auto; 
+            max-height: 100vh; 
+            white-space: pre; 
+            resize: both; 
+            padding: 5px; 
+        }
+		.common-text-comwidth {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 100px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		.common-text-comwidth-max {
+			padding: 5px 10px;
+			margin-top: 3px;
+			border-radius: 5px;
+			width: 180px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px dashed #ccc;
+		}
+		.coin-result {
+			width: 100%;
+			height: 67%;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 15px;
+			margin-bottom: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.coin-info-top {
+			margin-top: 25px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 30s linear infinite;
+		}
+		
+		.coin-info-under {
+			margin-top: 50px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 30s linear infinite;
+		}
+
+		@keyframes scroll {
+			0% {
+				transform: translateX(100%);
+			}
+			100% {
+				transform: translateX(-100%);
+			}
+		}
+		.ad-result {
+			width: 100%;
+			height: 65px;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+		.ad-info-top {
+			margin-top: 25px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 30s linear infinite;
+		}
+		
+		.nft-result-top {
+			width: 100%;
+			height: 90%;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 5px;
+			margin-bottom: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+		
+		.nft-result-left,
+		.nft-result-right {
+			width: 100%;
+			height: 30%;
+			border: 1px solid #ccc;
+			font-family: Arial, sans-serif;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin-top: 10px;
+			margin-bottom: 15px;
+			position: relative;
+			overflow: hidden;
+		}
+		
+		.nft-info-top {
+			margin-top: 25px;
+			left: 0;
+			top: 0;
+			white-space: nowrap;
+			animation: scroll 30s linear infinite;
+		}
+		#poweredByBNB {
+			position: fixed;
+			bottom: 10px;
+			left: 10px;
+			color: #999;
+			font-size: 12px;
+			font-family: Arial, sans-serif; 
+		}
+
+
+		.ikun-info {
+			position: fixed; 
+			bottom: 10px;
+			right: 10px; 
+			max-width: calc(50% - 20px); 
+			margin: 0; 
+			padding: 5px; 
+			color: #999;
+			font-family: Arial, sans-serif; 
+		}
+		
+		.ikun-info, .link {
+			font-family: Arial, sans-serif; 
+			font-size: 14px; 
+			color: #999;
+			text-decoration: none; 
+		}
+
+		.link:hover {
+			text-decoration: underline; 
+		}		
+				
+
+    </style>
+</head>
+<body>
+
+	<h1>BSC TEST iKunCoin Web3</h1>
+	
+	<div class="text-container">
+    	.__ ____  __.               	_________        .__        
+    	|__|    |/ _|__ __  ____    	\_   ___ \  ____ |__| ____  
+    	|  |      < |  |  \/    \   	/    \  \/ /  _ \|  |/    \ 
+    	|  |    |  \|  |  /   |  \  	\     \___(  <_> )  |   |  \
+    	|__|____|__ \____/|___|  /  	 \______  /\____/|__|___|  /
+    	           \/          \/   	        \/               \/  
+	</div>
+	<div class="scrolling-text"  id="scrollingText">
+		~ iKun is a way of life.
+	</div>
+	
+	
+	
+	<div class="static-text">
+	
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ7777777777777771333333333WMQQMVJJ3JJJJJUX7-)(((((3JJJ3MMMW-::::::::777777
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ7777777777777777771I3JNMQM4JJJJ&2I(((()(((-JJJJJ()(((IJ99MMM-::::::777777
+	QQQQQQQQQQQQE    QQQQQQQQQQQQ7777777777777777777NMMO97J&VVVY((()((JHMMJKMQMMRJJ3I()-:339HMN1::::777777
+	QQQQQQQQQQM     ,QQQQQQQQQQQQ7777777777777777YMMN97-Y9VI(((3JJ()(JGQSGQQUENNQQM&J1:())-3J&RMM!::777777
+	QQQQQQQQQK        2QQQQQQQQQQ77777777777777&MQU9"I29V(():99JJ()(JJMQMMMMGZ99F6QQH&J-MM)(-JJ9HQN:777777
+	QQQQQQQQQ          WQQQQQQQQQ7777777777771MQSV"3JJ9)(((!V9JJI(V9J6QACCCJ;;;YLCLUMNVJJMQJ)-4J9ZMM777777
+	QQQQQQQQ"           QQQQQQQQQ77717777777HMNV"JJI;IQAJ7:VVJJI((V4JMQPP$);;;;;;)&C&QMVJ2MMW)!;J&FQ717777
+	QQQQQQQQQ           QQQQQQQQQ)1::)17777MMF4:JJJ-)QMJ3"LVJJJ")99J3QQL24NQMA;;;;;9MQQ6:JJNM5(;7JVE::)1::
+	QQQQQQQQQQM        QQQQQQQQQQ:::::::77MM93RCVV-)GQ$J;(VLJJ-((V2JJQQJ3   .NM0;7MMJ2QH9:J&NM&)(JJV::::::
+	QQQQQQQQQQM        QQQQQQQQQQ::::::::HM$4NQJV9-)QQVJ-C9JJ3:(1JJJJQQJ"  ...VQKM0 .4QMMQQQMQM2)1JJ::::::
+	QQQQQQQQQQM        .QQQQQQQQQ::::::::2QQRQQ492!(QQVJ-V9JJ-)(LQQLJQMJ. MQQQ;NQQ,  J4JMQQQ9FMM3LVJ::::::
+	QQQQQQQQQQ     .     QQQQQQQQ:::::::::::!QQJ9J((QQV3-99JQMJJBMMMMQQJ, NQQM-EQM.     NQQQ3RQQHJVL::::::	
+	QQQQQQQQQQ    QQQQ    QQQQQQQ::::::::::::MM392J4QQV3((JJQQQMNNQ5IJJJJ ... (QMQV      ...BM$CMMQQ::::::
+	QQQQQQQQQR   QQQQQQF  .QQQQQQ::::::::::::QNJ9GMMMM93;JJ4MNO&C4IMM$.     "MMD62MM1   ..KMN;VZONM:::::::
+	QQQQQQQQQ   QQQQQQG  .QQQQQQQ::::::::::::WMQMQZ9TQMU0HMMMMOOF);;;RMMMMQMQS333339NMMMMM2)ZPZZZSM7::::::
+	QQQQQQQQQ.  QQQQQ&.WMQQQQQQQQ:::::::::::IGMMNM01COSSA8OO8OTPP(;;;;;;;NM33333333333VM2;;$ZZZZZXMZ::::::
+	QQQQQQQQQ.  QQQZL.OMQQQQQQQQQ:!:::!RMMMBP9655MM1IPPPPZPZPZZZZ;;;;;;;3MNJ333333333EMQN;;ZPZZZPRQ;:::!::				
+	QQQQQQQQM  QQQQQQ  :MQQQQQQQQMM:HMMT69699996FOMR1&PZZZZZZZZPL7111177)NMMMMMMMMMNGJSM);;$PZZPTMN::HMM::
+	QQQQQQQQQ. QQQQQQQQ-3QQQQQQQQ99QW99PEMMMMMMMMMMMN11PPPPZPZZ111111711171HMN23333JBMK;;;;)PZPDMN::QW99QQ				
+	QQQQQQQQM  QQQQQQQQQQQQQQQQQQ9969999966999999F5NQMB171111IC0RHNNNNHK0V31111I2LJ111177(;;;RMMY11(699966
+	QQQQQQQQQQQQQQQQQQQQQQQQQQQQQMMNMMMMK69969999$TQMNQQMMMQMHRRRRBRRRRRRRENMMMMMMMH0I17775MQMQQMMU1NMMMNN				
+	</div>
+	
+	<div class="wallet-wrapper">
+		<div class="wallet-container">
+			<div class="wallet-result">
+				<p id="connectWalletResult"></p>
+			</div>
+			<button class="wallet-button" onclick="connectWallet()">Connect Wallet</button>
+		</div>
+	</div>
+	<div class="separator"></div>
+	<div class="card-container">
+		<div class="left-card" id="tokenInfoContent">
+		</div>
+		<div class="center-card" id="adSlotContent">
+		</div>
+		<div class="right-card" id="anotherCard">
+		
+		</div>
+	</div>
+	
+	<div class="card-container-button">
+		<div class="left-card-button">
+			<button class="refresh-button" onclick="getTokenInfo()">Refresh</button>
+		</div>
+		<div class="center-card-button">
+			<button class="refresh-button" onclick="getAllAdvertisingSlotsToShow()">Refresh</button>
+		</div>
+		<div class="right-card-button">
+			<button class="refresh-button" onclick="getOtherInfo()">Refresh</button>
+		</div>
+	</div>
+
+	<div class="separator">
+		<span class="separator-title">iKunCoin</span>
+		<div class="separator-line"></div>
+	</div>
+	
+
+	<div class="card-container-coin">
+		<div class="left-card-coin">
+			<div class="static-text-coin">
+	,,,,,,,,.,,,,,,,,,,,,,,,,,",,,,,,,,,,,,,,,,,,",,,,,,,,,,,,,,,,.,.
+	,,,,,,,,,,,.,,,,,,,,,,,,,",,,.,,,,,,,,,,,,,,,,,,",,,,,,,,,,,,.,,,
+	,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,,,,,,,,,,,",,,,,,,,.,,,,,,,,,,,,,,
+	,,.,,,,,,,,,,,,",,,,.,,,,,,,,,,,,,,,,,.",,,,,,,,,,,,.,,,..,,,,,,,
+	,:.,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,,,.".,,,,,,,,,,,,,,,,,,,,,,,,,,
+	.,,,,,,,,,,,,,,,,,,.,,,,,,J.,,.L,,.Y-,,,,,,,,,,,,,,,,,.,,,,,,,,,,
+	,,",,,,,,,,,,,,,,,,,,.,,,.Y.,,,L,,.2,,.,,,,,,,,,,,,,,,,,,,,,,,,,,
+	,,,,",,,,,,,,..,,,,,,,,,,.Y.,,,L,,.2,,,,,.,,,,,,,.",,,,,,,,",,,,,
+	,,,,,,",,,,,,,,,,,,,,,,.,.Y.,,,L,,.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	,,,,,,,,,",,,,,,,,,,,,,,,.Y,,,,L,,.2,,,,,,,,,,,,.,,,,,,,,,,,,,.,,
+	,,,,,,.,",,,,,,,,,,,,,,,,.Y,,,,L,,.2,,,,,,,,,,,,,,,,,,,,,,,,,,,.,
+	,,,,,,,,,,,"..,,,,,,,,,,..Y.,..L,,.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	,,,,..,,,,,,,",,,,,,,,,",.Y.,,,L,,.2,,,,,,,,,,,,,.,,,,,,,,,,,,,,,
+	,,,,,,,,,,,,,,,.,,,,,,,,,.Y.,,,L.".2,,,.,,,,,,,,,,,,,,,,,,,,,,,,,
+	,",,,,,,,,,,,,,,,.,-,,,,,.Y.,,,L,,.2,,,,,,,,,,,,,,,,,,,"-,,,,,,,,
+	.,,,,,,,,,,,,,,,,,,.,,,,,.Y.,,,L,,.2:,,,,,,,,,,,,,,,,,",,,,,,,,,,
+	,,",,,,,,,,,,,,,:.,,..,,,.Y.,,,L,,,2,...,,,,,,,,,,,,..,,,,,,,,,,,
+	,,,,,,,,,,,,,,.,,,,,,,".,.Y.,,,L",.2,,,,..,,,,,,,,,.,,,,,,,,,,,,,
+	,,,,,,,,,,,",..,,,,,,,,.. 2--:!Y::-Y...,, ," ,, .,,.,,,,,,,,,,,,,
+	,,,,,,,.3VV999996"C999V&V$FZF00XTTPF6V&V9999U(96V9999$,,,,,,,,.,"
+	,,,,,,,.9P,,,,,,C&0SSSAST$9&VVVV99VCVZDAD8ASUL-.,,,,"99,,,,,,,,""
+	,,,,,,,.9;,",,,,D999999992V99V9999999999999VV&"..,,,,9U,,,,,,,",,
+	,,,,,,,.56,,,,,Z6999999V9999999V999999999V9999&.,,.,69,,,,,,,,,,,
+	,,,,,,,.TV6,,,.9999999V999999999V99999999V99999.,,,)66 ,,,.,,,,,,
+	,".,,,,,I6V9"-,9V9999999999999999999VV&99999999I,,PV0X,,",,,,,,,,
+	",,,,,,,,,,,&V999VC999999999999999VV99999999999V9&.,,,-.,,,,,,,,,
+	,,.,,,,,,,,,,,,.&999V999999999999VV999V99999996,,,,,,,,,..,,,,,,,
+	,,,.,,,,,,,,,,", 99999V999999999V9999999V9999U.,,,,,,,,,,,,,,,,,,
+	,,,,,,,,,,,,..,,,,8D6V99V9999999999999VV9VXS2,,,,,,,,,,,,,,,,,,,,
+	,,,,,,,,,,",,,,,,,DOO I8&V9VV9VV9V999&PU."DO.,,",,,,,,,,,,,,,,,,,
+	,,,,,,,,",,,,,,,,,UOO,,,,,,,,.OO6,,,,,,,,,UO(",,,,,,,,,,,,,,,,."-
+	,,,,,,,,,,.,,,,,,,SSS,,,,,,,.:SSA,,,,,,,,,SX8.,,.,,,,,,,,,,,,,,,,
+	,,,,,,,,,,,,..,,,,,,,,,,,,,,,,,,,,,,,,,,,,.,,,,,,,.,,,,,,,,,,,,,,
+	,,,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,.,,,,,,,.,,,,,,,,,,",,,,,,,,,,,,,
+	,,,,,,,,,,,,,,,,,,,-,,,,,,,,,,,,,,.,.,,,,,,,,,,,,,,,,,,.!,,,,,,,,
+	:,,,,,,,,,,,,,,,,-".,,,,,,,,,,,,,,,,-,,,,,,,,,,,,,,,,."-,,,,,,,,,
+			</div>
+			<div class="common-container">
+				<button class="common-button" onclick="prayAndMint()" >Pray and Mint</button>
+			</div>
+			<div class="common-container-margin">
+				<input type="number" id="burnAmount" class="burnAmount" placeholder="Amount to Burn">
+				<button class="common-button" onclick="offerIncenseAndBurn()">Offer Incense and Burn</button>
+			</div>
+		</div>
+		<div class="right-card-coin">
+			
+			<div class="common-container">
+				<input type="text" id="balanceaddress" class="balanceaddress" placeholder="Balance Address">
+				<button onclick="balanceof()" class="common-button">Get Address Balance</button>
+			</div>
+			<div class="common-container-margin">
+				<input type="text" id="transferRecipient" class="transferRecipient" placeholder="Recipient Address">
+				<input type="number" id="transferAmount" class="transferAmount" placeholder="Amount">
+				
+			</div>
+			<div class="common-container">
+				<button onclick="transferTokens()" class="common-button">Transfer Tokens</button>
+			</div>
+			<div class="coin-result">
+				<p id="prayAndMintAndOfferIncenseAndBurnResult" class="coin-info-top"></p>
+				<p id="balanceofResult" class="coin-info-under"></p>
+				<p id="transferTokensResult" class="coin-info-under"></p>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="separator">
+		<span class="separator-title">iKunNFT</span>
+		<div class="separator-line"></div>
+	</div>
+	<div class="card-container-nft">
+		<div class="top-card-nft">
+			<div class="nft-result-top">
+				<p id="nftLeftInfoResult" class="nft-info-top"></p>
+				<p id="nftRightInfoResult" class="nft-info-top"></p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="card-container-nft">
+		<div class="left-card-nft">
+			<div class="common-container-margin">
+				<button onclick="mintNFT()" class="common-button">Mint NFT</button>
+			</div>			
+			
+			<div class="common-container-margin">
+				<input type="number" id="nftIdContent" class="common-text-comwidth" placeholder="NFT ID">
+				<input type="text" id="nftName" class="common-text-input" placeholder="NFT Name">
+				<input type="text" id="nftMetadata" class="common-text-nft" placeholder="NFT Metadata">
+			</div>
+			<div class="common-container">
+				<button onclick="setNFTContent()" class="common-button">Set NFT Content</button>
+			</div>
+			
+			<div class="common-container-margin">
+				<input type="number" id="nftId" class="common-text-input" placeholder="NFT ID">
+				<input type="text" id="nftRecipient" class="common-text-nft" placeholder="Recipient Address">
+			</div>
+			<div class="common-container">
+				<button onclick="transferNFT()" class="common-button">Transfer NFT</button>
+			</div>
+			<div class="common-container-margin">
+				<input type="number" id="pageNumberOwner" class="common-text-input" placeholder="Page Number">
+				<input type="text" id="ownerAddress" class="common-text-nft" placeholder="Owner Address">
+			</div>
+			
+			<div class="common-container">
+				<button onclick="getOwnerNFTCodesByPage()" class="common-button">Get Owner NFT Codes By Page</button>
+			</div>
+			
+			<div class="common-container-margin">
+				<input type="number" id="pageNumberMinted" class="common-text-input" placeholder="Page Number">
+				<button onclick="getAllMintedNFTCodesByPage()" class="common-button">Get All Minted NFT Codes By Page</button>
+			</div>
+		</div>
+		
+		
+		<div class="right-card-nft">
+		
+			<div class="common-container-margin">
+				<input type="number" id="nftIdDetail" class="common-text-input" placeholder="NFT ID">
+				<button onclick="getNFTById()" class="common-button">Get NFT By ID</button>
+			</div>
+
+			<div class="common-container-margin">
+				<input type="text" id="nftCode" class="common-text-input" placeholder="NFT Code">
+				<button onclick="getNFTByCode()" class="common-button">Get NFT By Code</button>
+			</div>
+
+			<div class="common-container-margin">
+				<input type="number" id="sellNFTId" class="common-text-input" placeholder="NFT ID">
+				<input type="number" id="sellNFTPrice" class="common-text-nft" placeholder="Sell price">
+			</div>
+			
+			<div class="common-container">
+				<button onclick="sellNFT()" class="common-button">Sell NFT</button>
+			</div>
+
+			<div class="common-container-margin">
+				<input type="number" id="cancelSellNFTId" class="common-text-input" placeholder="NFT ID">
+				<button onclick="cancelSellNFT()" class="common-button">Cancel Sell NFT</button>
+			</div>
+
+			<div class="common-container-margin">
+				<input type="number" id="pageNumberSelling" class="common-text-input" placeholder="Page Number">
+				<button onclick="getALLSellingNFTCodesByPage()" class="common-button">Get All Selling NFT Codes By Page</button>
+			</div>
+
+			<div class="common-container-margin">
+				<input type="number" id="buyNFTId" class="common-text-input" placeholder="NFT ID">
+				<button onclick="buyNFT()" class="common-button">Buy NFT</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="separator">
+		<span class="separator-title">Advertising</span>
+		<div class="separator-line"></div>
+	</div>
+
+	<div class="card-container-ad">
+		<div class="left-card-ad">
+			<div class="ad-result">
+				<p id="adResultInfo" class="ad-info-top"></p>
+			</div>
+		
+			<div class="common-container-margin">
+				<button onclick="getAllAdvertisingSlots()" class="common-button">Get Available Ad Slots</button>
+			</div>
+			
+			<div class="common-container-margin">
+				<input type="number" id="slotId" class="common-text-comwidth" placeholder="Slot ID">
+				<input type="number" id="leaseDuration" class="common-text-comwidth-max" placeholder="Lease Duration">
+				<button onclick="leaseAdvertisingSlot()" class="common-button">Lease Advertising Slot</button>
+			</div>
+			
+			<div class="common-container-margin">
+				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID">
+				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
+				<input type="text" id="adContent" class="common-text-adContent" placeholder="Content">
+			</div>
+			
+			<div class="common-container">
+				<button onclick="setAdvertisingContent()" class="common-button">Set Advertising Content</button>
+			</div>
+
+
+			<div class="common-container-margin">
+				<input type="number" id="adSlotIdInfo" class="common-text-comwidth" placeholder="Slot ID">
+				<button onclick="getAdvertisingSlot()" class="common-button">Get Advertising Slot</button>
+			</div>
+		
+		</div>
+	</div>
+	<div id="poweredByBNB">
+		Powered by BNB Beacon Chain
+	</div>
+
+	<p class="ikun-info">
+		Contract address: <a href="https://testnet.bscscan.com/address/0x12025dEE2e50A8807735e9A67B63a88e3440fB58" target="_blank" class="link">0x12025dEE2e50A8807735e9A67B63a88e3440fB58</a>
+	</p>
+
+</body>
+</html>
+

@@ -388,7 +388,6 @@
 				
 				
 				var adstr = `{Slot ID: ${availableSlots[currentIndex]},   Title: ${adContent.title},   Content: ${adContent.content},   StartTime: ${new Date(adContent.startTime * 1000)},   Duration: ${adContent.duration},   Tenant: ${adContent.tenant} }	`;
-				console.log(adstr);
 				updateScrollingText(adstr);
 
 				currentIndex = (currentIndex + 1) % availableSlots.length;

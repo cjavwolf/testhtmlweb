@@ -1,23 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSC TEST iKunCoin Web3</title>
+    <title>iKunCoin</title>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
     <script>
     let contract;
+	
+	const web3 = new Web3(window.ethereum);
+	const contractAddress = '0x12025dEE2e50A8807735e9A67B63a88e3440fB58'; 
+	const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; 
+               
     
     window.addEventListener('load', async () => {
         
         if (window.ethereum) {
             try {
                 await window.ethereum.enable();
-    
-                const web3 = new Web3(window.ethereum);
-                const contractAddress = '0x12025dEE2e50A8807735e9A67B63a88e3440fB58'; 
-                const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"content","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTContentSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"code","type":"string"},{"indexed":false,"internalType":"bool","name":"isSelling","type":"bool"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NFTTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"PrayWithMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"account","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"TransferIKun","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"buyNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"cancelSellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"}],"name":"getAdvertisingSlot","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"content","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"address","name":"tenant","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllMintedNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getAllSellingNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAvailableSlots","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_code","type":"string"}],"name":"getNFTByCode","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"getNFTById","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"code","type":"string"},{"internalType":"string","name":"nftName","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isAssigned","type":"bool"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"isForSale","type":"bool"},{"internalType":"uint256","name":"price","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOneDayLeaseCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"page","type":"uint256"}],"name":"getOwnerNFTCodesByPage","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenInfo","outputs":[{"internalType":"string","name":"coinName","type":"string"},{"internalType":"string","name":"coinSymbol","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"spirit","type":"string"},{"internalType":"string","name":"slogan","type":"string"},{"internalType":"uint256","name":"coinDecimals","type":"uint256"},{"internalType":"uint256","name":"maxCirculation","type":"uint256"},{"internalType":"uint256","name":"currentSupplyNum","type":"uint256"},{"internalType":"uint256","name":"percentage","type":"uint256"},{"internalType":"uint256","name":"currentRate","type":"uint256"},{"internalType":"uint256","name":"totalBurnedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"leaseAdvertisingSlot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFT","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintNFTCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"offerIncenseAndBurn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"prayAndMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"}],"name":"sellNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_slotId","type":"uint256"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"string","name":"_content","type":"string"}],"name":"setAdvertisingContent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_metadata","type":"string"}],"name":"setNFTContentByNFTId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBurned","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"},{"internalType":"address","name":"_to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"}]; 
                 contract = new web3.eth.Contract(contractABI, contractAddress);
             } catch (error) {
             }
@@ -31,6 +31,7 @@
     
     async function connectWallet() {
         try {
+			await window.ethereum.enable();
             await window.ethereum.request({ method: 'eth_requestAccounts' });
             document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
 			init();
@@ -250,7 +251,6 @@
         }
     }
 
-
     async function buyNFT() {
         const nftId = document.getElementById("buyNFTId").value;
         try {
@@ -261,8 +261,6 @@
             document.getElementById("nftRightInfoResult").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
- 
-    
 
     async function leaseAdvertisingSlot() {
         const slotId = document.getElementById("slotId").value;
@@ -299,7 +297,6 @@
             document.getElementById("adResultInfo").innerText = `Error: ${JSON.stringify(error.message)}`;
         }
     }
-
     
     async function getAllAdvertisingSlots() {
         try {
@@ -327,7 +324,6 @@
 		changeAllMsg("");
 	}
 
-
 	let availableSlots = []; 
 	let currentIndex = 0; 
 
@@ -336,7 +332,7 @@
 			const allSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 			const unUsedSlots = (await contract.methods.getAvailableSlots().call()).map(slot => parseInt(slot)); 
 			availableSlots = allSlots.filter(slot => !unUsedSlots.includes(slot));
-
+			availableSlots.unshift(0);
 			showNextAd();
 			if (availableSlots.length > 1) {
 				setInterval(showNextAd, 10000);
@@ -393,8 +389,6 @@
 	    }
 	    return lines.slice(0, maxLines).join('\n') + '...';
 	}
-	
-
 
 	function updateScrollingText(adstr) {
 		var scrollingTextElement = document.getElementById("scrollingText");
@@ -406,11 +400,10 @@
 			scrollingTextElement.style.animationDuration = (totalText.length * 50) + "ms";
 		}
 	}
-
+	
 	</script>
     <style>
-	
-	
+
 		h1 {
 			position: fixed;
 			top: 0;
@@ -571,7 +564,6 @@
 		  -webkit-line-clamp: 5; 
 		}
 
-
 		.refresh-button {
 			padding: 5px 10px;
 			border: none;
@@ -587,7 +579,6 @@
 			color: white; 
 			font-size: 16px;
 		}
-
 
 		.button-container {
 			display: flex;
@@ -659,7 +650,6 @@
 			flex: 1; 
 			margin-right: 10px; 
 		}
-		
 		
 		.common-button {
 			padding: 5px 10px;
@@ -766,7 +756,6 @@
 		    margin: 0 auto;
 		}
 		
-
 		.left-card-nft,
 		.right-card-nft {
 		    width: 50%;
@@ -958,7 +947,6 @@
 			font-family: Arial, sans-serif; 
 		}
 
-
 		.ikun-info {
 			position: fixed; 
 			bottom: 10px;
@@ -979,15 +967,11 @@
 
 		.link:hover {
 			text-decoration: underline; 
-		}		
-				
-
+		}
     </style>
 </head>
 <body>
-
-	<h1>BSC TEST iKunCoin Web3</h1>
-	
+	<h1>iKunCoin Meme</h1>
 	<div class="text-container">
     	.__ ____  __.               	_________        .__        
     	|__|    |/ _|__ __  ____    	\_   ___ \  ____ |__| ____  
@@ -999,8 +983,6 @@
 	<div class="scrolling-text"  id="scrollingText">
 		~ iKun is a way of life.
 	</div>
-	
-	
 	
 	<div class="static-text">
 	
@@ -1063,7 +1045,6 @@
 		<div class="separator-line"></div>
 	</div>
 	
-
 	<div class="card-container-coin">
 		<div class="left-card-coin">
 			<div class="static-text-coin">
@@ -1134,7 +1115,6 @@
 		</div>
 	</div>
 
-
 	<div class="separator">
 		<span class="separator-title">iKunNFT</span>
 		<div class="separator-line"></div>
@@ -1185,7 +1165,6 @@
 			</div>
 		</div>
 		
-		
 		<div class="right-card-nft">
 		
 			<div class="common-container-margin">
@@ -1224,7 +1203,6 @@
 		</div>
 	</div>
 
-
 	<div class="separator">
 		<span class="separator-title">Advertising</span>
 		<div class="separator-line"></div>
@@ -1244,13 +1222,13 @@
 			</div>
 				
 			<div class="common-container-margin">
-				<input type="number" id="slotId" class="common-text-comwidth" placeholder="Slot ID">
-				<input type="number" id="leaseDuration" class="common-text-comwidth-max" placeholder="Lease Duration">
+				<input type="number" id="slotId" class="common-text-comwidth" placeholder="Slot ID 1-10">
+				<input type="number" id="leaseDuration" class="common-text-comwidth-max" placeholder="Lease Duration 1,3,7">
 				<button onclick="leaseAdvertisingSlot()" class="common-button">Lease Advertising Slot</button>
 			</div>
 			
 			<div class="common-container-margin">
-				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID">
+				<input type="number" id="adSlotId" class="common-text-comwidth" placeholder="Slot ID 1-10">
 				<input type="text" id="adTitle" class="common-text-input" placeholder="Title">
 				<input type="text" id="adContentInfo" class="common-text-ad" placeholder="Content">  
 
@@ -1262,7 +1240,7 @@
 
 
 			<div class="common-container-margin">
-				<input type="number" id="adSlotIdInfo" class="common-text-comwidth" placeholder="Slot ID">
+				<input type="number" id="adSlotIdInfo" class="common-text-comwidth" placeholder="Slot ID 0-10">
 				<button onclick="getAdvertisingSlot()" class="common-button">Get Advertising Slot</button>
 			</div>
 		

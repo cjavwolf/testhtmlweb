@@ -7,9 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
     <script>
     let contract;
-    
-    window.addEventListener('load', async () => {
-        
+	
+	window.onload = function() {
+
         if (window.ethereum) {
             try {
                 await window.ethereum.enable();
@@ -22,9 +22,6 @@
             }
             
         } 
-    });
-	
-	window.onload = function() {
 		connectWallet();
 	};
 

@@ -27,23 +27,30 @@
 	window.onload = function() {
 		connectWallet();
 	};
-    
-    async function connectWallet() {
+
+	async function connectWallet() {
 		if (window.ethereum) {
 			try {
 				await window.ethereum.enable();
-				const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-				document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
-				init();
+				const accounts = await window.ethereum.request({
+					method: "eth_requestAccounts"
+				});
+				const account = accounts[0];
+				if (accounts.length > 0) {
+					if (account !== undefined) {
+						window.location.reload();
+					}
+					document.getElementById("connectWalletResult").innerText = `Connected wallet successfully! Address: ${window.ethereum.selectedAddress}`;
+					init();
+				}
 			} catch (error) {
 				document.getElementById("connectWalletResult").innerText = 'Error: User denied wallet connection';
 				var msg = 'Please ensure your wallet is connected before proceeding with any actions!!!';
 				changeAllMsg(msg);
-				
 			}
 		}
-    }
-	
+
+	}
 	
 	function changeAllMsg(msg) {
 		updateScrollingText(msg);
